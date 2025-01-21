@@ -2,7 +2,7 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Keywords\Contracts;
 
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 
 interface ReceivesParentSchema
 {

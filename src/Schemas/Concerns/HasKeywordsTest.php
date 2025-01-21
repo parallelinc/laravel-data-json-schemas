@@ -9,6 +9,8 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\MergesMultipleInstancesI
 use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\HasKeywords;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use Illuminate\Support\Collection;
 
@@ -72,6 +74,37 @@ class HasKeywordsTestSchema extends StringSchema
         TheMergesMultipleInstancesIntoAllOfTestKeyword::class,
     ];
 }
+
+it('can get the schema keywords', function () {
+    $schema = HasKeywordsTestSchema::make();
+
+    $reflection = new ReflectionObject($schema);
+    $reflectionMethod = $reflection->getMethod('getKeywords');
+    $reflectionMethod->setAccessible(true);
+
+    expect($reflectionMethod->invoke($schema))->toBe([
+        TypeKeyword::class,
+        DescriptionKeyword::class,
+        TheTestKeyword::class,
+        TheHandlesMultipleInstancesTestKeyword::class,
+        TheMergesMultipleInstancesIntoAllOfTestKeyword::class,
+    ]);
+});
+
+test('getKeywords throws an exception when the keywords property is not set', function () {
+    class NoKeywordsTestSchema implements Schema
+    {
+        use PrimitiveSchema;
+    }
+
+    $schema = new NoKeywordsTestSchema;
+
+    $reflection = new ReflectionObject($schema);
+    $reflectionMethod = $reflection->getMethod('getKeywords');
+    $reflectionMethod->setAccessible(true);
+
+    $reflectionMethod->invoke($schema);
+})->throws(KeywordNotSetException::class);
 
 it('can call a keyword method')
     ->expect(HasKeywordsTestSchema::make())

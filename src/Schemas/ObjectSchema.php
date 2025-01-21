@@ -8,9 +8,13 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Object\MaxPropertiesKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Object\MinPropertiesKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Object\PropertiesKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Object\RequiredKeyword;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 
-class ObjectSchema extends Schema
+class ObjectSchema implements Schema
 {
+    use PrimitiveSchema;
+
     public static DataType $type = DataType::Object;
 
     public static array $keywords = [

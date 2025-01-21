@@ -5,7 +5,7 @@ namespace BasilLangevin\LaravelDataSchemas\Keywords\Composition;
 use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\MergesMultipleInstancesIntoAllOf;
 use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\ReceivesParentSchema;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use Closure;
 use Illuminate\Support\Collection;
 

@@ -6,9 +6,13 @@ use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Keywords\Array\MaxItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Array\MinItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 
-class ArraySchema extends Schema
+class ArraySchema implements Schema
 {
+    use PrimitiveSchema;
+
     public static DataType $type = DataType::Array;
 
     public static array $keywords = [

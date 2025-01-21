@@ -15,13 +15,6 @@ use Illuminate\Support\Str;
 trait HasKeywords
 {
     /**
-     * The keywords that are available for this schema type.
-     *
-     * @see https://json-schema.org/draft/2020-12/json-schema-validation
-     */
-    public static array $keywords;
-
-    /**
      * The instances of each keyword that has been set.
      */
     private array $keywordInstances = [];
@@ -31,6 +24,11 @@ trait HasKeywords
      */
     protected function getKeywords(): array
     {
+        if (! isset(static::$keywords)) {
+            throw new KeywordNotSetException('The keywords property is not set for this schema type.');
+        }
+
+        /** @disregard P1014 because the if statement ensures the property exists */
         return Arr::flatten(static::$keywords);
     }
 

@@ -3,7 +3,7 @@
 namespace BasilLangevin\LaravelDataSchemas\Tests\Support;
 
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use Illuminate\Support\Arr;
@@ -20,19 +20,19 @@ class DataClassBuilder
         $this->properties = collect();
     }
 
-    public function addProperty(string $type, string $name, array $attributes = [], ?string $default = null): self
+    public function addProperty(string $type, string $name, array $attributes = [], mixed $default = null): self
     {
         $this->properties->push(new Property($type, $name, $attributes, $default));
 
         return $this;
     }
 
-    public function addArrayProperty(string $name, array $attributes = [], ?string $default = null): self
+    public function addArrayProperty(string $name, array $attributes = [], ?array $default = null): self
     {
         return $this->addProperty('array', $name, $attributes, $default);
     }
 
-    public function addBooleanProperty(string $name, array $attributes = [], ?string $default = null): self
+    public function addBooleanProperty(string $name, array $attributes = [], ?bool $default = null): self
     {
         return $this->addProperty('bool', $name, $attributes, $default);
     }

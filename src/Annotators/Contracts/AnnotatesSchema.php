@@ -2,7 +2,7 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Annotators\Contracts;
 
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 
 interface AnnotatesSchema

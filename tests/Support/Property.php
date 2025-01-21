@@ -11,7 +11,7 @@ class Property
         public string $type,
         public string $name,
         public array $attributes,
-        public ?string $default = null,
+        public mixed $default = null,
     ) {}
 
     protected function stringifyAttributes(): string
@@ -70,6 +70,10 @@ class Property
 
     protected function stringifyDefault(): string
     {
+        if (is_bool($this->default)) {
+            return $this->default ? 'true' : 'false';
+        }
+
         if (is_string($this->default)) {
             return "'".addslashes($this->default)."'";
         }

@@ -4,7 +4,7 @@ namespace BasilLangevin\LaravelDataSchemas\Annotators;
 
 use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
 use BasilLangevin\LaravelDataSchemas\Attributes\Description;
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;

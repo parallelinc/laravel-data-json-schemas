@@ -7,9 +7,13 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\String\MaxLengthKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\String\MinLengthKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\String\PatternKeyword;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 
-class StringSchema extends Schema
+class StringSchema implements Schema
 {
+    use PrimitiveSchema;
+
     public static DataType $type = DataType::String;
 
     public static array $keywords = [

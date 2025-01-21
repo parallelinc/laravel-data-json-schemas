@@ -4,7 +4,7 @@ namespace BasilLangevin\LaravelDataSchemas\Annotators;
 
 use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 
 class TitleAnnotator implements AnnotatesSchema

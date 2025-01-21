@@ -3,7 +3,7 @@
 namespace BasilLangevin\LaravelDataSchemas;
 
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 
 class JsonSchema

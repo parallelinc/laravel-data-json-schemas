@@ -7,7 +7,7 @@ use BasilLangevin\LaravelDataSchemas\Annotators\CustomAnnotationAnnotator;
 use BasilLangevin\LaravelDataSchemas\Annotators\DefaultAnnotationAnnotator;
 use BasilLangevin\LaravelDataSchemas\Annotators\DescriptionAnnotator;
 use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 
 class ApplyAnnotationsToSchema

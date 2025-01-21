@@ -3,8 +3,8 @@
 namespace BasilLangevin\LaravelDataSchemas\Actions;
 
 use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use Spatie\LaravelData\Attributes\Validation\Present;
@@ -36,7 +36,7 @@ class TransformDataClassToSchema
             ->map(function (PropertyWrapper $property) {
                 return TransformPropertyToSchema::run($property);
             })
-            ->toArray();
+            ->all();
     }
 
     /**

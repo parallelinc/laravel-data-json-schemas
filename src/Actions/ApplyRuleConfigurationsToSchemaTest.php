@@ -126,6 +126,7 @@ test('getApplicableContracts returns the correct contracts', function ($type, $c
     ['bool', [ConfiguresAnySchema::class, ConfiguresBooleanSchema::class]],
     ['int', [ConfiguresAnySchema::class, ConfiguresIntegerSchema::class, ConfiguresNumberSchema::class]],
     ['float', [ConfiguresAnySchema::class, ConfiguresNumberSchema::class]],
+    ['null', [ConfiguresAnySchema::class]],
     ['object', [ConfiguresAnySchema::class, ConfiguresObjectSchema::class]],
     ['string', [ConfiguresAnySchema::class, ConfiguresStringSchema::class]],
 ]);

@@ -7,6 +7,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
@@ -38,6 +39,7 @@ class MakeSchemaForReflectionType
             $name === 'bool' => BooleanSchema::class,
             $name === 'array' => ArraySchema::class,
             $name === 'object' => ObjectSchema::class,
+            $name === 'null' => NullSchema::class,
             enum_exists($name) => $this->getEnumSchemaClass($name),
         };
     }

@@ -142,6 +142,17 @@ trait HasKeywords
         return $result;
     }
 
+    public function buildSchema(): array
+    {
+        return collect($this->getKeywords())
+            ->flatten()
+            ->filter(fn (string $keyword) => $this->hasKeyword($keyword))
+            ->reduce(function (Collection $schema, string $keyword) {
+                return $this->applyKeyword($keyword, $schema);
+            }, collect())
+            ->toArray();
+    }
+
     /**
      * Add the definition for a keyword to the given schema.
      */

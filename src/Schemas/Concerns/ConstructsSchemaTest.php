@@ -2,14 +2,14 @@
 
 use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DescriptionKeyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\ConstructsSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
 
 covers(ConstructsSchema::class);
 
-class ConstructsSchemaTestSchema implements Schema
+class ConstructsSchemaTestSchema implements SingleTypeSchema
 {
-    use PrimitiveSchema;
+    use SingleTypeSchemaTrait;
 
     public static array $keywords = [
         DescriptionKeyword::class,

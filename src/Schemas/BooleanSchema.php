@@ -4,12 +4,12 @@ namespace BasilLangevin\LaravelDataSchemas\Schemas;
 
 use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
 
-class BooleanSchema implements Schema
+class BooleanSchema implements SingleTypeSchema
 {
-    use PrimitiveSchema;
+    use SingleTypeSchemaTrait;
 
     public static DataType $type = DataType::Boolean;
 

@@ -26,6 +26,8 @@ class TestPropertyWrapperClass
 
     public object $testObject;
 
+    public string|int $testUnion;
+
     protected string $hidden;
 
     public function test()
@@ -33,6 +35,36 @@ class TestPropertyWrapperClass
         return 'test';
     }
 }
+
+it('can get the constituent types of a union property', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
+
+    expect($property->getTypes())->toBeCollection()->toHaveCount(2);
+    expect($property->getTypes()->first()->getName())->toBe('string');
+    expect($property->getTypes()->last()->getName())->toBe('int');
+});
+
+it('can get the types of a single type property', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($property->getTypes())->toBeCollection()->toHaveCount(1);
+    expect($property->getTypes()->first()->getName())->toBe('string');
+});
+
+it('can get the type names of a union property', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
+
+    expect($property->getTypeNames())->toBeCollection()->toHaveCount(2);
+    expect($property->getTypeNames()->first())->toBe('string');
+    expect($property->getTypeNames()->last())->toBe('int');
+});
+
+it('can get the type names of a single type property', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($property->getTypeNames())->toBeCollection()->toHaveCount(1);
+    expect($property->getTypeNames()->first())->toBe('string');
+});
 
 it('can check if the reflected property has a given type', function (string $property, string $type) {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, $property);
@@ -59,6 +91,21 @@ test('hasType returns false if the reflected property does not have a given type
     ['testFloat', 'boolean'],
     ['testInt', 'string'],
     ['testEnum', 'nonexistent'],
+]);
+
+test('property type checks return false if the property is a union', function (string $method) {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
+
+    expect($reflector->$method())->toBe(false);
+})->with([
+    ['isArray'],
+    ['isBoolean'],
+    ['isEnum'],
+    ['isFloat'],
+    ['isInteger'],
+    ['isNumber'],
+    ['isObject'],
+    ['isString'],
 ]);
 
 it('can check if the reflected property is an array', function () {
@@ -201,16 +248,16 @@ it('can get its siblings', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->siblings())->toBeCollection()
-        ->toHaveCount(6)
+        ->toHaveCount(7)
         ->each->toBeInstanceOf(PropertyWrapper::class);
 
     expect($reflector->siblings()->map->getName()->toArray())
-        ->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject']);
+        ->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testUnion']);
 });
 
 it('can get its sibling names', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->siblingNames())->toBeCollection();
-    expect($reflector->siblingNames()->toArray())->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject']);
+    expect($reflector->siblingNames()->toArray())->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testUnion']);
 });

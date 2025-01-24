@@ -8,12 +8,12 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Object\MaxPropertiesKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Object\MinPropertiesKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Object\PropertiesKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Object\RequiredKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
 
-class ObjectSchema implements Schema
+class ObjectSchema implements SingleTypeSchema
 {
-    use PrimitiveSchema;
+    use SingleTypeSchemaTrait;
 
     public static DataType $type = DataType::Object;
 

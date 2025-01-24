@@ -1,6 +1,7 @@
 <?php
 
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
+use BasilLangevin\LaravelDataSchemas\Actions\MakeSchemaForReflectionType;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresAnySchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresArraySchema;
@@ -9,9 +10,12 @@ use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresInteg
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\Alpha;
+use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\ValidationAttribute;
 
 covers(ApplyRuleConfigurationsToSchema::class);
@@ -32,6 +36,28 @@ it('applies the correct rule configurations to the schema', function () {
     expect($result->getPattern())->toBe('/^[a-zA-Z]+$/');
 
     expect(fn () => $result->getTitle())->toThrow(Exception::class, 'The keyword "title" has not been set.');
+});
+
+it('applies the correct rule configurations to a union schema', function () {
+    $this->class->addProperty('string|int', 'name', [Alpha::class, Title::class => 'title', Min::class => 1]);
+
+    $property = $this->class->getClassProperty('name');
+
+    $action = new ApplyRuleConfigurationsToSchema;
+
+    $schema = (new UnionSchema)->applyType($property);
+
+    $result = $action->handle($schema, $property);
+
+    $constituents = $result->getConstituentSchemas();
+
+    $stringSchema = $constituents->first();
+    $integerSchema = $constituents->last();
+
+    expect($stringSchema->getPattern())->toBe('/^[a-zA-Z]+$/');
+    expect($stringSchema->getMinLength())->toBe(1);
+
+    expect($integerSchema->getMinimum())->toBe(1);
 });
 
 test('getConfigurableAttributes only includes validation attributes', function () {
@@ -85,13 +111,14 @@ test('getApplicableContracts returns the correct contracts', function ($type, $c
     $this->class->addProperty($type, 'name');
 
     $property = $this->class->getClassProperty('name');
+    $schema = MakeSchemaForReflectionType::run($property->getType());
     $action = new ApplyRuleConfigurationsToSchema;
 
     $reflection = new ReflectionClass($action);
     $method = $reflection->getMethod('getApplicableContracts');
     $method->setAccessible(true);
 
-    $result = $method->invokeArgs($action, [$property]);
+    $result = $method->invokeArgs($action, [$schema]);
 
     expect($result->all())->toBe($contracts);
 })->with([
@@ -104,17 +131,15 @@ test('getApplicableContracts returns the correct contracts', function ($type, $c
 ]);
 
 it('returns the correct contracts for a class wrapper', function () {
-    $this->class->addStringProperty('name');
+    $schema = ObjectSchema::make();
 
-    $property = $this->class->getClassProperty('name');
-    $wrapper = $property->getClass();
     $action = new ApplyRuleConfigurationsToSchema;
 
     $reflection = new ReflectionClass($action);
     $method = $reflection->getMethod('getApplicableContracts');
     $method->setAccessible(true);
 
-    $result = $method->invokeArgs($action, [$wrapper]);
+    $result = $method->invokeArgs($action, [$schema]);
 
     expect($result)->toBeCollection()->toHaveCount(2);
     expect($result->all())->toBe([ConfiguresAnySchema::class, ConfiguresObjectSchema::class]);

@@ -12,6 +12,6 @@ class ApplyTypeToSchema
 
     public function handle(Schema $schema, PropertyWrapper $property): Schema
     {
-        return $schema->type($schema::$type);
+        return $schema->applyType($property);
     }
 }

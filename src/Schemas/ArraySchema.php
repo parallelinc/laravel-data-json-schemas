@@ -6,12 +6,12 @@ use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Keywords\Array\MaxItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Array\MinItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
 
-class ArraySchema implements Schema
+class ArraySchema implements SingleTypeSchema
 {
-    use PrimitiveSchema;
+    use SingleTypeSchemaTrait;
 
     public static DataType $type = DataType::Array;
 

@@ -9,12 +9,12 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Number\ExclusiveMinimumKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Number\MaximumKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Number\MinimumKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Number\MultipleOfKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
 
-class NumberSchema implements Schema
+class NumberSchema implements SingleTypeSchema
 {
-    use PrimitiveSchema;
+    use SingleTypeSchemaTrait;
 
     public static DataType $type = DataType::Number;
 

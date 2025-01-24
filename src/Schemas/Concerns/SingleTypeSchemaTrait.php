@@ -2,19 +2,34 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\Concerns;
 
+use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\PipeCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
-use Illuminate\Support\Collection;
 
 /**
  * @property static DataType $type The type of the schema.
  */
-trait PrimitiveSchema
+trait SingleTypeSchemaTrait
 {
     use ConstructsSchema;
     use HasKeywords;
     use PipeCallbacks;
     use WhenCallbacks;
+
+    public static function getDataType(): DataType
+    {
+        if (! isset(static::$type)) {
+            throw new \Exception('SingleType schemas must have a $type.');
+        }
+
+        /** @disregard P1014 because the if statement ensures the property exists */
+        return static::$type;
+    }
+
+    public function applyType(): self
+    {
+        return $this->type(static::getDataType());
+    }
 
     /**
      * Clone the base structure of the schema.
@@ -29,12 +44,6 @@ trait PrimitiveSchema
      */
     public function toArray(): array
     {
-        return collect($this->getKeywords())
-            ->flatten()
-            ->filter(fn (string $keyword) => $this->hasKeyword($keyword))
-            ->reduce(function (Collection $schema, string $keyword) {
-                return $this->applyKeyword($keyword, $schema);
-            }, collect())
-            ->toArray();
+        return $this->buildSchema();
     }
 }

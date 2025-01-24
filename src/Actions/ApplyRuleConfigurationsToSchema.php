@@ -10,11 +10,17 @@ use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresInteg
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 use ReflectionMethod;
@@ -35,6 +41,12 @@ class ApplyRuleConfigurationsToSchema
 
     public function handle(Schema $schema, EntityWrapper $entity): Schema
     {
+        if ($schema instanceof UnionSchema) {
+            $schema->getConstituentSchemas()->each(fn (Schema $schema) => $this->handle($schema, $entity));
+
+            return $schema;
+        }
+
         $attributes = $this->getConfigurableAttributes($entity);
 
         foreach ($attributes as $attribute) {
@@ -51,7 +63,7 @@ class ApplyRuleConfigurationsToSchema
     {
         $configurator = $attribute->getRuleConfigurator();
 
-        $this->getApplicableContracts($entity)
+        $this->getApplicableContracts($schema)
             ->intersect(class_implements($configurator))
             ->flatMap(fn ($contract) => $this->getContractMethods($contract))
             ->unique()
@@ -71,24 +83,20 @@ class ApplyRuleConfigurationsToSchema
     /**
      * Get the contracts that are applicable to the entity.
      */
-    protected function getApplicableContracts(EntityWrapper $entity): Collection
+    protected function getApplicableContracts(Schema $schema): Collection
     {
-        $contracts = collect(static::$contracts);
+        $contractTypes = ['*'];
+        $contractTypes[] = match (get_class($schema)) {
+            ArraySchema::class => 'array',
+            BooleanSchema::class => 'boolean',
+            IntegerSchema::class => ['integer', 'number'],
+            NumberSchema::class => 'number',
+            ObjectSchema::class => 'object',
+            StringSchema::class => 'string',
+        };
 
-        if ($entity instanceof ClassWrapper) {
-            return $contracts->only(['*', 'object'])->values();
-        }
-
-        return $this->getApplicablePropertyContracts($entity);
-    }
-
-    /**
-     * Get the contracts that are applicable to the property.
-     */
-    protected function getApplicablePropertyContracts(PropertyWrapper $property): Collection
-    {
         return collect(static::$contracts)
-            ->filter(fn ($contract, $type) => $property->hasType($type))
+            ->only(Arr::flatten($contractTypes))
             ->values();
     }
 

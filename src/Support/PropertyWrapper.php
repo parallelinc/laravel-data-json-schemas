@@ -8,6 +8,7 @@ use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 use Illuminate\Support\Collection;
 use ReflectionNamedType;
 use ReflectionProperty;
+use ReflectionUnionType;
 
 class PropertyWrapper implements EntityWrapper
 {
@@ -24,9 +25,28 @@ class PropertyWrapper implements EntityWrapper
         return new self(new ReflectionProperty($className, $propertyName));
     }
 
-    public function getType(): ReflectionNamedType
+    public function getType(): ReflectionNamedType|ReflectionUnionType
     {
         return $this->property->getType();
+    }
+
+    /**
+     * Get the types of the property as a collection.
+     *
+     * @return \Illuminate\Support\Collection<int, ReflectionNamedType>
+     */
+    public function getTypes(): Collection
+    {
+        if ($this->isUnion()) {
+            return collect($this->getType()->getTypes());
+        }
+
+        return collect([$this->getType()]);
+    }
+
+    public function getTypeNames(): Collection
+    {
+        return $this->getTypes()->map->getName();
     }
 
     /**
@@ -46,12 +66,21 @@ class PropertyWrapper implements EntityWrapper
         };
     }
 
+    protected function isUnion(): bool
+    {
+        return $this->getType() instanceof ReflectionUnionType;
+    }
+
     /**
      * Determine if the reflected property is an array.
      */
     public function isArray(): bool
     {
-        return $this->property->getType()->getName() === 'array';
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return $this->getType()->getName() === 'array';
     }
 
     /**
@@ -59,7 +88,11 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isBoolean(): bool
     {
-        return $this->property->getType()->getName() === 'bool';
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return $this->getType()->getName() === 'bool';
     }
 
     /**
@@ -67,7 +100,11 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isEnum(): bool
     {
-        return enum_exists($this->property->getType()->getName());
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return enum_exists($this->getType()->getName());
     }
 
     /**
@@ -75,7 +112,11 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isFloat(): bool
     {
-        return $this->property->getType()->getName() === 'float';
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return $this->getType()->getName() === 'float';
     }
 
     /**
@@ -83,7 +124,11 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isInteger(): bool
     {
-        return $this->property->getType()->getName() === 'int';
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return $this->getType()->getName() === 'int';
     }
 
     /**
@@ -91,7 +136,11 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isNumber(): bool
     {
-        return in_array($this->property->getType()->getName(), ['float', 'int']);
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return $this->getType()->getName() === 'int' || $this->getType()->getName() === 'float';
     }
 
     /**
@@ -99,7 +148,11 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isObject(): bool
     {
-        return $this->property->getType()->getName() === 'object';
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return $this->getType()->getName() === 'object';
     }
 
     /**
@@ -107,7 +160,11 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isString(): bool
     {
-        return $this->property->getType()->getName() === 'string';
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return $this->getType()->getName() === 'string';
     }
 
     /**

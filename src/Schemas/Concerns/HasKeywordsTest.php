@@ -9,8 +9,8 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\MergesMultipleInstancesI
 use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\HasKeywords;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\PrimitiveSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use Illuminate\Support\Collection;
 
@@ -92,9 +92,9 @@ it('can get the schema keywords', function () {
 });
 
 test('getKeywords throws an exception when the keywords property is not set', function () {
-    class NoKeywordsTestSchema implements Schema
+    class NoKeywordsTestSchema implements SingleTypeSchema
     {
-        use PrimitiveSchema;
+        use SingleTypeSchemaTrait;
     }
 
     $schema = new NoKeywordsTestSchema;

@@ -12,6 +12,7 @@ enum PrimativesTestStringEnum: string
 }
 
 $basicStringEnumSchema = [
+    '$schema' => 'https://json-schema.org/draft/2019-09/schema',
     'type' => 'object',
     'properties' => [
         'testParameter' => [
@@ -69,6 +70,7 @@ enum PrimativesTestIntegerEnum: int
 }
 
 $basicIntegerEnumSchema = [
+    '$schema' => 'https://json-schema.org/draft/2019-09/schema',
     'type' => 'object',
     'properties' => [
         'testParameter' => [

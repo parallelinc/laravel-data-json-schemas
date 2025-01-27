@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
 
 $basicSchema = [
+    '$schema' => 'https://json-schema.org/draft/2019-09/schema',
     'type' => 'object',
     'properties' => [
         'testParameter' => [

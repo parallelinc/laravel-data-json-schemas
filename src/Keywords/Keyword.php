@@ -5,6 +5,7 @@ namespace BasilLangevin\LaravelDataSchemas\Keywords;
 use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\CustomAnnotationKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DefaultKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DescriptionKeyword;
+use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DialectKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\TitleKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Composition\NotKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\General\ConstKeyword;
@@ -16,6 +17,7 @@ use Illuminate\Support\Collection;
 abstract class Keyword
 {
     const ANNOTATION_KEYWORDS = [
+        DialectKeyword::class,
         TitleKeyword::class,
         DescriptionKeyword::class,
         DefaultKeyword::class,

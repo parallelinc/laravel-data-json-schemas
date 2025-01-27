@@ -112,6 +112,17 @@ it('sets the title to the class name if it is a data object with no other title 
         ->toBe('Data Object With No Title Annotation Test');
 });
 
+it('does not set the title to the class name if it is not a data object', function () {
+    class NonDataObjectTest
+    {
+        public function __construct(public bool $testParameter) {}
+    }
+
+    $schema = JsonSchema::make(NonDataObjectTest::class)->toArray();
+
+    expect(Arr::has($schema, 'title'))->toBeFalse();
+});
+
 it('Removes the Data suffix from the class name if it is a data object and the class name ends with Data', function () {
     class DataObjectWithDataSuffixTestData extends Data
     {

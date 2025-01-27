@@ -2,13 +2,14 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Support;
 
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesAttributes;
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesDocBlock;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
-use Illuminate\Support\Collection;
-use ReflectionNamedType;
+use DateTimeInterface;
 use ReflectionProperty;
+use ReflectionNamedType;
 use ReflectionUnionType;
+use Illuminate\Support\Collection;
+use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesDocBlock;
+use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesAttributes;
 
 class PropertyWrapper implements EntityWrapper
 {
@@ -93,6 +94,21 @@ class PropertyWrapper implements EntityWrapper
         }
 
         return $this->getType()->getName() === 'bool';
+    }
+
+    public function isDateTime(): bool
+    {
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        $typeName = $this->getType()->getName();
+
+        if (is_subclass_of($typeName, DateTimeInterface::class)) {
+            return true;
+        }
+
+        return $typeName === 'DateTimeInterface';
     }
 
     /**

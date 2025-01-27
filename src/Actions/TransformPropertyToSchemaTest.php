@@ -1,15 +1,18 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyAnnotationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyEnumToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyTypeToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\TransformPropertyToSchema;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use Spatie\LaravelData\Data;
+use BasilLangevin\LaravelDataSchemas\Enums\Format;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestIntegerEnum;
+use BasilLangevin\LaravelDataSchemas\Actions\ApplyEnumToSchema;
+use BasilLangevin\LaravelDataSchemas\Actions\ApplyTypeToSchema;
+use BasilLangevin\LaravelDataSchemas\Actions\ApplyAnnotationsToSchema;
+use BasilLangevin\LaravelDataSchemas\Actions\TransformPropertyToSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
-use Spatie\LaravelData\Data;
+use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestIntegerEnum;
+use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
 
 covers(TransformPropertyToSchema::class);
 
@@ -24,6 +27,10 @@ class PropertyTransformActionTest extends Data
         public string $stringProperty,
         public TestStringEnum $stringEnumProperty,
         public TestIntegerEnum $intEnumProperty,
+        public DateTime $testDateTime,
+        public DateTimeInterface $testDateTimeInterface,
+        public CarbonInterface $testCarbonInterface,
+        public Carbon $testCarbon,
     ) {}
 }
 
@@ -74,3 +81,17 @@ it('calls the ApplyRuleConfigurationsToSchema action', function () {
     $action = new TransformPropertyToSchema;
     $action->handle($property);
 });
+
+it('applies the DateTime format to DateTime properties', function ($property) {
+    $property = PropertyWrapper::make(PropertyTransformActionTest::class, $property);
+
+    $action = new TransformPropertyToSchema;
+    $schema = $action->handle($property);
+
+    expect($schema->getFormat())->toBe(Format::DateTime);
+})->with([
+    ['testDateTime'],
+    ['testDateTimeInterface'],
+    ['testCarbonInterface'],
+    ['testCarbon'],
+]);

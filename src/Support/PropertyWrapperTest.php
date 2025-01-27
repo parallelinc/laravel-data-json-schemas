@@ -1,10 +1,12 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 
 covers(PropertyWrapper::class);
@@ -25,6 +27,14 @@ class TestPropertyWrapperClass
     public int $testInt;
 
     public object $testObject;
+
+    public DateTime $testDateTime;
+
+    public DateTimeInterface $testDateTimeInterface;
+
+    public CarbonInterface $testCarbonInterface;
+
+    public Carbon $testCarbon;
 
     public string|int $testUnion;
 
@@ -130,6 +140,23 @@ test('isBoolean returns false if the reflected property is not a boolean', funct
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->isBoolean())->toBe(false);
+});
+
+it('can check if the reflected property is a DateTime', function ($property) {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, $property);
+
+    expect($reflector->isDateTime())->toBe(true);
+})->with([
+    ['testDateTime'],
+    ['testDateTimeInterface'],
+    ['testCarbonInterface'],
+    ['testCarbon'],
+]);
+
+test('isDateTime returns false if the reflected property is not a DateTime', function () {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($reflector->isDateTime())->toBe(false);
 });
 
 it('can check if the reflected property is an enum', function () {
@@ -248,16 +275,16 @@ it('can get its siblings', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->siblings())->toBeCollection()
-        ->toHaveCount(7)
+        ->toHaveCount(11)
         ->each->toBeInstanceOf(PropertyWrapper::class);
 
     expect($reflector->siblings()->map->getName()->toArray())
-        ->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testUnion']);
+        ->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testUnion']);
 });
 
 it('can get its sibling names', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->siblingNames())->toBeCollection();
-    expect($reflector->siblingNames()->toArray())->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testUnion']);
+    expect($reflector->siblingNames()->toArray())->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testUnion']);
 });

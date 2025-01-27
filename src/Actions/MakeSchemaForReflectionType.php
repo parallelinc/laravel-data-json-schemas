@@ -2,18 +2,19 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Actions;
 
-use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
-use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
+use DateTimeInterface;
+use ReflectionNamedType;
+use ReflectionUnionType;
 use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
-use ReflectionNamedType;
-use ReflectionUnionType;
+use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
 
 class MakeSchemaForReflectionType
 {
@@ -41,6 +42,8 @@ class MakeSchemaForReflectionType
             $name === 'object' => ObjectSchema::class,
             $name === 'null' => NullSchema::class,
             enum_exists($name) => $this->getEnumSchemaClass($name),
+            $name === 'DateTimeInterface' => StringSchema::class,
+            is_subclass_of($name, DateTimeInterface::class) => StringSchema::class,
         };
     }
 

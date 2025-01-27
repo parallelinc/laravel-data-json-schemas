@@ -5,6 +5,7 @@ use BasilLangevin\LaravelDataSchemas\Attributes\Title;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use Spatie\LaravelData\Data;
 
 covers(ClassWrapper::class);
 
@@ -28,6 +29,24 @@ class TestClassWrapperClass
 it('can get its name')
     ->expect(ClassWrapper::make(TestClassWrapperClass::class)->getName())
     ->toBe('TestClassWrapperClass');
+
+it('can get its short name')
+    ->expect(ClassWrapper::make(TestClassWrapperClass::class)->getShortName())
+    ->toBe('TestClassWrapperClass');
+
+it('can check if it is a data object', function () {
+    class IsDataObjectTestClass extends Data {}
+    $reflector = ClassWrapper::make(IsDataObjectTestClass::class);
+
+    expect($reflector->isDataObject())->toBe(true);
+});
+
+it('can check if it is not a data object', function () {
+    class IsNotDataObjectTestClass {}
+    $reflector = ClassWrapper::make(IsNotDataObjectTestClass::class);
+
+    expect($reflector->isDataObject())->toBe(false);
+});
 
 it('can check if it has an attribute', function () {
     $reflector = ClassWrapper::make(TestClassWrapperClass::class);

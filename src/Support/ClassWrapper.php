@@ -10,6 +10,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
 use Reflector;
+use Spatie\LaravelData\Data;
 
 class ClassWrapper implements EntityWrapper
 {
@@ -32,6 +33,22 @@ class ClassWrapper implements EntityWrapper
     public function getName(): string
     {
         return $this->class->getName();
+    }
+
+    /**
+     * Get the short name of the class.
+     */
+    public function getShortName(): string
+    {
+        return $this->class->getShortName();
+    }
+
+    /**
+     * Check if the class is a data object.
+     */
+    public function isDataObject(): bool
+    {
+        return $this->class->isSubclassOf(Data::class);
     }
 
     /**

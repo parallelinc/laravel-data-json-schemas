@@ -96,6 +96,29 @@ it('does not set its title with a DocBlock summary on the class when the doc blo
 
     $schema = JsonSchema::make(DocBlockClassSummaryNoDescriptionTest::class)->toArray();
 
-    expect(Arr::has($schema, 'title'))
-        ->toBeFalse();
+    expect(Arr::get($schema, 'title'))
+        ->not->toBe('The class we\'re testing.');
+});
+
+it('sets the title to the class name if it is a data object with no other title annotation', function () {
+    class DataObjectWithNoTitleAnnotationTest extends Data
+    {
+        public function __construct(public bool $testParameter) {}
+    }
+
+    $schema = JsonSchema::make(DataObjectWithNoTitleAnnotationTest::class)->toArray();
+
+    expect(Arr::get($schema, 'title'))
+        ->toBe('Data Object With No Title Annotation Test');
+});
+
+it('Removes the Data suffix from the class name if it is a data object and the class name ends with Data', function () {
+    class DataObjectWithDataSuffixTestData extends Data
+    {
+        public function __construct(public bool $testParameter) {}
+    }
+
+    $schema = JsonSchema::make(DataObjectWithDataSuffixTestData::class)->toArray();
+
+    expect(Arr::get($schema, 'title'))->toBe('Data Object With Data Suffix Test');
 });

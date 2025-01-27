@@ -41,7 +41,12 @@ it('can create a basic string enum schema from a data object', function () use (
     expect($schema)->toBeInstanceOf(ObjectSchema::class);
     expect($schema->getName())->toBe('BasicStringEnumData');
 
-    expect($schema->toArray())->toBe($basicStringEnumSchema);
+    expect($schema->toArray())->toEqual(
+        array_merge(
+            $basicStringEnumSchema,
+            ['title' => 'Basic String Enum'],
+        ),
+    );
 });
 
 it('can create a string enum schema with a description from a data object', function () use ($basicStringEnumSchema) {
@@ -60,7 +65,12 @@ it('can create a string enum schema with a description from a data object', func
 
     Arr::set($basicStringEnumSchema, 'properties.testParameter.description', 'The test parameter.');
 
-    expect($schema->toArray())->toEqual($basicStringEnumSchema);
+    expect($schema->toArray())->toEqual(
+        array_merge(
+            $basicStringEnumSchema,
+            ['title' => 'String Enum With Description'],
+        ),
+    );
 });
 
 enum PrimativesTestIntegerEnum: int
@@ -103,7 +113,12 @@ it('can create a basic integer enum schema from a data object', function () use 
     expect($schema)->toBeInstanceOf(ObjectSchema::class);
     expect($schema->getName())->toBe('BasicIntegerEnumData');
 
-    expect($schema->toArray())->toBe($basicIntegerEnumSchema);
+    expect($schema->toArray())->toEqual(
+        array_merge(
+            $basicIntegerEnumSchema,
+            ['title' => 'Basic Integer Enum'],
+        ),
+    );
 });
 
 it('can create an integer enum schema with a description from a data object', function () use ($basicIntegerEnumSchema) {
@@ -122,5 +137,10 @@ it('can create an integer enum schema with a description from a data object', fu
 
     Arr::set($basicIntegerEnumSchema, 'properties.testParameter.description', 'The test parameter.');
 
-    expect($schema->toArray())->toEqual($basicIntegerEnumSchema);
+    expect($schema->toArray())->toEqual(
+        array_merge(
+            $basicIntegerEnumSchema,
+            ['title' => 'Integer Enum With Description'],
+        ),
+    );
 });

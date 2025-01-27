@@ -2,12 +2,16 @@
 
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyAnnotationsToSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyEnumToSchema;
+use BasilLangevin\LaravelDataSchemas\Actions\ApplyPropertiesToDataObjectSchema;
+use BasilLangevin\LaravelDataSchemas\Actions\ApplyRequiredToDataObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyTypeToSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\TransformPropertyToSchema;
 use BasilLangevin\LaravelDataSchemas\Enums\Format;
+use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestIntegerEnum;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 use Carbon\Carbon;
@@ -31,6 +35,7 @@ class PropertyTransformActionTest extends Data
         public DateTimeInterface $testDateTimeInterface,
         public CarbonInterface $testCarbonInterface,
         public Carbon $testCarbon,
+        public PersonData $dataObjectProperty,
     ) {}
 }
 
@@ -95,3 +100,26 @@ it('applies the DateTime format to DateTime properties', function ($property) {
     ['testCarbonInterface'],
     ['testCarbon'],
 ]);
+
+it('calls the ApplyPropertiesToDataObjectSchema action when the property is a data object', function () {
+    $property = PropertyWrapper::make(PropertyTransformActionTest::class, 'dataObjectProperty');
+
+    $mock = $this->mock(ApplyPropertiesToDataObjectSchema::class);
+
+    $mock->shouldReceive('handle')->once()
+        ->andReturn(ObjectSchema::make('dataObjectProperty'));
+
+    $action = new TransformPropertyToSchema;
+    $action->handle($property);
+});
+
+it('calls the ApplyRequiredToDataObjectSchema action when the property is a data object', function () {
+    $property = PropertyWrapper::make(PropertyTransformActionTest::class, 'dataObjectProperty');
+
+    $mock = $this->mock(ApplyRequiredToDataObjectSchema::class);
+
+    $mock->shouldReceive('handle')->once();
+
+    $action = new TransformPropertyToSchema;
+    $action->handle($property);
+});

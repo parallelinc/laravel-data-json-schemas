@@ -1,12 +1,14 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
+use BasilLangevin\LaravelDataSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
+use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
+use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
 
 covers(TitleAnnotator::class);
 
@@ -100,6 +102,17 @@ it('does not set its title with a DocBlock summary on the class when the doc blo
         ->not->toBe('The class we\'re testing.');
 });
 
+it('does not set its title if it is a property with no annotations', function () {
+    class PropertyWithNoAnnotationsTest extends Data
+    {
+        public function __construct(public bool $testParameter) {}
+    }
+
+    $schema = JsonSchema::make(PropertyWithNoAnnotationsTest::class)->toArray();
+
+    expect(Arr::has($schema, 'properties.testParameter.title'))->toBeFalse();
+});
+
 it('sets the title to the class name if it is a data object with no other title annotation', function () {
     class DataObjectWithNoTitleAnnotationTest extends Data
     {
@@ -112,15 +125,18 @@ it('sets the title to the class name if it is a data object with no other title 
         ->toBe('Data Object With No Title Annotation Test');
 });
 
-it('does not set the title to the class name if it is not a data object', function () {
-    class NonDataObjectTest
+it('sets the title to the class name if it is a data object property with no other title annotation', function () {
+    class DataObjectWithNoTitleAnnotationPropertyTest extends Data
     {
-        public function __construct(public bool $testParameter) {}
+        public function __construct(
+            public PersonData $person,
+        ) {}
     }
 
-    $schema = JsonSchema::make(NonDataObjectTest::class)->toArray();
+    $schema = JsonSchema::make(DataObjectWithNoTitleAnnotationPropertyTest::class)->toArray();
 
-    expect(Arr::has($schema, 'title'))->toBeFalse();
+    expect(Arr::get($schema, 'properties.person.title'))
+        ->toBe('Person');
 });
 
 it('Removes the Data suffix from the class name if it is a data object and the class name ends with Data', function () {

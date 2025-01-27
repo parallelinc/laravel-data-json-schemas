@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionUnionType;
+use Spatie\LaravelData\Data;
 
 class PropertyWrapper implements EntityWrapper
 {
@@ -184,11 +185,35 @@ class PropertyWrapper implements EntityWrapper
     }
 
     /**
+     * Determine if the reflected property is a Spatie data object.
+     */
+    public function isDataObject(): bool
+    {
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return is_subclass_of($this->getType()->getName(), Data::class);
+    }
+
+    /**
      * Determine if the reflected property is nullable.
      */
     public function isNullable(): bool
     {
         return $this->getTypes()->contains(fn (ReflectionNamedType $type) => $type->allowsNull());
+    }
+
+    /**
+     * Get the data class of the property as a ClassWrapper.
+     */
+    public function getDataClass(): ?ClassWrapper
+    {
+        if (! $this->isDataObject()) {
+            return null;
+        }
+
+        return ClassWrapper::make($this->getType()->getName());
     }
 
     /**

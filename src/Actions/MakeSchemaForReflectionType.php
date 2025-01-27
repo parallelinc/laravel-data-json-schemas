@@ -15,6 +15,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use DateTimeInterface;
 use ReflectionNamedType;
 use ReflectionUnionType;
+use Spatie\LaravelData\Data;
 
 class MakeSchemaForReflectionType
 {
@@ -50,6 +51,7 @@ class MakeSchemaForReflectionType
             enum_exists($name) => $this->getEnumSchemaClass($name),
             $name === 'DateTimeInterface' => StringSchema::class,
             is_subclass_of($name, DateTimeInterface::class) => StringSchema::class,
+            is_subclass_of($name, Data::class) => ObjectSchema::class,
         };
     }
 

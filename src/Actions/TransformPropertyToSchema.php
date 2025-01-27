@@ -17,6 +17,14 @@ class TransformPropertyToSchema
             ->when($property->isEnum(), fn (Schema $schema) => ApplyEnumToSchema::run($schema, $property))
             ->pipe(fn (Schema $schema) => ApplyAnnotationsToSchema::run($schema, $property))
             ->when($property->isDateTime(), fn (Schema $schema) => ApplyDateTimeFormatToSchema::run($schema))
-            ->pipe(fn (Schema $schema) => ApplyRuleConfigurationsToSchema::run($schema, $property));
+            ->pipe(fn (Schema $schema) => ApplyRuleConfigurationsToSchema::run($schema, $property))
+            ->when($property->isDataObject(), function (Schema $schema) use ($property) {
+                $class = $property->getDataClass();
+
+                ApplyPropertiesToDataObjectSchema::run($schema, $class);
+                ApplyRequiredToDataObjectSchema::run($schema, $class);
+
+                return $schema;
+            });
     }
 }

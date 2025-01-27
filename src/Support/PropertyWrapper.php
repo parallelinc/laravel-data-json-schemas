@@ -2,14 +2,14 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Support;
 
-use DateTimeInterface;
-use ReflectionProperty;
-use ReflectionNamedType;
-use ReflectionUnionType;
-use Illuminate\Support\Collection;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesDocBlock;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesAttributes;
+use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesDocBlock;
+use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
+use DateTimeInterface;
+use Illuminate\Support\Collection;
+use ReflectionNamedType;
+use ReflectionProperty;
+use ReflectionUnionType;
 
 class PropertyWrapper implements EntityWrapper
 {
@@ -181,6 +181,14 @@ class PropertyWrapper implements EntityWrapper
         }
 
         return $this->getType()->getName() === 'string';
+    }
+
+    /**
+     * Determine if the reflected property is nullable.
+     */
+    public function isNullable(): bool
+    {
+        return $this->getTypes()->contains(fn (ReflectionNamedType $type) => $type->allowsNull());
     }
 
     /**

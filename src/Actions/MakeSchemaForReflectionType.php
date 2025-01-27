@@ -2,23 +2,25 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Actions;
 
-use DateTimeInterface;
-use ReflectionNamedType;
-use ReflectionUnionType;
-use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
+use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
 use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
+use DateTimeInterface;
+use ReflectionNamedType;
+use ReflectionUnionType;
 
 class MakeSchemaForReflectionType
 {
     use Runnable;
+
+    public function __construct(protected bool $unionNullableTypes = true) {}
 
     public function handle(ReflectionNamedType|ReflectionUnionType $type, string $name = ''): Schema
     {
@@ -32,6 +34,10 @@ class MakeSchemaForReflectionType
         }
 
         $name = $type->getName();
+
+        if ($type->allowsNull() && $name !== 'null' && $this->unionNullableTypes) {
+            return UnionSchema::class;
+        }
 
         return match (true) {
             $name === 'string' => StringSchema::class,

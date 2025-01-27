@@ -2,6 +2,7 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas;
 
+use BadMethodCallException;
 use BasilLangevin\LaravelDataSchemas\Actions\MakeSchemaForReflectionType;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\ConstructsSchema;
@@ -17,7 +18,9 @@ use ReflectionNamedType;
 class UnionSchema implements Schema
 {
     use ConstructsSchema;
-    use HasKeywords;
+    use HasKeywords {
+        __call as __callUnionKeyword;
+    }
     use PipeCallbacks;
     use WhenCallbacks;
 
@@ -36,10 +39,57 @@ class UnionSchema implements Schema
     {
         $this->constituentSchemas = $property->getTypes()
             ->map(function (ReflectionNamedType $type) {
-                return MakeSchemaForReflectionType::run($type);
+                $action = new MakeSchemaForReflectionType(unionNullableTypes: false);
+
+                return $action->handle($type);
             });
 
+        $includesNull = $this->constituentSchemas->contains(fn (SingleTypeSchema $schema) => $schema instanceof NullSchema);
+
+        if ($property->isNullable() && ! $includesNull) {
+            $this->constituentSchemas->push(NullSchema::make());
+        }
+
         return $this;
+    }
+
+    /**
+     * Allow keyword methods to be called on the schema type.
+     */
+    public function __call($name, $arguments)
+    {
+        try {
+            return $this->__callUnionKeyword($name, $arguments);
+        } catch (\BadMethodCallException $e) {
+        }
+
+        $badCalls = 0;
+
+        $results = $this->getConstituentSchemas()
+            ->map(function (SingleTypeSchema $schema) use ($name, $arguments, &$badCalls) {
+                try {
+                    return $schema->__call($name, $arguments);
+                } catch (\BadMethodCallException $e) {
+                    $badCalls++;
+
+                    return $e;
+                }
+            })
+            ->reject(fn ($result) => $result instanceof \BadMethodCallException);
+
+        if ($badCalls === $this->getConstituentSchemas()->count()) {
+            throw new BadMethodCallException("Method \"{$name}\" not found");
+        }
+
+        if ($results->every(fn ($result) => $result instanceof Schema)) {
+            return $this;
+        }
+
+        if ($results->count() === 1) {
+            return $results->first();
+        }
+
+        return $results;
     }
 
     public function cloneBaseStructure(): self

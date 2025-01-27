@@ -4,6 +4,7 @@ use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
 use BasilLangevin\LaravelDataSchemas\Attributes\Description;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
 use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
@@ -14,6 +15,43 @@ use Spatie\LaravelData\Attributes\Validation\NotRegex;
 covers(UnionSchema::class);
 
 uses(TestsSchemaTransformation::class);
+
+test('applyType creates the set of constituent schemas', function () {
+    $this->class->addProperty('string | int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(2);
+    expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
+    expect($schema->getConstituentSchemas()->last())->toBeInstanceOf(IntegerSchema::class);
+});
+
+test('applyType adds a constituent null schema if the property is nullable', function () {
+    $this->class->addProperty('?string', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(2);
+    expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
+    expect($schema->getConstituentSchemas()->last())->toBeInstanceOf(NullSchema::class);
+});
+
+test('applyType never adds more than one constituent null schema', function () {
+    $this->class->addProperty('string|int|null', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(3);
+    expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
+    expect($schema->getConstituentSchemas()->get(1))->toBeInstanceOf(IntegerSchema::class);
+    expect($schema->getConstituentSchemas()->last())->toBeInstanceOf(NullSchema::class);
+});
 
 it('supports titles and descriptions')
     ->expect(fn () => $this->class->addProperty('string | int', 'property', [Title::class => 'Property', Description::class => 'This is a property']))
@@ -53,6 +91,84 @@ todo('supports multiple not composition keywords')
         'minLength' => 1,
         'pattern' => '/test/',
     ]);
+
+it('can call annotation methods on itself', function () {
+    $schema = UnionSchema::make('test');
+    $schema->title('test title');
+
+    expect($schema->getTitle())->toBe('test title');
+});
+
+it('can call keyword methods on its constituent schemas', function () {
+    $this->class->addProperty('string | int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    $result = $schema->minLength(42);
+
+    expect($result)->toBeInstanceOf(UnionSchema::class);
+    expect($result->getConstituentSchemas()->first()->getMinLength())->toBe(42);
+});
+
+it('throws a BadMethodCallException if a keyword method is not supported by any of its constituent schemas', function () {
+    $this->class->addProperty('string | int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    $schema->minItems(42);
+})
+    ->throws(\BadMethodCallException::class, 'Method "minItems" not found');
+
+it('applies a keyword to all of its applicable constituent schemas', function () {
+    $this->class->addProperty('string | int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    $schema->const(null);
+
+    expect($schema->getConstituentSchemas()->first()->getConst())->toBe(null);
+    expect($schema->getConstituentSchemas()->last()->getConst())->toBe(null);
+});
+
+test('a getter keyword method returns the value from the constituent schema that has the keyword', function () {
+    $this->class->addProperty('string | int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    $schema->minLength(42);
+
+    expect($schema->getMinLength())->toBe(42);
+});
+
+test('a getter keyword method throws an exception if the keyword is not set on any of the constituent schemas', function () {
+    $this->class->addProperty('string | int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    expect(fn () => $schema->getMinLength())->toThrow(\Exception::class, 'The keyword "minLength" has not been set.');
+});
+
+test('a getter keyword method returns a collection of the values from the constituent schemas when mu.tiple have the keyword', function () {
+    $this->class->addProperty('string | int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    $schema->const(null);
+
+    expect($schema->getConst())->toBeCollection()->toHaveCount(2)->toArray()->toBe([null, null]);
+});
 
 it('can clone its base structure', function () {
     $this->class->addProperty('string|int', 'name');

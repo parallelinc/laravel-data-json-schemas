@@ -16,9 +16,9 @@ it('can transform the VacationData class', function () {
                 'type' => 'string',
             ],
             'startDate' => [
-                'x-date-after-or-equal' => 'The value must be after or equal to '.Carbon::now()->startOfDay()->toIso8601ZuluString().'.',
                 'type' => 'string',
                 'format' => 'date-time',
+                'x-date-after-or-equal' => 'The value must be after or equal to '.Carbon::now()->startOfDay()->toIso8601ZuluString().'.',
             ],
             'endDate' => [
                 'type' => ['string', 'null'],

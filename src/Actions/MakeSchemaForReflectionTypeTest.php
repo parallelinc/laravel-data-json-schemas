@@ -13,9 +13,15 @@ use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestIntegerEnum;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
 
 covers(MakeSchemaForReflectionType::class);
+
+class MakeSchemaForReflectionTypeCollectionInheritance extends Collection {}
+
+class MakeSchemaForReflectionTypeDataCollectionInheritance extends DataCollection {}
 
 class MakeSchemaForReflectionTypeTest extends Data
 {
@@ -26,18 +32,25 @@ class MakeSchemaForReflectionTypeTest extends Data
         public int $intProperty,
         public object $objectProperty,
         public string $stringProperty,
+
         public TestStringEnum $stringEnumProperty,
         public TestIntegerEnum $intEnumProperty,
+
         public DateTimeInterface $dateTimeProperty,
         public CarbonInterface $carbonInterfaceProperty,
         public Carbon $carbonProperty,
+
+        public Collection $collectionProperty,
+        public MakeSchemaForReflectionTypeCollectionInheritance $collectionInheritanceProperty,
+        public MakeSchemaForReflectionTypeDataCollectionInheritance $dataCollectionProperty,
+
         public ?string $nullableProperty,
         public string|int $unionProperty,
     ) {}
 }
 
 it('creates the correct Schema type from a Data class property', function ($property, $schemaType) {
-    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, $property)->getType();
+    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, $property)->getReflectionType();
     $schema = MakeSchemaForReflectionType::run($wrapper, $property);
 
     expect($schema)->toBeInstanceOf($schemaType);
@@ -53,19 +66,22 @@ it('creates the correct Schema type from a Data class property', function ($prop
     ['intEnumProperty', IntegerSchema::class],
     ['dateTimeProperty', StringSchema::class],
     ['carbonProperty', StringSchema::class],
+    ['collectionProperty', ArraySchema::class],
+    ['collectionInheritanceProperty', ArraySchema::class],
+    ['dataCollectionProperty', ArraySchema::class],
     ['nullableProperty', UnionSchema::class],
     ['unionProperty', UnionSchema::class],
 ]);
 
 it('makes a UnionSchema for a nullable type by default', function () {
-    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'nullableProperty')->getType();
+    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'nullableProperty')->getReflectionType();
     $schema = MakeSchemaForReflectionType::run($wrapper, 'nullableProperty');
 
     expect($schema)->toBeInstanceOf(UnionSchema::class);
 });
 
 it('does not make a UnionSchema for a nullable type if the unionNullableTypes option is false', function () {
-    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'nullableProperty')->getType();
+    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'nullableProperty')->getReflectionType();
     $action = new MakeSchemaForReflectionType(unionNullableTypes: false);
     $schema = $action->handle($wrapper, 'nullableProperty');
 

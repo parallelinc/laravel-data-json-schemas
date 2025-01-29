@@ -11,44 +11,89 @@ use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionUnionType;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Support\DataProperty;
+use Spatie\LaravelData\Support\DataPropertyType;
+use Spatie\LaravelData\Support\Types\CombinationType;
+use Spatie\LaravelData\Support\Types\NamedType;
+use Spatie\LaravelData\Support\Types\Type;
+use Spatie\LaravelData\Support\Types\UnionType;
 
 class PropertyWrapper implements EntityWrapper
 {
     use AccessesAttributes;
     use AccessesDocBlock;
 
-    public function __construct(protected ReflectionProperty $property) {}
+    protected ReflectionProperty $property;
+
+    public function __construct(
+        protected DataProperty $dataProperty
+    ) {
+        $this->property = new ReflectionProperty($dataProperty->className, $dataProperty->name);
+    }
 
     /**
      * Create a new property wrapper from a reflection property.
      */
     public static function make(string $className, string $propertyName): self
     {
-        return new self(new ReflectionProperty($className, $propertyName));
+        return ClassWrapper::make($className)->getProperty($propertyName);
     }
 
-    public function getType(): ReflectionNamedType|ReflectionUnionType
+    public function getReflection(): ReflectionProperty
+    {
+        return $this->property;
+    }
+
+    public function getDataProperty(): DataProperty
+    {
+        return $this->dataProperty;
+    }
+
+    public function getDataType(): DataPropertyType
+    {
+        return $this->dataProperty->type;
+    }
+
+    public function getReflectionType(): ReflectionNamedType|ReflectionUnionType
     {
         return $this->property->getType();
+    }
+
+    public function getReflectionTypes(): Collection
+    {
+        $type = $this->getReflectionType();
+
+        if ($type instanceof ReflectionUnionType) {
+            return collect($type->getTypes());
+        }
+
+        return collect([$type]);
+    }
+
+    public function getType(): NamedType|CombinationType
+    {
+        return $this->getDataType()->type;
     }
 
     /**
      * Get the types of the property as a collection.
      *
-     * @return \Illuminate\Support\Collection<int, ReflectionNamedType>
+     * @return \Illuminate\Support\Collection<int, NamedType>
      */
     public function getTypes(): Collection
     {
-        if ($this->isUnion()) {
-            return collect($this->getType()->getTypes());
+        $type = $this->getType();
+
+        if ($type instanceof UnionType) {
+            return collect($type->types);
         }
 
-        return collect([$this->getType()]);
+        return collect([$type]);
     }
 
     public function getTypeNames(): Collection
     {
-        return $this->getTypes()->map->getName();
+        return $this->getTypes()->map->name;
     }
 
     /**
@@ -58,43 +103,28 @@ class PropertyWrapper implements EntityWrapper
     {
         return match ($type) {
             '*' => true,
-            'array' => $this->isArray(),
-            'boolean' => $this->isBoolean(),
-            'integer' => $this->isInteger(),
-            'number' => $this->isNumber(),
-            'object' => $this->isObject(),
-            'string' => $this->isString(),
+            'array' => $this->hasTypeName('array'),
+            'boolean' => $this->hasTypeName('bool'),
+            'integer' => $this->hasTypeName('int'),
+            'number' => $this->hasTypeName('int') || $this->hasTypeName('float'),
+            'object' => $this->hasTypeName('object'),
+            'string' => $this->hasTypeName('string'),
             default => false,
         };
     }
 
+    public function hasTypeName(string $type): bool
+    {
+        if ($this->isUnion()) {
+            return false;
+        }
+
+        return $this->getType()->name === $type;
+    }
+
     protected function isUnion(): bool
     {
-        return $this->getType() instanceof ReflectionUnionType;
-    }
-
-    /**
-     * Determine if the reflected property is an array.
-     */
-    public function isArray(): bool
-    {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return $this->getType()->getName() === 'array';
-    }
-
-    /**
-     * Determine if the reflected property is a boolean.
-     */
-    public function isBoolean(): bool
-    {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return $this->getType()->getName() === 'bool';
+        return $this->getType() instanceof UnionType;
     }
 
     public function isDateTime(): bool
@@ -103,13 +133,21 @@ class PropertyWrapper implements EntityWrapper
             return false;
         }
 
-        $typeName = $this->getType()->getName();
+        $typeName = $this->getType()->name;
 
-        if (is_subclass_of($typeName, DateTimeInterface::class)) {
-            return true;
+        return is_subclass_of($typeName, DateTimeInterface::class)
+            || $typeName === 'DateTimeInterface';
+    }
+
+    public function isArray(): bool
+    {
+        if ($this->isUnion()) {
+            return false;
         }
 
-        return $typeName === 'DateTimeInterface';
+        $kind = $this->getType()->kind;
+
+        return $kind->isDataCollectable() || $kind->isNonDataIteratable();
     }
 
     /**
@@ -121,67 +159,7 @@ class PropertyWrapper implements EntityWrapper
             return false;
         }
 
-        return enum_exists($this->getType()->getName());
-    }
-
-    /**
-     * Determine if the reflected property is a float.
-     */
-    public function isFloat(): bool
-    {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return $this->getType()->getName() === 'float';
-    }
-
-    /**
-     * Determine if the reflected property is an integer.
-     */
-    public function isInteger(): bool
-    {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return $this->getType()->getName() === 'int';
-    }
-
-    /**
-     * Determine if the reflected property is a number.
-     */
-    public function isNumber(): bool
-    {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return $this->getType()->getName() === 'int' || $this->getType()->getName() === 'float';
-    }
-
-    /**
-     * Determine if the reflected property is an object.
-     */
-    public function isObject(): bool
-    {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return $this->getType()->getName() === 'object';
-    }
-
-    /**
-     * Determine if the reflected property is a string.
-     */
-    public function isString(): bool
-    {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return $this->getType()->getName() === 'string';
+        return enum_exists($this->getType()->name);
     }
 
     /**
@@ -193,7 +171,7 @@ class PropertyWrapper implements EntityWrapper
             return false;
         }
 
-        return is_subclass_of($this->getType()->getName(), Data::class);
+        return is_subclass_of($this->getType()->name, Data::class);
     }
 
     /**
@@ -201,7 +179,7 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isNullable(): bool
     {
-        return $this->getTypes()->contains(fn (ReflectionNamedType $type) => $type->allowsNull());
+        return $this->getDataType()->isNullable;
     }
 
     /**
@@ -213,7 +191,7 @@ class PropertyWrapper implements EntityWrapper
             return null;
         }
 
-        return ClassWrapper::make($this->getType()->getName());
+        return ClassWrapper::make($this->getType()->dataClass);
     }
 
     /**

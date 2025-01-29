@@ -13,9 +13,11 @@ use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use DateTimeInterface;
+use Illuminate\Support\Collection;
 use ReflectionNamedType;
 use ReflectionUnionType;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
 
 class MakeSchemaForReflectionType
 {
@@ -41,16 +43,23 @@ class MakeSchemaForReflectionType
         }
 
         return match (true) {
-            $name === 'string' => StringSchema::class,
+            $name === 'array' => ArraySchema::class,
+            $name === 'bool' => BooleanSchema::class,
             $name === 'float' => NumberSchema::class,
             $name === 'int' => IntegerSchema::class,
-            $name === 'bool' => BooleanSchema::class,
-            $name === 'array' => ArraySchema::class,
-            $name === 'object' => ObjectSchema::class,
             $name === 'null' => NullSchema::class,
+            $name === 'string' => StringSchema::class,
+            $name === 'object' => ObjectSchema::class,
+
             enum_exists($name) => $this->getEnumSchemaClass($name),
+
             $name === 'DateTimeInterface' => StringSchema::class,
             is_subclass_of($name, DateTimeInterface::class) => StringSchema::class,
+
+            $name === Collection::class => ArraySchema::class,
+            is_subclass_of($name, Collection::class) => ArraySchema::class,
+            is_subclass_of($name, DataCollection::class) => ArraySchema::class,
+
             is_subclass_of($name, Data::class) => ObjectSchema::class,
         };
     }

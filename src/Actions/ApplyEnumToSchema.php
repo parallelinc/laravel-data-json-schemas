@@ -12,7 +12,7 @@ class ApplyEnumToSchema
 
     public function handle(Schema $schema, PropertyWrapper $property): Schema
     {
-        $enum = $property->getType()->getName();
+        $enum = $property->getType()->name;
 
         return $schema->enum($enum);
     }

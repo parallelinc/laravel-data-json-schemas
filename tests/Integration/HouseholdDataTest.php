@@ -1,10 +1,21 @@
 <?php
 
+use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\AddressData;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\HouseholdData;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PetData;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VacationData;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
 
 it('can transform the HouseholdData class', function () {
     $output = JsonSchema::make(HouseholdData::class)->toArray();
+
+    $makeSubschema = function (string $class) {
+        return TransformDataClassToSchema::run(ClassWrapper::make($class))->toArray();
+    };
 
     $expected = [
         '$schema' => 'https://json-schema.org/draft/2019-09/schema',
@@ -12,38 +23,35 @@ it('can transform the HouseholdData class', function () {
         'type' => 'object',
         'properties' => [
             'id' => [
-                'type' => 'string',
+                'type' => ['string', 'integer'],
                 'format' => 'uuid',
             ],
-            'address' => [
-                'type' => ['object', 'null'],
-                'title' => 'Address',
-                'properties' => [
-                    'street' => [
-                        'description' => 'The street name and number',
-                        'type' => 'string',
-                    ],
-                    'apartment' => [
-                        'type' => ['string', 'integer', 'null'],
-                        'pattern' => '/^[a-zA-Z0-9_-]+$/',
-                    ],
-                    'city' => [
-                        'type' => 'string',
-                        'maxLength' => 100,
-                    ],
-                    'province' => [
-                        'type' => 'string',
-                        'enum' => ['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'ON', 'PE', 'QC', 'SK'],
-                    ],
-                    'postalCode' => [
-                        'type' => 'string',
-                        'pattern' => '^[A-Z]\d[A-Z] \d[A-Z]\d$',
-                    ],
+            'address' => array_merge($makeSubschema(AddressData::class), ['type' => ['object', 'null']]),
+            'members' => [
+                'type' => 'array',
+                'items' => $makeSubschema(PersonData::class),
+            ],
+            'pets' => [
+                'type' => 'array',
+                'items' => $makeSubschema(PetData::class),
+            ],
+            'vacations' => [
+                'type' => 'array',
+                'items' => $makeSubschema(VacationData::class),
+            ],
+            'vehicles' => [
+                'type' => ['array', 'null'],
+                'items' => $makeSubschema(VehicleData::class),
+            ],
+            'favouriteNumbers' => [
+                'type' => 'array',
+                'minItems' => 3,
+                'items' => [
+                    'type' => 'integer',
                 ],
-                'required' => ['street', 'city', 'province', 'postalCode'],
             ],
         ],
-        'required' => ['id'],
+        'required' => ['id', 'members', 'pets', 'vacations', 'favouriteNumbers'],
     ];
 
     expect($output)->toEqual($expected);

@@ -35,7 +35,7 @@ it('can apply a single custom annotation to a schema')
     ]);
 
 it('can apply multiple custom annotations to a schema', function () {
-    class TestMultipleCustomAnnotationsClass extends Data
+    class TestApplyMultipleCustomAnnotationsClass extends Data
     {
         public function __construct(
             #[CustomAnnotation('foo', 'bar')]
@@ -44,7 +44,7 @@ it('can apply multiple custom annotations to a schema', function () {
         ) {}
     }
 
-    $schema = JsonSchema::make(TestMultipleCustomAnnotationsClass::class);
+    $schema = JsonSchema::make(TestApplyMultipleCustomAnnotationsClass::class);
 
     expect($schema->toArray())->toHaveKey('properties.test', [
         'type' => 'string',

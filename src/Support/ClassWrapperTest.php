@@ -82,3 +82,11 @@ it('can get its properties', function () {
     expect($reflector->properties()->first()->getName())
         ->toBe('test');
 });
+
+it('can get a property', function () {
+    $reflector = ClassWrapper::make(TestClassWrapperClass::class);
+
+    expect($reflector->getProperty('test'))
+        ->toBeInstanceOf(PropertyWrapper::class)
+        ->getName()->toBe('test');
+});

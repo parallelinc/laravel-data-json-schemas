@@ -8,9 +8,11 @@ use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 use ReflectionMethod;
-use ReflectionProperty;
 use Reflector;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Support\DataClass;
+use Spatie\LaravelData\Support\DataProperty;
+use Spatie\LaravelData\Support\Factories\DataClassFactory;
 
 class ClassWrapper implements EntityWrapper
 {
@@ -25,6 +27,11 @@ class ClassWrapper implements EntityWrapper
     public static function make(string $className): self
     {
         return new self(new ReflectionClass($className));
+    }
+
+    public function getDataClass(): DataClass
+    {
+        return app(DataClassFactory::class)->build($this->class);
     }
 
     /**
@@ -53,13 +60,21 @@ class ClassWrapper implements EntityWrapper
 
     /**
      * Get the properties of the reflector as a collection.
+     *
+     * @return \Illuminate\Support\Collection<int, PropertyWrapper>
      */
     public function properties(): Collection
     {
-        return collect($this->class->getProperties(ReflectionProperty::IS_PUBLIC))
-            ->map(function (ReflectionProperty $property) {
+        return $this->getDataClass()->properties
+            ->map(function (DataProperty $property) {
                 return new PropertyWrapper($property);
-            });
+            })
+            ->values();
+    }
+
+    public function getProperty(string $propertyName): PropertyWrapper
+    {
+        return $this->properties()->first(fn (PropertyWrapper $property) => $property->getName() === $propertyName);
     }
 
     /**

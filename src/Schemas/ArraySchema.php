@@ -3,6 +3,7 @@
 namespace BasilLangevin\LaravelDataSchemas\Schemas;
 
 use BasilLangevin\LaravelDataSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataSchemas\Keywords\Array\ItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Array\MaxItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Array\MinItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
@@ -21,5 +22,6 @@ class ArraySchema implements SingleTypeSchema
         Keyword::COMPOSITION_KEYWORDS,
         MaxItemsKeyword::class,
         MinItemsKeyword::class,
+        ItemsKeyword::class,
     ];
 }

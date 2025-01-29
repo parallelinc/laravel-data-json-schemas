@@ -14,6 +14,7 @@ use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use Illuminate\Support\Collection;
 use ReflectionNamedType;
+use Spatie\LaravelData\Support\Types\Type;
 
 class UnionSchema implements Schema
 {
@@ -37,7 +38,7 @@ class UnionSchema implements Schema
 
     public function applyType(PropertyWrapper $property): self
     {
-        $this->constituentSchemas = $property->getTypes()
+        $this->constituentSchemas = $property->getReflectionTypes()
             ->map(function (ReflectionNamedType $type) {
                 $action = new MakeSchemaForReflectionType(unionNullableTypes: false);
 

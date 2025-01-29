@@ -9,6 +9,9 @@ use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Spatie\LaravelData\Support\DataProperty;
+use Spatie\LaravelData\Support\DataPropertyType;
+use Spatie\LaravelData\Support\Types\Type;
 
 covers(PropertyWrapper::class);
 
@@ -53,19 +56,47 @@ class TestPropertyWrapperClass
     }
 }
 
+it('can get its reflection instance', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($property->getReflection())->toBeInstanceOf(ReflectionProperty::class);
+    expect($property->getReflection()->getName())->toBe('test');
+});
+
+it('can get its data property instance', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($property->getDataProperty())->toBeInstanceOf(DataProperty::class);
+    expect($property->getDataProperty()->name)->toBe('test');
+});
+
+it('can get its data type', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($property->getDataType())->toBeInstanceOf(DataPropertyType::class);
+    expect($property->getDataType()->type)->toBeInstanceOf(Type::class)->name->toBe('string');
+});
+
+it('can get its reflection type', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($property->getReflectionType())->toBeInstanceOf(ReflectionNamedType::class);
+    expect($property->getReflectionType()->getName())->toBe('string');
+});
+
 it('can get the constituent types of a union property', function () {
     $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
 
     expect($property->getTypes())->toBeCollection()->toHaveCount(2);
-    expect($property->getTypes()->first()->getName())->toBe('string');
-    expect($property->getTypes()->last()->getName())->toBe('int');
+    expect($property->getTypes()->first()->name)->toBe('string');
+    expect($property->getTypes()->last()->name)->toBe('int');
 });
 
 it('can get the types of a single type property', function () {
     $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($property->getTypes())->toBeCollection()->toHaveCount(1);
-    expect($property->getTypes()->first()->getName())->toBe('string');
+    expect($property->getTypes()->first()->name)->toBe('string');
 });
 
 it('can get the type names of a union property', function () {
@@ -97,6 +128,38 @@ it('can check if the reflected property has a given type', function (string $pro
     ['testObject', 'object'],
 ]);
 
+it('can check if the reflected property has a given type name', function (string $property, string $type) {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, $property);
+
+    expect($reflector->hasTypeName($type))->toBe(true);
+})->with([
+    ['test', 'string'],
+    ['testArray', 'array'],
+    ['testBoolean', 'bool'],
+    ['testFloat', 'float'],
+    ['testInt', 'int'],
+    ['testObject', 'object'],
+]);
+
+test('hasTypeName returns false if the reflected property does not have a given type name', function (string $property, string $type) {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, $property);
+
+    expect($reflector->hasTypeName($type))->toBe(false);
+})->with([
+    ['test', 'integer'],
+    ['testArray', 'string'],
+    ['testBoolean', 'float'],
+    ['testFloat', 'bool'],
+    ['testInt', 'string'],
+    ['testEnum', 'nonexistent'],
+]);
+
+test('hasTypeName returns false if the reflected property is a union', function () {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
+
+    expect($reflector->hasTypeName('string'))->toBe(false);
+});
+
 test('hasType returns false if the reflected property does not have a given type', function (string $property, string $type) {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, $property);
 
@@ -115,40 +178,9 @@ test('property type checks return false if the property is a union', function (s
 
     expect($reflector->$method())->toBe(false);
 })->with([
-    ['isArray'],
-    ['isBoolean'],
     ['isEnum'],
-    ['isFloat'],
-    ['isInteger'],
-    ['isNumber'],
-    ['isObject'],
     ['isDataObject'],
-    ['isString'],
 ]);
-
-it('can check if the reflected property is an array', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testArray');
-
-    expect($reflector->isArray())->toBe(true);
-});
-
-test('isArray returns false if the reflected property is not an array', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
-
-    expect($reflector->isArray())->toBe(false);
-});
-
-it('can check if the reflected property is a boolean', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testBoolean');
-
-    expect($reflector->isBoolean())->toBe(true);
-});
-
-test('isBoolean returns false if the reflected property is not a boolean', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
-
-    expect($reflector->isBoolean())->toBe(false);
-});
 
 it('can check if the reflected property is a DateTime', function ($property) {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, $property);
@@ -177,72 +209,6 @@ test('isEnum returns false if the reflected property is not an enum', function (
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->isEnum())->toBe(false);
-});
-
-it('can check if the reflected property is a float', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testFloat');
-
-    expect($reflector->isFloat())->toBe(true);
-});
-
-test('isFloat returns false if the reflected property is not a float', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
-
-    expect($reflector->isFloat())->toBe(false);
-});
-
-it('can check if the reflected property is an integer', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testInt');
-
-    expect($reflector->isInteger())->toBe(true);
-});
-
-test('isInteger returns false if the reflected property is not an integer', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
-
-    expect($reflector->isInteger())->toBe(false);
-});
-
-it('can check if a reflected float property is a number', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testFloat');
-
-    expect($reflector->isNumber())->toBe(true);
-});
-
-it('can check if a reflected int property is a number', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testInt');
-
-    expect($reflector->isNumber())->toBe(true);
-});
-
-test('isNumber returns false if the reflected property is not a number', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
-
-    expect($reflector->isNumber())->toBe(false);
-});
-
-it('can check if the reflected property is an object', function () {
-    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testObject');
-
-    expect($property->isObject())->toBe(true);
-});
-
-test('isObject returns false if the reflected property is not an object', function () {
-    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
-
-    expect($property->isObject())->toBe(false);
-});
-
-it('can check if the reflected property is a string', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
-
-    expect($reflector->isString())->toBe(true);
-});
-
-test('isString returns false if the reflected property is not a string', function () {
-    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testInt');
-
-    expect($reflector->isString())->toBe(false);
 });
 
 it('can check if the reflected property is nullable', function (string $property) {

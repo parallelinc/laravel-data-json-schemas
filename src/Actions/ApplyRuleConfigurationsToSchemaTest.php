@@ -111,7 +111,7 @@ test('getApplicableContracts returns the correct contracts', function ($type, $c
     $this->class->addProperty($type, 'name');
 
     $property = $this->class->getClassProperty('name');
-    $schema = MakeSchemaForReflectionType::run($property->getType());
+    $schema = MakeSchemaForReflectionType::run($property->getReflectionType());
     $action = new ApplyRuleConfigurationsToSchema;
 
     $reflection = new ReflectionClass($action);

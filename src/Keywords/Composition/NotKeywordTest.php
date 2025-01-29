@@ -51,18 +51,19 @@ test('its parent schema is automatically set when calling the keyword', function
     expect($reflectionProperty->getValue($not))->toBe($parentSchema);
 });
 
-it('can apply the callback to a schema')
-    ->expect(StringSchema::make()->not($notCallback))
-    ->applyKeyword(NotKeyword::class, $basicOutput)
-    ->toEqual(collect([
-        'type' => DataType::String->value,
-        'not' => [
-            'minLength' => 42,
-        ],
-    ]));
+it('can apply the callback to a schema', function () use ($notCallback) {
+    $schema = StringSchema::make()->not($notCallback);
+
+    expect($schema->toArray())
+        ->toEqual([
+            'not' => [
+                'minLength' => 42,
+            ],
+        ]);
+});
 
 it('combines multiple not keywords into an allOf')
-    ->expect(StringSchema::make()->not($notCallback)->not($notCallback2))
+    ->expect(fn () => StringSchema::make()->not($notCallback)->not($notCallback2))
     ->applyKeyword(NotKeyword::class, $basicOutput)
     ->toEqual(collect([
         'type' => DataType::String->value,

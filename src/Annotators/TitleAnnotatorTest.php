@@ -1,14 +1,13 @@
 <?php
 
+use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
+use BasilLangevin\LaravelDataSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
-use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
 
 covers(TitleAnnotator::class);
 

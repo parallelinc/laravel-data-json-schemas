@@ -47,7 +47,7 @@ class ApplyRequiredToDataObjectSchema
             ->filter(function (PropertyWrapper $property) {
                 $type = $property->getType();
 
-                return $type !== null && ! $type->allowsNull();
+                return $type !== null && ! $property->isNullable();
             })
             ->map->getName()
             ->toArray();

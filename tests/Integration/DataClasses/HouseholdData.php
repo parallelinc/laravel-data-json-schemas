@@ -17,7 +17,8 @@ class HouseholdData extends Data
         #[Uuid]
         public string|int $id,
 
-        public ?AddressData $address,
+        /** The family's home address. */
+        public string|AddressData|null $address,
 
         /** @var PersonData[] */
         public array $members,

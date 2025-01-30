@@ -4,16 +4,19 @@ namespace BasilLangevin\LaravelDataSchemas\Schemas;
 
 use BadMethodCallException;
 use BasilLangevin\LaravelDataSchemas\Actions\MakeSchemaForReflectionType;
+use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\ConstructsSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\HasKeywords;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\PipeCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use Illuminate\Support\Collection;
 use ReflectionNamedType;
+use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Support\Types\Type;
 
 class UnionSchema implements Schema
@@ -39,11 +42,7 @@ class UnionSchema implements Schema
     public function applyType(PropertyWrapper $property): self
     {
         $this->constituentSchemas = $property->getReflectionTypes()
-            ->map(function (ReflectionNamedType $type) {
-                $action = new MakeSchemaForReflectionType(unionNullableTypes: false);
-
-                return $action->handle($type);
-            });
+            ->map(fn (ReflectionNamedType $type) => $this->makeConstituentSchema($type));
 
         $includesNull = $this->constituentSchemas->contains(fn (SingleTypeSchema $schema) => $schema instanceof NullSchema);
 
@@ -51,7 +50,22 @@ class UnionSchema implements Schema
             $this->constituentSchemas->push(NullSchema::make());
         }
 
+        if (! $this->canBeConsolidated()) {
+            $this->constituentSchemas->each->applyType();
+        }
+
         return $this;
+    }
+
+    protected function makeConstituentSchema(ReflectionNamedType $type): SingleTypeSchema
+    {
+        if (is_subclass_of($type->getName(), Data::class)) {
+            return TransformDataClassToSchema::run(ClassWrapper::make($type->getName()));
+        }
+
+        $action = new MakeSchemaForReflectionType(unionNullableTypes: false);
+
+        return $action->handle($type);
     }
 
     /**
@@ -103,10 +117,13 @@ class UnionSchema implements Schema
         return $clone;
     }
 
-    /**
-     * Convert the schema to an array.
-     */
-    public function toArray(): array
+    protected function canBeConsolidated(): bool
+    {
+        return $this->getConstituentSchemas()
+            ->doesntContain(fn (SingleTypeSchema $schema) => $schema instanceof ObjectSchema);
+    }
+
+    protected function buildConsolidatedSchema(): array
     {
         $types = $this->getConstituentSchemas()
             ->map(fn (SingleTypeSchema $schema) => $schema::getDataType())
@@ -117,9 +134,31 @@ class UnionSchema implements Schema
             ->flatMap->buildSchema();
 
         return [
-            'type' => $types,
             ...$this->buildSchema(),
+            'type' => $types,
             ...$constituentSchemas,
         ];
+    }
+
+    protected function buildAnyOfSchema(): array
+    {
+        $constituentSchemas = $this->getConstituentSchemas()
+            ->map->buildSchema()
+            ->toArray();
+
+        return [
+            ...$this->buildSchema(),
+            'anyOf' => $constituentSchemas,
+        ];
+    }
+
+    /**
+     * Convert the schema to an array.
+     */
+    public function toArray(): array
+    {
+        return $this->canBeConsolidated()
+            ? $this->buildConsolidatedSchema()
+            : $this->buildAnyOfSchema();
     }
 }

@@ -3,6 +3,7 @@
 use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
 use BasilLangevin\LaravelDataSchemas\Attributes\Description;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
@@ -51,6 +52,26 @@ test('applyType never adds more than one constituent null schema', function () {
     expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
     expect($schema->getConstituentSchemas()->get(1))->toBeInstanceOf(IntegerSchema::class);
     expect($schema->getConstituentSchemas()->last())->toBeInstanceOf(NullSchema::class);
+});
+
+test('applyType adds types to the constituent schemas if one of them is an object', function () {
+    $this->class->addProperty('object|string', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    expect($schema->getConstituentSchemas()->last()->getType())->toBe(DataType::String);
+});
+
+test('applyType does not add types to the constituent schemas if none of them is an object', function () {
+    $this->class->addProperty('string|int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make('test');
+    $schema->applyType($property);
+
+    expect(fn () => $schema->getConstituentSchemas()->first()->getType())->toThrow(\Exception::class, 'The keyword "type" has not been set.');
 });
 
 it('supports titles and descriptions')
@@ -188,4 +209,29 @@ it('can clone its base structure', function () {
     $constituents = $clone->getConstituentSchemas();
     expect($constituents->first())->toBeInstanceOf(StringSchema::class);
     expect($constituents->last())->toBeInstanceOf(IntegerSchema::class);
+});
+
+it('consolidates non-object schemas into a single schema', function () {
+    $this->class->addProperty('string|int', 'property', [Description::class => 'test description']);
+
+    expect($this->class->getSchema('property'))->toBe([
+        'description' => 'test description',
+        'type' => ['string', 'integer'],
+    ]);
+});
+
+it('wraps constituent schemas in an anyOf schema if one of them is an object', function () {
+    $this->class->addProperty('object|string', 'property', [Description::class => 'test description']);
+
+    expect($this->class->getSchema('property'))->toBe([
+        'description' => 'test description',
+        'anyOf' => [
+            [
+                'type' => 'object',
+            ],
+            [
+                'type' => 'string',
+            ],
+        ],
+    ]);
 });

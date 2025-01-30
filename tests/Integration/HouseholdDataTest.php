@@ -26,7 +26,18 @@ it('can transform the HouseholdData class', function () {
                 'type' => ['string', 'integer'],
                 'format' => 'uuid',
             ],
-            'address' => array_merge($makeSubschema(AddressData::class), ['type' => ['object', 'null']]),
+            'address' => [
+                'description' => 'The family\'s home address.',
+                'anyOf' => [
+                    $makeSubschema(AddressData::class),
+                    [
+                        'type' => 'string',
+                    ],
+                    [
+                        'type' => 'null',
+                    ],
+                ],
+            ],
             'members' => [
                 'type' => 'array',
                 'items' => $makeSubschema(PersonData::class),

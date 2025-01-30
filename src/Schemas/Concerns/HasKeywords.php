@@ -3,15 +3,15 @@
 namespace BasilLangevin\LaravelDataSchemas\Schemas\Concerns;
 
 use BadMethodCallException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
-use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\ReceivesParentSchema;
 use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\CustomAnnotationKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\HandlesMultipleInstances;
 use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\MergesMultipleInstancesIntoAllOf;
+use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\ReceivesParentSchema;
+use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 trait HasKeywords
 {

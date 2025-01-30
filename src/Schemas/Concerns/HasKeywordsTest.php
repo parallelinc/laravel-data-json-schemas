@@ -1,19 +1,19 @@
 <?php
 
-use Illuminate\Support\Collection;
 use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\HasKeywords;
-use BasilLangevin\LaravelDataSchemas\Keywords\Composition\NotKeyword;
 use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DescriptionKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
 use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\CustomAnnotationKeyword;
+use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DescriptionKeyword;
+use BasilLangevin\LaravelDataSchemas\Keywords\Composition\NotKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\HandlesMultipleInstances;
 use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\MergesMultipleInstancesIntoAllOf;
+use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
+use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\HasKeywords;
+use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use Illuminate\Support\Collection;
 
 covers(HasKeywords::class);
 

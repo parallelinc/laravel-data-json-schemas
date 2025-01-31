@@ -14,7 +14,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
-class applyarrayitemstoschema
+class ApplyArrayItemsToSchema
 {
     use Runnable;
 

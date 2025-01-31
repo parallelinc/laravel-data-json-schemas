@@ -269,6 +269,12 @@ it('can get the data class name of the property', function () {
     expect($property->getDataClassName())->toBe(PersonData::class);
 });
 
+it('cannot get the data class name of a union type', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
+
+    expect($property->getDataClassName())->toBeNull();
+});
+
 it('can get the data class of the property', function () {
     $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testDataObject');
 

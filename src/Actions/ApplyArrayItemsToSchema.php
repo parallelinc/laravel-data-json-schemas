@@ -15,6 +15,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use Spatie\LaravelData\Support\Types\NamedType;
 
 class ApplyArrayItemsToSchema
 {
@@ -34,7 +35,7 @@ class ApplyArrayItemsToSchema
 
     protected function getDataClassSchema(PropertyWrapper $property, SchemaTree $tree): ?Schema
     {
-        $class = $property->getType()->dataClass;
+        $class = $property->getDataClassName();
 
         if (! $class) {
             return null;
@@ -45,17 +46,20 @@ class ApplyArrayItemsToSchema
 
     protected function getIterableSchema(PropertyWrapper $property): ?Schema
     {
-        $type = $property->getType()->iterableItemType;
+        /** @var NamedType $type */
+        $type = $property->getType();
+
+        $iterableType = $type->iterableItemType;
 
         /** @var class-string<SingleTypeSchema>|null $schemaClass */
         $schemaClass = match (true) {
-            $type === 'array' => ArraySchema::class,
-            $type === 'bool' => BooleanSchema::class,
-            $type === 'float' => NumberSchema::class,
-            $type === 'int' => IntegerSchema::class,
-            $type === 'null' => NullSchema::class,
-            $type === 'object' => ObjectSchema::class,
-            $type === 'string' => StringSchema::class,
+            $iterableType === 'array' => ArraySchema::class,
+            $iterableType === 'bool' => BooleanSchema::class,
+            $iterableType === 'float' => NumberSchema::class,
+            $iterableType === 'int' => IntegerSchema::class,
+            $iterableType === 'null' => NullSchema::class,
+            $iterableType === 'object' => ObjectSchema::class,
+            $iterableType === 'string' => StringSchema::class,
             default => null,
         };
 

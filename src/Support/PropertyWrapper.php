@@ -7,8 +7,8 @@ use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesDocBlock;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
-use ReflectionNamedType;
 use ReflectionProperty;
+use ReflectionType;
 use ReflectionUnionType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Support\DataProperty;
@@ -16,7 +16,6 @@ use Spatie\LaravelData\Support\DataPropertyType;
 use Spatie\LaravelData\Support\Types\CombinationType;
 use Spatie\LaravelData\Support\Types\NamedType;
 use Spatie\LaravelData\Support\Types\Type;
-use Spatie\LaravelData\Support\Types\UnionType;
 
 class PropertyWrapper implements EntityWrapper
 {
@@ -54,7 +53,7 @@ class PropertyWrapper implements EntityWrapper
         return $this->dataProperty->type;
     }
 
-    public function getReflectionType(): ReflectionNamedType|ReflectionUnionType
+    public function getReflectionType(): ?ReflectionType
     {
         return $this->property->getType();
     }
@@ -70,7 +69,7 @@ class PropertyWrapper implements EntityWrapper
         return collect([$type]);
     }
 
-    public function getType(): NamedType|CombinationType
+    public function getType(): Type
     {
         return $this->getDataType()->type;
     }
@@ -84,11 +83,15 @@ class PropertyWrapper implements EntityWrapper
     {
         $type = $this->getType();
 
-        if ($type instanceof UnionType) {
-            return collect($type->types);
+        if ($type instanceof CombinationType) {
+            /** @var array<int, NamedType> $types */
+            $types = $type->types;
+
+            return collect($types);
         }
 
-        return collect([$type]);
+        /** @var NamedType $type */
+        return Collection::make([$type]);
     }
 
     public function getTypeNames(): Collection
@@ -115,25 +118,23 @@ class PropertyWrapper implements EntityWrapper
 
     public function hasTypeName(string $type): bool
     {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return $this->getType()->name === $type;
+        return $this->getTypeName() === $type;
     }
 
-    protected function isUnion(): bool
+    public function getTypeName(): ?string
     {
-        return $this->getType() instanceof UnionType;
+        $type = $this->getType();
+
+        if ($type instanceof NamedType) {
+            return $type->name;
+        }
+
+        return null;
     }
 
     public function isDateTime(): bool
     {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        $typeName = $this->getType()->name;
+        $typeName = $this->getTypeName();
 
         return is_subclass_of($typeName, DateTimeInterface::class)
             || $typeName === 'DateTimeInterface';
@@ -141,11 +142,13 @@ class PropertyWrapper implements EntityWrapper
 
     public function isArray(): bool
     {
-        if ($this->isUnion()) {
+        $type = $this->getType();
+
+        if (! $type instanceof NamedType) {
             return false;
         }
 
-        $kind = $this->getType()->kind;
+        $kind = $type->kind;
 
         return $kind->isDataCollectable() || $kind->isNonDataIteratable();
     }
@@ -155,11 +158,7 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isEnum(): bool
     {
-        if ($this->isUnion()) {
-            return false;
-        }
-
-        return enum_exists($this->getType()->name);
+        return enum_exists($this->getTypeName());
     }
 
     /**
@@ -167,11 +166,17 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isDataObject(): bool
     {
-        if ($this->isUnion() || $this->isArray()) {
+        $type = $this->getType();
+
+        if ($this->isArray()) {
             return false;
         }
 
-        return is_subclass_of($this->getType()->dataClass, Data::class);
+        if (! $type instanceof NamedType) {
+            return false;
+        }
+
+        return is_subclass_of($type->dataClass, Data::class);
     }
 
     /**
@@ -185,9 +190,15 @@ class PropertyWrapper implements EntityWrapper
     /**
      * Get the name of the data class of the property.
      */
-    public function getDataClassName(): string
+    public function getDataClassName(): ?string
     {
-        return $this->getType()->dataClass;
+        $type = $this->getType();
+
+        if (! $type instanceof NamedType) {
+            return null;
+        }
+
+        return $type->dataClass;
     }
 
     /**

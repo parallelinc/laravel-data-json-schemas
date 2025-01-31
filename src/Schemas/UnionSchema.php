@@ -29,17 +29,16 @@ class UnionSchema implements Schema
 {
     // General DocBlock annotations
     use AnnotationKeywordMethodAnnotations;
+
     // Constituent schemas DocBlock annotations
     use ArraySchemaKeywordMethodAnnotations;
     use CompositionKeywordMethodAnnotations;
     use ConstructsSchema;
-
     use GeneralKeywordMethodAnnotations;
     use HasKeywords {
         __call as __callUnionKeyword;
     }
     use NumberSchemaKeywordMethodAnnotations;
-
     use ObjectSchemaKeywordMethodAnnotations;
     use PipeCallbacks;
     use StringSchemaKeywordMethodAnnotations;
@@ -82,7 +81,10 @@ class UnionSchema implements Schema
 
         $action = new MakeSchemaForReflectionType(unionNullableTypes: false);
 
-        return $action->handle($type);
+        /** @var SingleTypeSchema $schema */
+        $schema = $action->handle($type);
+
+        return $schema;
     }
 
     public function tree(SchemaTree $tree): self

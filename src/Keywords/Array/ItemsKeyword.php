@@ -24,7 +24,7 @@ class ItemsKeyword extends Keyword implements HandlesMultipleInstances
      */
     public function apply(Collection $schema): Collection
     {
-        return $schema->merge(['items' => $this->get()->toArray()]);
+        return $schema->merge(['items' => $this->get()->toArray(true)]);
     }
 
     /**
@@ -33,7 +33,7 @@ class ItemsKeyword extends Keyword implements HandlesMultipleInstances
     public static function applyMultiple(Collection $schema, Collection $instances): Collection
     {
         return $schema->merge(['items' => [
-            'anyOf' => $instances->map->get()->toArray(),
+            'anyOf' => $instances->map->get()->map->toArray(true)->toArray(),
         ]]);
     }
 }

@@ -9,24 +9,24 @@ use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 
 covers(ApplyArrayItemsToSchema::class);
 
 beforeEach(function () {
-    $class = ClassWrapper::make(PersonData::class);
-    $this->personSchema = TransformDataClassToSchema::run($class)->toArray();
+    $this->personSchema = TransformDataClassToSchema::run(VehicleData::class)->toArray();
+    $this->tree = app(SchemaTree::class);
 });
 
 it('can apply the items keyword for a property with a var annotation', function () {
     class ApplyArrayItemsForVarAnnotatedArrayToSchemaTest extends Data
     {
         public function __construct(
-            /** @var array<int, PersonData> */
+            /** @var array<int, VehicleData> */
             public array $annotatedArrayProperty,
         ) {}
     }
@@ -35,7 +35,7 @@ it('can apply the items keyword for a property with a var annotation', function 
 
     $schema = ArraySchema::make();
 
-    $schema = ApplyArrayItemsToSchema::run($schema, $property);
+    $schema = ApplyArrayItemsToSchema::run($schema, $property, $this->tree);
 
     expect($schema->toArray())->toEqual([
         'items' => $this->personSchema,
@@ -43,7 +43,7 @@ it('can apply the items keyword for a property with a var annotation', function 
 });
 
 it('can apply the items keyword for a property with a var annotation on the class', function () {
-    /** @var array<int, PersonData> $annotatedArrayProperty */
+    /** @var array<int, VehicleData> $annotatedArrayProperty */
     class ApplyArrayItemsForVarAnnotatedArrayOnClassTest extends Data
     {
         public function __construct(
@@ -55,7 +55,7 @@ it('can apply the items keyword for a property with a var annotation on the clas
 
     $schema = ArraySchema::make();
 
-    $schema = ApplyArrayItemsToSchema::run($schema, $property);
+    $schema = ApplyArrayItemsToSchema::run($schema, $property, $this->tree);
 
     expect($schema->toArray())->toEqual([
         'items' => $this->personSchema,
@@ -66,7 +66,7 @@ it('can apply the items keyword for a property with a param annotation', functio
     class ApplyArrayItemsForParamAnnotatedArrayToSchemaTest extends Data
     {
         public function __construct(
-            /** @param array<int, PersonData> $annotatedArrayProperty */
+            /** @param array<int, VehicleData> $annotatedArrayProperty */
             public array $annotatedArrayProperty,
         ) {}
     }
@@ -75,7 +75,7 @@ it('can apply the items keyword for a property with a param annotation', functio
 
     $schema = ArraySchema::make();
 
-    $schema = ApplyArrayItemsToSchema::run($schema, $property);
+    $schema = ApplyArrayItemsToSchema::run($schema, $property, $this->tree);
 
     expect($schema->toArray())->toEqual([
         'items' => $this->personSchema,
@@ -86,7 +86,7 @@ it('can apply the items keyword for a property with a DataCollectionOf attribute
     class ApplyArrayItemsForDataCollectionOfAttributeTest extends Data
     {
         public function __construct(
-            #[DataCollectionOf(PersonData::class)]
+            #[DataCollectionOf(VehicleData::class)]
             public array $annotatedArrayProperty,
         ) {}
     }
@@ -95,7 +95,7 @@ it('can apply the items keyword for a property with a DataCollectionOf attribute
 
     $schema = ArraySchema::make();
 
-    $schema = ApplyArrayItemsToSchema::run($schema, $property);
+    $schema = ApplyArrayItemsToSchema::run($schema, $property, $this->tree);
 
     expect($schema->toArray())->toEqual([
         'items' => $this->personSchema,
@@ -120,10 +120,10 @@ it('can apply the items keyword for a property with an iterable array annotation
 
     $schema = ArraySchema::make();
 
-    $schema = ApplyArrayItemsToSchema::run($schema, $property);
+    $schema = ApplyArrayItemsToSchema::run($schema, $property, $this->tree);
 
     expect($schema->toArray())->toEqual([
-        'items' => $subschema::make()->applyType()->toArray(),
+        'items' => $subschema::make()->applyType()->tree($this->tree)->toArray(),
     ]);
 })->with([
     ['array', ArraySchema::class],
@@ -147,7 +147,7 @@ it('does not apply the items keyword for a property with no array annotation', f
 
     $schema = ArraySchema::make();
 
-    $schema = ApplyArrayItemsToSchema::run($schema, $property);
+    $schema = ApplyArrayItemsToSchema::run($schema, $property, $this->tree);
 
     expect($schema->toArray())->toEqual([]);
 });
@@ -165,7 +165,7 @@ it('does not apply the items keyword for a property with a mixed iterable type',
 
     $schema = ArraySchema::make();
 
-    $schema = ApplyArrayItemsToSchema::run($schema, $property);
+    $schema = ApplyArrayItemsToSchema::run($schema, $property, $this->tree);
 
     expect($schema->toArray())->toEqual([]);
 });

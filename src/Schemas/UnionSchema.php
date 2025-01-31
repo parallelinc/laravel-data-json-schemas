@@ -10,10 +10,10 @@ use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\ConstructsSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\HasKeywords;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\PipeCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 use Illuminate\Support\Collection;
 use ReflectionNamedType;
 use Spatie\LaravelData\Data;
@@ -39,10 +39,10 @@ class UnionSchema implements Schema
         return $this->constituentSchemas;
     }
 
-    public function applyType(PropertyWrapper $property): self
+    public function applyType(PropertyWrapper $property, SchemaTree $tree): self
     {
         $this->constituentSchemas = $property->getReflectionTypes()
-            ->map(fn (ReflectionNamedType $type) => $this->makeConstituentSchema($type));
+            ->map(fn (ReflectionNamedType $type) => $this->makeConstituentSchema($type, $tree));
 
         $includesNull = $this->constituentSchemas->contains(fn (SingleTypeSchema $schema) => $schema instanceof NullSchema);
 
@@ -57,15 +57,22 @@ class UnionSchema implements Schema
         return $this;
     }
 
-    protected function makeConstituentSchema(ReflectionNamedType $type): SingleTypeSchema
+    protected function makeConstituentSchema(ReflectionNamedType $type, SchemaTree $tree): SingleTypeSchema
     {
         if (is_subclass_of($type->getName(), Data::class)) {
-            return TransformDataClassToSchema::run(ClassWrapper::make($type->getName()));
+            return TransformDataClassToSchema::run($type->getName(), $tree);
         }
 
         $action = new MakeSchemaForReflectionType(unionNullableTypes: false);
 
         return $action->handle($type);
+    }
+
+    public function tree(SchemaTree $tree): self
+    {
+        $this->getConstituentSchemas()->each->tree($tree);
+
+        return $this;
     }
 
     /**
@@ -131,7 +138,7 @@ class UnionSchema implements Schema
             ->toArray();
 
         $constituentSchemas = $this->getConstituentSchemas()
-            ->flatMap->buildSchema();
+            ->flatMap->toArray(true);
 
         return [
             ...$this->buildSchema(),
@@ -143,7 +150,7 @@ class UnionSchema implements Schema
     protected function buildAnyOfSchema(): array
     {
         $constituentSchemas = $this->getConstituentSchemas()
-            ->map->buildSchema()
+            ->map->toArray(true)
             ->toArray();
 
         return [
@@ -155,7 +162,7 @@ class UnionSchema implements Schema
     /**
      * Convert the schema to an array.
      */
-    public function toArray(): array
+    public function toArray(bool $nested = false): array
     {
         return $this->canBeConsolidated()
             ? $this->buildConsolidatedSchema()

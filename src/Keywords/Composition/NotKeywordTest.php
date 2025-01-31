@@ -3,6 +3,7 @@
 use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Keywords\Composition\NotKeyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use Mockery\MockInterface;
 
 covers(NotKeyword::class);
 
@@ -60,6 +61,23 @@ it('can apply the callback to a schema', function () use ($notCallback) {
                 'minLength' => 42,
             ],
         ]);
+});
+
+it('passes the nested flag when applying the callback to a schema', function () use ($basicOutput) {
+    $partialMock = $this->partialMock(StringSchema::class, function (MockInterface $mock) {
+        $mock->shouldReceive('cloneBaseStructure')
+            ->once()
+            ->andReturnSelf();
+
+        $mock->shouldReceive('toArray')
+            ->with(true)
+            ->once();
+    });
+
+    $schema = $partialMock->not(fn () => null);
+
+    $schema->applyKeyword(NotKeyword::class, $basicOutput);
+
 });
 
 it('combines multiple not keywords into an allOf')

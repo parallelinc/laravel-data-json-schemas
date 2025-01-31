@@ -39,6 +39,6 @@ class NotKeyword extends Keyword implements MergesMultipleInstancesIntoAllOf, Re
 
         ($this->callback)($notSchema);
 
-        return $schema->merge(['not' => $notSchema->toArray()]);
+        return $schema->merge(['not' => $notSchema->toArray(true)]);
     }
 }

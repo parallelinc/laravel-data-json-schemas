@@ -1,5 +1,6 @@
 <?php
 
+use BasilLangevin\LaravelDataSchemas\Actions\TransformPropertyToSchema;
 use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
 use BasilLangevin\LaravelDataSchemas\Attributes\Description;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
@@ -9,6 +10,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use Mockery\MockInterface;
 use Spatie\LaravelData\Attributes\Validation\Filled;
 use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\NotRegex;
@@ -21,8 +23,8 @@ test('applyType creates the set of constituent schemas', function () {
     $this->class->addProperty('string | int', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(2);
     expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
@@ -33,8 +35,8 @@ test('applyType adds a constituent null schema if the property is nullable', fun
     $this->class->addProperty('?string', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(2);
     expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
@@ -45,8 +47,8 @@ test('applyType never adds more than one constituent null schema', function () {
     $this->class->addProperty('string|int|null', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(3);
     expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
@@ -58,8 +60,8 @@ test('applyType adds types to the constituent schemas if one of them is an objec
     $this->class->addProperty('object|string', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     expect($schema->getConstituentSchemas()->last()->getType())->toBe(DataType::String);
 });
@@ -68,10 +70,31 @@ test('applyType does not add types to the constituent schemas if none of them is
     $this->class->addProperty('string|int', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     expect(fn () => $schema->getConstituentSchemas()->first()->getType())->toThrow(\Exception::class, 'The keyword "type" has not been set.');
+});
+
+test('the tree method adds the tree to each of the constituent schemas', function () {
+    $this->class->addProperty('string|int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
+
+    $schema->tree($this->tree);
+
+    [$stringSchema, $integerSchema] = $schema->getConstituentSchemas();
+
+    $stringReflection = new ReflectionClass($stringSchema);
+    $integerReflection = new ReflectionClass($integerSchema);
+
+    $stringTree = $stringReflection->getProperty('tree')->getValue($stringSchema);
+    $integerTree = $integerReflection->getProperty('tree')->getValue($integerSchema);
+
+    expect($stringTree)->toBe($this->tree);
+    expect($integerTree)->toBe($this->tree);
 });
 
 it('supports titles and descriptions')
@@ -114,7 +137,7 @@ todo('supports multiple not composition keywords')
     ]);
 
 it('can call annotation methods on itself', function () {
-    $schema = UnionSchema::make('test');
+    $schema = UnionSchema::make();
     $schema->title('test title');
 
     expect($schema->getTitle())->toBe('test title');
@@ -124,8 +147,8 @@ it('can call keyword methods on its constituent schemas', function () {
     $this->class->addProperty('string | int', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     $result = $schema->minLength(42);
 
@@ -137,8 +160,8 @@ it('throws a BadMethodCallException if a keyword method is not supported by any 
     $this->class->addProperty('string | int', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     $schema->minItems(42);
 })
@@ -148,8 +171,8 @@ it('applies a keyword to all of its applicable constituent schemas', function ()
     $this->class->addProperty('string | int', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     $schema->const(null);
 
@@ -161,8 +184,8 @@ test('a getter keyword method returns the value from the constituent schema that
     $this->class->addProperty('string | int', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     $schema->minLength(42);
 
@@ -173,8 +196,8 @@ test('a getter keyword method throws an exception if the keyword is not set on a
     $this->class->addProperty('string | int', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     expect(fn () => $schema->getMinLength())->toThrow(\Exception::class, 'The keyword "minLength" has not been set.');
 });
@@ -183,8 +206,8 @@ test('a getter keyword method returns a collection of the values from the consti
     $this->class->addProperty('string | int', 'property');
     $property = $this->class->getClassProperty('property');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     $schema->const(null);
 
@@ -195,15 +218,14 @@ it('can clone its base structure', function () {
     $this->class->addProperty('string|int', 'name');
     $property = $this->class->getClassProperty('name');
 
-    $schema = UnionSchema::make('test');
-    $schema->applyType($property);
+    $schema = UnionSchema::make();
+    $schema->applyType($property, $this->tree);
 
     $schema->description('test description');
 
     $clone = $schema->cloneBaseStructure();
 
     expect($clone)->toBeInstanceOf(UnionSchema::class);
-    expect($clone->getName())->toBe('');
     expect(fn () => $clone->getDescription())->toThrow(\Exception::class, 'The keyword "description" has not been set.');
 
     $constituents = $clone->getConstituentSchemas();
@@ -220,14 +242,44 @@ it('consolidates non-object schemas into a single schema', function () {
     ]);
 });
 
+it('passes the nested flag to its consolidated constituent schemas', function () {
+    $this->class->addProperty('string|int', 'property');
+
+    $property = $this->class->getClassProperty('property');
+
+    $schema = TransformPropertyToSchema::run($property, $this->tree);
+
+    $stringMock = $this->partialMock(StringSchema::class, function (MockInterface $mock) {
+        $mock->shouldReceive('toArray')
+            ->with(true)
+            ->once();
+    });
+    $integerMock = $this->partialMock(IntegerSchema::class, function (MockInterface $mock) {
+        $mock->shouldReceive('toArray')
+            ->with(true)
+            ->once();
+    });
+
+    $newConstituentSchemas = collect([
+        $stringMock,
+        $integerMock,
+    ]);
+
+    $reflection = new ReflectionObject($schema);
+
+    $reflection->getProperty('constituentSchemas')->setValue($schema, $newConstituentSchemas);
+
+    $schema->toArray(true);
+});
+
 it('wraps constituent schemas in an anyOf schema if one of them is an object', function () {
-    $this->class->addProperty('object|string', 'property', [Description::class => 'test description']);
+    $this->class->addProperty('\BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData|string', 'property', [Description::class => 'test description']);
 
     expect($this->class->getSchema('property'))->toBe([
         'description' => 'test description',
         'anyOf' => [
             [
-                'type' => 'object',
+                '$ref' => '#/$defs/person',
             ],
             [
                 'type' => 'string',

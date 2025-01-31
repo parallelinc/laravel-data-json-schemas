@@ -11,16 +11,16 @@ use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
-class ApplyArrayItemsToSchema
+class applyarrayitemstoschema
 {
     use Runnable;
 
-    public function handle(Schema $schema, PropertyWrapper $property): Schema
+    public function handle(Schema $schema, PropertyWrapper $property, SchemaTree $tree): Schema
     {
-        $itemsSchema = $this->getDataClassSchema($property)
+        $itemsSchema = $this->getDataClassSchema($property, $tree)
             ?? $this->getIterableSchema($property);
 
         if (! $itemsSchema) {
@@ -30,7 +30,7 @@ class ApplyArrayItemsToSchema
         return $schema->items($itemsSchema);
     }
 
-    protected function getDataClassSchema(PropertyWrapper $property): ?Schema
+    protected function getDataClassSchema(PropertyWrapper $property, SchemaTree $tree): ?Schema
     {
         $class = $property->getType()->dataClass;
 
@@ -38,7 +38,7 @@ class ApplyArrayItemsToSchema
             return null;
         }
 
-        return TransformDataClassToSchema::run(ClassWrapper::make($class));
+        return TransformDataClassToSchema::run($class, $tree);
     }
 
     protected function getIterableSchema(PropertyWrapper $property): ?Schema

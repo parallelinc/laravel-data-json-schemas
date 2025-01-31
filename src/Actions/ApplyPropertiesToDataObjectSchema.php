@@ -6,14 +6,15 @@ use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 class ApplyPropertiesToDataObjectSchema
 {
     use Runnable;
 
-    public function handle(Schema $schema, ClassWrapper $class): Schema
+    public function handle(Schema $schema, ClassWrapper $class, SchemaTree $tree): Schema
     {
-        $properties = $this->getProperties($class);
+        $properties = $this->getProperties($class, $tree);
 
         if (empty($properties)) {
             return $schema;
@@ -25,12 +26,12 @@ class ApplyPropertiesToDataObjectSchema
     /**
      * Get the properties of the class, transforming each into a Schema object.
      */
-    protected function getProperties(ClassWrapper $class): array
+    protected function getProperties(ClassWrapper $class, SchemaTree $tree): array
     {
         return $class->properties()
-            ->map(function (PropertyWrapper $property) {
-                return TransformPropertyToSchema::run($property);
-            })
+            ->mapWithKeys(fn (PropertyWrapper $property) => [
+                $property->getName() => TransformPropertyToSchema::run($property, $tree),
+            ])
             ->all();
     }
 }

@@ -3,11 +3,16 @@
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyPropertiesToDataObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 use Spatie\LaravelData\Attributes\Validation\Present;
 use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 
 covers(ApplyPropertiesToDataObjectSchema::class);
+
+beforeEach(function () {
+    $this->tree = app(SchemaTree::class);
+});
 
 class ApplyPropertiesToDataObjectSchemaTestClass extends Data
 {
@@ -26,11 +31,11 @@ class ApplyPropertiesToDataObjectSchemaTestClass extends Data
 it('adds properties to the schema', function () {
     $class = ClassWrapper::make(ApplyPropertiesToDataObjectSchemaTestClass::class);
 
-    $schema = ObjectSchema::make('Test');
-    ApplyPropertiesToDataObjectSchema::run($schema, $class);
+    $schema = ObjectSchema::make();
+    ApplyPropertiesToDataObjectSchema::run($schema, $class, $this->tree);
 
     expect($schema->getProperties())->toHaveCount(6);
-    expect(collect($schema->getProperties())->map->getName()->toArray())->toBe([
+    expect(collect($schema->getProperties())->keys()->toArray())->toBe([
         'requiredString',
         'stringWithDefault',
         'requiredInt',
@@ -43,8 +48,8 @@ it('adds properties to the schema', function () {
 it('does not add properties to the schema if there are no properties', function () {
     $class = ClassWrapper::make(Data::class);
 
-    $schema = ObjectSchema::make('Test');
-    ApplyPropertiesToDataObjectSchema::run($schema, $class);
+    $schema = ObjectSchema::make();
+    ApplyPropertiesToDataObjectSchema::run($schema, $class, $this->tree);
 
     expect(fn () => $schema->getProperties())->toThrow(\Exception::class, 'The keyword "properties" has not been set.');
 });

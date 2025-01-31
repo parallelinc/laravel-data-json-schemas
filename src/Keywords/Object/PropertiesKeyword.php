@@ -4,6 +4,7 @@ namespace BasilLangevin\LaravelDataSchemas\Keywords\Object;
 
 use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\HandlesMultipleInstances;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use Illuminate\Support\Collection;
 
 class PropertiesKeyword extends Keyword implements HandlesMultipleInstances
@@ -47,8 +48,6 @@ class PropertiesKeyword extends Keyword implements HandlesMultipleInstances
      */
     protected static function resolveProperties(Collection $properties): array
     {
-        return $properties->mapWithKeys(function ($property) {
-            return [$property->getName() => $property->toArray()];
-        })->all();
+        return $properties->map(fn (Schema $property) => $property->toArray(nested: true))->all();
     }
 }

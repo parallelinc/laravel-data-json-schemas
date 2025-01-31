@@ -29,7 +29,6 @@ it('can create a basic boolean schema from a data object', function () use ($bas
     $schema = JsonSchema::make(BasicBooleanData::class);
 
     expect($schema)->toBeInstanceOf(ObjectSchema::class);
-    expect($schema->getName())->toBe('BasicBooleanData');
 
     expect($schema->toArray())->toEqual(
         array_merge(
@@ -51,7 +50,6 @@ it('can create a boolean schema with a description from a data object', function
     $schema = JsonSchema::make(BooleanWithDescriptionData::class);
 
     expect($schema)->toBeInstanceOf(ObjectSchema::class);
-    expect($schema->getName())->toBe('BooleanWithDescriptionData');
 
     Arr::set($basicSchema, 'properties.testParameter.description', 'The test parameter.');
 

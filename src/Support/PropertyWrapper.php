@@ -167,11 +167,11 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isDataObject(): bool
     {
-        if ($this->isUnion()) {
+        if ($this->isUnion() || $this->isArray()) {
             return false;
         }
 
-        return is_subclass_of($this->getType()->name, Data::class);
+        return is_subclass_of($this->getType()->dataClass, Data::class);
     }
 
     /**
@@ -183,6 +183,14 @@ class PropertyWrapper implements EntityWrapper
     }
 
     /**
+     * Get the name of the data class of the property.
+     */
+    public function getDataClassName(): string
+    {
+        return $this->getType()->dataClass;
+    }
+
+    /**
      * Get the data class of the property as a ClassWrapper.
      */
     public function getDataClass(): ?ClassWrapper
@@ -191,7 +199,7 @@ class PropertyWrapper implements EntityWrapper
             return null;
         }
 
-        return ClassWrapper::make($this->getType()->dataClass);
+        return ClassWrapper::make($this->getDataClassName());
     }
 
     /**

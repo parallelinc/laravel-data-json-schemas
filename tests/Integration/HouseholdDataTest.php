@@ -2,7 +2,6 @@
 
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\AddressData;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\HouseholdData;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
@@ -14,7 +13,7 @@ it('can transform the HouseholdData class', function () {
     $output = JsonSchema::make(HouseholdData::class)->toArray();
 
     $makeSubschema = function (string $class) {
-        return TransformDataClassToSchema::run(ClassWrapper::make($class))->toArray();
+        return TransformDataClassToSchema::run($class)->buildSchema();
     };
 
     $expected = [
@@ -26,21 +25,25 @@ it('can transform the HouseholdData class', function () {
                 'type' => ['string', 'integer'],
                 'format' => 'uuid',
             ],
-            'address' => [
+            'home_address' => [
                 'description' => 'The family\'s home address.',
                 'anyOf' => [
-                    $makeSubschema(AddressData::class),
-                    [
-                        'type' => 'string',
-                    ],
-                    [
-                        'type' => 'null',
-                    ],
+                    ['$ref' => '#/$defs/address'],
+                    ['type' => 'string'],
+                    ['type' => 'null'],
+                ],
+            ],
+            'vacation_address' => [
+                'description' => 'The family\'s vacation address.',
+                'anyOf' => [
+                    ['$ref' => '#/$defs/address'],
+                    ['type' => 'string'],
+                    ['type' => 'null'],
                 ],
             ],
             'members' => [
                 'type' => 'array',
-                'items' => $makeSubschema(PersonData::class),
+                'items' => ['$ref' => '#/$defs/person'],
             ],
             'pets' => [
                 'type' => 'array',
@@ -63,6 +66,10 @@ it('can transform the HouseholdData class', function () {
             ],
         ],
         'required' => ['id', 'members', 'pets', 'vacations', 'favouriteNumbers'],
+        '$defs' => [
+            'address' => $makeSubschema(AddressData::class),
+            'person' => $makeSubschema(PersonData::class),
+        ],
     ];
 
     expect($output)->toEqual($expected);

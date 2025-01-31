@@ -4,7 +4,7 @@ use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
 use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
 use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
@@ -128,14 +128,14 @@ it('sets the title to the class name if it is a data object property with no oth
     class DataObjectWithNoTitleAnnotationPropertyTest extends Data
     {
         public function __construct(
-            public PersonData $person,
+            public VehicleData $vehicle,
         ) {}
     }
 
     $schema = JsonSchema::make(DataObjectWithNoTitleAnnotationPropertyTest::class)->toArray();
 
-    expect(Arr::get($schema, 'properties.person.title'))
-        ->toBe('Person');
+    expect(Arr::get($schema, 'properties.vehicle.title'))
+        ->toBe('Vehicle');
 });
 
 it('Removes the Data suffix from the class name if it is a data object and the class name ends with Data', function () {

@@ -45,7 +45,7 @@ it('applies the correct rule configurations to a union schema', function () {
 
     $action = new ApplyRuleConfigurationsToSchema;
 
-    $schema = (new UnionSchema)->applyType($property);
+    $schema = (new UnionSchema)->applyType($property, $this->tree);
 
     $result = $action->handle($schema, $property);
 

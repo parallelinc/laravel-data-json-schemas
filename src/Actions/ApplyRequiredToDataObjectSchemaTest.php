@@ -29,7 +29,7 @@ class ApplyRequiredToDataObjectSchemaTestClass extends Data
 it('adds required properties to the schema', function () {
     $class = ClassWrapper::make(ApplyRequiredToDataObjectSchemaTestClass::class);
 
-    $schema = ObjectSchema::make('Test');
+    $schema = ObjectSchema::make();
     $schema = ApplyRequiredToDataObjectSchema::run($schema, $class);
 
     expect($schema->getRequired())->toBe([

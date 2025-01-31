@@ -22,7 +22,7 @@ class SingleTypeSchemaTestSchema implements Schema
 }
 
 it('can convert to an array')
-    ->expect(SingleTypeSchemaTestSchema::make('test'))
+    ->expect(SingleTypeSchemaTestSchema::make())
     ->description('test description')
     ->toArray()
     ->toBe([
@@ -30,7 +30,7 @@ it('can convert to an array')
     ]);
 
 it('can apply its type', function () {
-    $schema = StringSchema::make('test');
+    $schema = StringSchema::make();
     $schema->applyType();
 
     expect($schema->getType())->toBe(DataType::String);
@@ -42,12 +42,11 @@ test('applyType throws an exception if the type is not set', function () {
 })->throws(\Exception::class, 'SingleType schemas must have a $type.');
 
 it('can clone its base structure', function () {
-    $schema = SingleTypeSchemaTestSchema::make('test');
+    $schema = SingleTypeSchemaTestSchema::make();
     $schema->description('test description');
 
     $clone = $schema->cloneBaseStructure();
 
     expect($clone)->toBeInstanceOf(SingleTypeSchemaTestSchema::class);
-    expect($clone->getName())->toBe('');
     expect(fn () => $clone->getDescription())->toThrow(\Exception::class, 'The keyword "description" has not been set.');
 });

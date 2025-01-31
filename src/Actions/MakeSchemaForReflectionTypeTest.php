@@ -54,7 +54,6 @@ it('creates the correct Schema type from a Data class property', function ($prop
     $schema = MakeSchemaForReflectionType::run($wrapper, $property);
 
     expect($schema)->toBeInstanceOf($schemaType);
-    expect($schema->getName())->toBe($property);
 })->with([
     ['arrayProperty', ArraySchema::class],
     ['boolProperty', BooleanSchema::class],

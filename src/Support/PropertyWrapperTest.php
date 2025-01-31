@@ -9,6 +9,7 @@ use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\Support\DataProperty;
 use Spatie\LaravelData\Support\DataPropertyType;
 use Spatie\LaravelData\Support\Types\Type;
@@ -21,6 +22,8 @@ class TestPropertyWrapperClass
     public string $test;
 
     public array $testArray;
+
+    public Collection $testCollection;
 
     public bool $testBoolean;
 
@@ -180,6 +183,7 @@ test('property type checks return false if the property is a union', function (s
 })->with([
     ['isEnum'],
     ['isDataObject'],
+    ['isArray'],
 ]);
 
 it('can check if the reflected property is a DateTime', function ($property) {
@@ -197,6 +201,24 @@ test('isDateTime returns false if the reflected property is not a DateTime', fun
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->isDateTime())->toBe(false);
+});
+
+it('can check if the reflected property is an array', function () {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testArray');
+
+    expect($reflector->isArray())->toBe(true);
+});
+
+it('can check if a reflected Collection property is an array', function () {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testCollection');
+
+    expect($reflector->isArray())->toBe(true);
+});
+
+test('isArray returns false if the reflected property is not an array', function () {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($reflector->isArray())->toBe(false);
 });
 
 it('can check if the reflected property is an enum', function () {
@@ -239,6 +261,12 @@ test('isDataObject returns false if the reflected property is not a data object'
     $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($property->isDataObject())->toBe(false);
+});
+
+it('can get the data class name of the property', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testDataObject');
+
+    expect($property->getDataClassName())->toBe(PersonData::class);
 });
 
 it('can get the data class of the property', function () {
@@ -292,16 +320,16 @@ it('can get its siblings', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->siblings())->toBeCollection()
-        ->toHaveCount(14)
+        ->toHaveCount(15)
         ->each->toBeInstanceOf(PropertyWrapper::class);
 
     expect($reflector->siblings()->map->getName()->toArray())
-        ->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testNullable', 'testUnion', 'testNullableUnion', 'testDataObject']);
+        ->toBe(['testArray', 'testCollection', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testNullable', 'testUnion', 'testNullableUnion', 'testDataObject']);
 });
 
 it('can get its sibling names', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->siblingNames())->toBeCollection();
-    expect($reflector->siblingNames()->toArray())->toBe(['testArray', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testNullable', 'testUnion', 'testNullableUnion', 'testDataObject']);
+    expect($reflector->siblingNames()->toArray())->toBe(['testArray', 'testCollection', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testNullable', 'testUnion', 'testNullableUnion', 'testDataObject']);
 });

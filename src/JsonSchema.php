@@ -5,7 +5,6 @@ namespace BasilLangevin\LaravelDataSchemas;
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 
 class JsonSchema
 {
@@ -39,7 +38,7 @@ class JsonSchema
      */
     protected function build(): Schema
     {
-        return TransformDataClassToSchema::run(ClassWrapper::make($this->dataClass))
+        return TransformDataClassToSchema::run($this->dataClass)
             ->dialect(JsonSchemaDialect::Draft201909);
     }
 }

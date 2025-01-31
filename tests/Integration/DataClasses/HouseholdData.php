@@ -3,7 +3,6 @@
 namespace BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses;
 
 use Illuminate\Support\Collection;
-use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Data;
@@ -18,12 +17,15 @@ class HouseholdData extends Data
         public string|int $id,
 
         /** The family's home address. */
-        public string|AddressData|null $address,
+        public string|AddressData|null $home_address,
+
+        /** The family's vacation address. */
+        public string|AddressData|null $vacation_address,
 
         /** @var PersonData[] */
         public array $members,
 
-        #[DataCollectionOf(PetData::class)]
+        /** @var PetData[] */
         public array $pets,
 
         /** @var Collection<int, VacationData> */

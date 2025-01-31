@@ -63,10 +63,6 @@ class TitleAnnotator implements AnnotatesSchema
             return null;
         }
 
-        if ($entity instanceof PropertyWrapper) {
-            $entity = $entity->getDataClass();
-        }
-
         return str($entity->getShortName())
             ->whenEndsWith('Data', fn (Stringable $string) => $string->beforeLast('Data'))
             ->snake()

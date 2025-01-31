@@ -15,7 +15,7 @@ it('can apply the type to the schema', function () {
     $this->class->addStringProperty('test');
     $property = $this->class->getClassProperty('test');
 
-    ApplyTypeToSchema::run($schema, $property);
+    ApplyTypeToSchema::run($schema, $property, $this->tree);
 
     expect($schema->getType())->toBe(DataType::String);
 });

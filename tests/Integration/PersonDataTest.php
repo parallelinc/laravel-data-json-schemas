@@ -24,11 +24,18 @@ it('can transform the PersonData class', function () {
                 'type' => 'integer',
                 'maximum' => 100,
             ],
+            'children' => [
+                'type' => 'array',
+                'items' => [
+                    '$ref' => '#',
+                ],
+            ],
         ],
         'required' => [
             'firstName',
             'lastName',
             'age',
+            'children',
         ],
     ];
 

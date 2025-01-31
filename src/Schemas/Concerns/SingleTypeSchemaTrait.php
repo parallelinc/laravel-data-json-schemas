@@ -5,6 +5,7 @@ namespace BasilLangevin\LaravelDataSchemas\Schemas\Concerns;
 use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\PipeCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
+use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 /**
  * @property static DataType $type The type of the schema.
@@ -15,6 +16,8 @@ trait SingleTypeSchemaTrait
     use HasKeywords;
     use PipeCallbacks;
     use WhenCallbacks;
+
+    protected SchemaTree $tree;
 
     public static function getDataType(): DataType
     {
@@ -39,10 +42,17 @@ trait SingleTypeSchemaTrait
         return new static;
     }
 
+    public function tree(SchemaTree $tree): self
+    {
+        $this->tree = $tree;
+
+        return $this;
+    }
+
     /**
      * Convert the schema to an array.
      */
-    public function toArray(): array
+    public function toArray(bool $nested = false): array
     {
         return $this->buildSchema();
     }

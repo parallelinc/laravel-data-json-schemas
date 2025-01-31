@@ -4,7 +4,6 @@ namespace BasilLangevin\LaravelDataSchemas\Tests\Support;
 
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -117,7 +116,7 @@ class DataClassBuilder
 
         $this->defineClass();
 
-        return TransformDataClassToSchema::run(ClassWrapper::make($className));
+        return TransformDataClassToSchema::run($className);
     }
 
     /**

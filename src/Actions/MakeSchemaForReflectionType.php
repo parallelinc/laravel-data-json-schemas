@@ -25,9 +25,9 @@ class MakeSchemaForReflectionType
 
     public function __construct(protected bool $unionNullableTypes = true) {}
 
-    public function handle(ReflectionNamedType|ReflectionUnionType $type, string $name = ''): Schema
+    public function handle(ReflectionNamedType|ReflectionUnionType $type): Schema
     {
-        return $this->getSchemaClass($type)::make($name);
+        return $this->getSchemaClass($type)::make();
     }
 
     protected function getSchemaClass(ReflectionNamedType|ReflectionUnionType $type): string

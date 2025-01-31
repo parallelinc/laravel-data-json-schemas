@@ -11,6 +11,7 @@ use BasilLangevin\LaravelDataSchemas\Enums\Format;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestIntegerEnum;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
@@ -19,6 +20,10 @@ use Carbon\CarbonInterface;
 use Spatie\LaravelData\Data;
 
 covers(TransformPropertyToSchema::class);
+
+beforeEach(function () {
+    $this->tree = app(SchemaTree::class);
+});
 
 class PropertyTransformActionTest extends Data
 {
@@ -45,10 +50,10 @@ it('calls the ApplyTypeToSchema action', function () {
     $mock = $this->mock(ApplyTypeToSchema::class);
 
     $mock->shouldReceive('handle')->once()
-        ->andReturn(StringSchema::make('stringProperty'));
+        ->andReturn(StringSchema::make());
 
     $action = new TransformPropertyToSchema;
-    $action->handle($property);
+    $action->handle($property, $this->tree);
 });
 
 it('calls the ApplyEnumToSchema action', function () {
@@ -57,10 +62,10 @@ it('calls the ApplyEnumToSchema action', function () {
     $mock = $this->mock(ApplyEnumToSchema::class);
 
     $mock->shouldReceive('handle')->once()
-        ->andReturn(StringSchema::make('stringEnumProperty'));
+        ->andReturn(StringSchema::make());
 
     $action = new TransformPropertyToSchema;
-    $action->handle($property);
+    $action->handle($property, $this->tree);
 });
 
 it('calls the ApplyAnnotationsToSchema action', function () {
@@ -69,10 +74,10 @@ it('calls the ApplyAnnotationsToSchema action', function () {
     $mock = $this->mock(ApplyAnnotationsToSchema::class);
 
     $mock->shouldReceive('handle')->once()
-        ->andReturn(StringSchema::make('stringProperty'));
+        ->andReturn(StringSchema::make());
 
     $action = new TransformPropertyToSchema;
-    $action->handle($property);
+    $action->handle($property, $this->tree);
 });
 
 it('calls the ApplyRuleConfigurationsToSchema action', function () {
@@ -81,17 +86,17 @@ it('calls the ApplyRuleConfigurationsToSchema action', function () {
     $mock = $this->mock(ApplyRuleConfigurationsToSchema::class);
 
     $mock->shouldReceive('handle')->once()
-        ->andReturn(StringSchema::make('stringProperty'));
+        ->andReturn(StringSchema::make());
 
     $action = new TransformPropertyToSchema;
-    $action->handle($property);
+    $action->handle($property, $this->tree);
 });
 
 it('applies the DateTime format to DateTime properties', function ($property) {
     $property = PropertyWrapper::make(PropertyTransformActionTest::class, $property);
 
     $action = new TransformPropertyToSchema;
-    $schema = $action->handle($property);
+    $schema = $action->handle($property, $this->tree);
 
     expect($schema->getFormat())->toBe(Format::DateTime);
 })->with([
@@ -107,10 +112,10 @@ it('calls the ApplyPropertiesToDataObjectSchema action when the property is a da
     $mock = $this->mock(ApplyPropertiesToDataObjectSchema::class);
 
     $mock->shouldReceive('handle')->once()
-        ->andReturn(ObjectSchema::make('dataObjectProperty'));
+        ->andReturn(ObjectSchema::make());
 
     $action = new TransformPropertyToSchema;
-    $action->handle($property);
+    $action->handle($property, $this->tree);
 });
 
 it('calls the ApplyRequiredToDataObjectSchema action when the property is a data object', function () {
@@ -118,8 +123,9 @@ it('calls the ApplyRequiredToDataObjectSchema action when the property is a data
 
     $mock = $this->mock(ApplyRequiredToDataObjectSchema::class);
 
-    $mock->shouldReceive('handle')->once();
+    $mock->shouldReceive('handle')->once()
+        ->andReturn(ObjectSchema::make());
 
     $action = new TransformPropertyToSchema;
-    $action->handle($property);
+    $action->handle($property, $this->tree);
 });

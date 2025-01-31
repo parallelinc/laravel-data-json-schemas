@@ -3,6 +3,7 @@
 use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Keywords\Array\ItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 
 covers(ItemsKeyword::class);
@@ -29,6 +30,20 @@ it('can apply the items to a schema')
         'items' => $stringSchema->toArray(),
     ]));
 
+it('passes the nested flag when applying the items to a schema', function () use ($basicOutput) {
+    $spy = $this->spy(ObjectSchema::class);
+
+    $subSchema = app(ObjectSchema::class);
+
+    $schema = ArraySchema::make()->items($subSchema);
+
+    $schema->applyKeyword(ItemsKeyword::class, $basicOutput);
+
+    $spy->shouldHaveReceived('toArray')
+        ->with(true)
+        ->once();
+});
+
 it('wraps multiple instances in an anyOf')
     ->expect(ArraySchema::make()->items($stringSchema)->items($stringSchema))
     ->applyKeyword(ItemsKeyword::class, $basicOutput)
@@ -41,3 +56,18 @@ it('wraps multiple instances in an anyOf')
             ],
         ],
     ]));
+
+it('passes the nested flag when applying multiple instances to a schema', function () use ($basicOutput) {
+    $spy = $this->spy(ObjectSchema::class);
+
+    $subSchema1 = app(ObjectSchema::class);
+    $subSchema2 = app(ObjectSchema::class);
+
+    $schema = ArraySchema::make()->items($subSchema1)->items($subSchema2);
+
+    $schema->applyKeyword(ItemsKeyword::class, $basicOutput);
+
+    $spy->shouldHaveReceived('toArray')
+        ->with(true)
+        ->twice();
+});

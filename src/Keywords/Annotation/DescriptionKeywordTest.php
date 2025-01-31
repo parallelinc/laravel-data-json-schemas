@@ -19,12 +19,8 @@ $basicOutput = collect([
     'type' => DataType::String->value,
 ]);
 
-it('can set its description on construction')
-    ->expect(DescriptionKeywordTestSchema::make('test', 'test description'))
-    ->getDescription()->toBe('test description');
-
-it('can set its description after construction')
-    ->expect(DescriptionKeywordTestSchema::make('test'))
+it('can set its description')
+    ->expect(DescriptionKeywordTestSchema::make())
     ->description('test description')
     ->getDescription()->toBe('test description');
 

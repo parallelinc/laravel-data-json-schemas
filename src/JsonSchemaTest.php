@@ -2,6 +2,7 @@
 
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
+use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
 use BasilLangevin\LaravelDataSchemas\JsonSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
@@ -19,10 +20,27 @@ test('make runs the TransformDataClassToSchema action', function () {
     app(JsonSchema::class)->make(PersonData::class);
 });
 
-test('make adds the 2019-09 dialect to the schema', function () {
+test('make adds the 2019-09 dialect to the schema by default', function () {
     $schema = app(JsonSchema::class)->make(PersonData::class);
 
     expect($schema->getDialect())->toBe(JsonSchemaDialect::Draft201909);
+});
+
+test('make adds whatever dialect is set in the config', function () {
+    config(['data-schemas.dialect' => JsonSchemaDialect::Draft202012]);
+
+    $schema = app(JsonSchema::class)->make(PersonData::class);
+
+    expect($schema->getDialect())->toBe(JsonSchemaDialect::Draft202012);
+});
+
+test('make does not add a dialect if it is not set in the config', function () {
+    config(['data-schemas.dialect' => null]);
+
+    $schema = app(JsonSchema::class)->make(PersonData::class);
+
+    expect(fn () => $schema->getDialect())
+        ->toThrow(KeywordNotSetException::class, 'The keyword "dialect" has not been set.');
 });
 
 test('collect runs the TransformDataClassToSchema action with a tree', function () {
@@ -48,10 +66,27 @@ test('collect returns an array schema with an ObjectSchema for the data class as
     ]);
 });
 
-test('collect adds the 2019-09 dialect to the schema', function () {
+test('collect adds the 2019-09 dialect to the schema by default', function () {
     $schema = app(JsonSchema::class)->collect(PersonData::class);
 
     expect($schema->getDialect())->toBe(JsonSchemaDialect::Draft201909);
+});
+
+test('collect adds whatever dialect is set in the config', function () {
+    config(['data-schemas.dialect' => JsonSchemaDialect::Draft202012]);
+
+    $schema = app(JsonSchema::class)->collect(PersonData::class);
+
+    expect($schema->getDialect())->toBe(JsonSchemaDialect::Draft202012);
+});
+
+test('collect does not add a dialect if it is not set in the config', function () {
+    config(['data-schemas.dialect' => null]);
+
+    $schema = app(JsonSchema::class)->collect(PersonData::class);
+
+    expect(fn () => $schema->getDialect())
+        ->toThrow(KeywordNotSetException::class, 'The keyword "dialect" has not been set.');
 });
 
 test('toArray transforms the data class into a JSON Schema array', function () {

@@ -4,7 +4,7 @@ use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
 
 it('can transform the VehicleData class', function () {
-    $output = JsonSchema::make(VehicleData::class)->toArray();
+    $output = JsonSchema::toArray(VehicleData::class);
 
     $expected = [
         '$schema' => 'https://json-schema.org/draft/2019-09/schema',

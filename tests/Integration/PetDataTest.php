@@ -4,7 +4,7 @@ use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PetData;
 
 it('can transform the PetData class', function () {
-    $output = JsonSchema::make(PetData::class)->toArray();
+    $output = JsonSchema::toArray(PetData::class);
 
     $expected = [
         '$schema' => 'https://json-schema.org/draft/2019-09/schema',

@@ -2,6 +2,7 @@
 
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\AddressData;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\HouseholdData;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
@@ -10,10 +11,10 @@ use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VacationData;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
 
 it('can transform the HouseholdData class', function () {
-    $output = JsonSchema::make(HouseholdData::class)->toArray();
+    $output = JsonSchema::toArray(HouseholdData::class);
 
     $makeSubschema = function (string $class) {
-        return TransformDataClassToSchema::run($class)->buildSchema();
+        return TransformDataClassToSchema::run($class, app(SchemaTree::class))->buildSchema();
     };
 
     $expected = [

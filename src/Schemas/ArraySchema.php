@@ -24,4 +24,16 @@ class ArraySchema implements SingleTypeSchema
         MinItemsKeyword::class,
         ItemsKeyword::class,
     ];
+
+    public function toArray(bool $nested = false): array
+    {
+        if ($nested || ! $this->tree->hasDefs()) {
+            return $this->buildSchema();
+        }
+
+        return [
+            ...$this->buildSchema(),
+            '$defs' => $this->tree->getDefs(),
+        ];
+    }
 }

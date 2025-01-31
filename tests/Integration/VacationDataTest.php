@@ -5,7 +5,7 @@ use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VacationData;
 use Carbon\Carbon;
 
 it('can transform the VacationData class', function () {
-    $output = JsonSchema::make(VacationData::class)->toArray();
+    $output = JsonSchema::toArray(VacationData::class);
 
     $expected = [
         '$schema' => 'https://json-schema.org/draft/2019-09/schema',

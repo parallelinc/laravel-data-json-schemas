@@ -1,8 +1,28 @@
 <?php
 
+use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 covers(SchemaTree::class);
+
+it('can register a schema', function () {
+    $tree = app(SchemaTree::class);
+
+    $schema = ObjectSchema::make();
+
+    $tree->registerSchema('App\Data\UserData', $schema);
+    expect($tree->hasRegisteredSchema('App\Data\UserData'))->toBeTrue();
+    expect($tree->getRegisteredSchema('App\Data\UserData'))->toBe($schema);
+});
+
+it('can check if it has a registered schema', function () {
+    $tree = app(SchemaTree::class);
+
+    expect($tree->hasRegisteredSchema('App\Data\UserData'))->toBeFalse();
+
+    $tree->registerSchema('App\Data\UserData', ObjectSchema::make());
+    expect($tree->hasRegisteredSchema('App\Data\UserData'))->toBeTrue();
+});
 
 it('can increment the count of a data class', function () {
     $tree = app(SchemaTree::class);

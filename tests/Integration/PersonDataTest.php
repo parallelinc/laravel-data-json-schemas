@@ -4,7 +4,7 @@ use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
 
 it('can transform the PersonData class', function () {
-    $output = JsonSchema::make(PersonData::class)->toArray();
+    $output = JsonSchema::toArray(PersonData::class);
 
     $expected = [
         '$schema' => 'https://json-schema.org/draft/2019-09/schema',

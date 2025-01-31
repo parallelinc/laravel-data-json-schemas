@@ -6,7 +6,6 @@ use BasilLangevin\LaravelDataSchemas\Actions\ApplyRequiredToDataObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Support\DataClassSchemaRegistry;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 use Spatie\LaravelData\Data;
 
@@ -54,24 +53,24 @@ it('increments the data class count on the SchemaTree', function () {
     expect($tree->getDataClassCount(DataClassTransformActionTest::class))->toBe(1);
 });
 
-it('registers the resulting Schema with the DataClassSchemaRegistry', function () {
-    $registry = app(DataClassSchemaRegistry::class);
+it('registers the resulting Schema with the SchemaTree', function () {
+    $tree = app(SchemaTree::class);
 
-    expect($registry->has(DataClassTransformActionTest::class))->toBeFalse();
+    expect($tree->hasRegisteredSchema(DataClassTransformActionTest::class))->toBeFalse();
 
-    TransformDataClassToSchema::run(DataClassTransformActionTest::class);
+    TransformDataClassToSchema::run(DataClassTransformActionTest::class, $tree);
 
-    expect($registry->has(DataClassTransformActionTest::class))->toBeTrue();
+    expect($tree->hasRegisteredSchema(DataClassTransformActionTest::class))->toBeTrue();
 });
 
-it('returns the existing Schema from the DataClassSchemaRegistry if it exists', function () {
-    $registry = app(DataClassSchemaRegistry::class);
+it('returns the existing Schema from the SchemaTree if it exists', function () {
+    $tree = app(SchemaTree::class);
 
     $schema = ObjectSchema::make();
 
-    $registry->register(DataClassTransformActionTest::class, $schema);
+    $tree->registerSchema(DataClassTransformActionTest::class, $schema);
 
-    expect(TransformDataClassToSchema::run(DataClassTransformActionTest::class))->toBe($schema);
+    expect(TransformDataClassToSchema::run(DataClassTransformActionTest::class, $tree))->toBe($schema);
 });
 
 it('creates an ObjectSchema from a Data class', function () {

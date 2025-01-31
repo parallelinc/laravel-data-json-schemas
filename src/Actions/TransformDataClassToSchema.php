@@ -6,16 +6,11 @@ use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\DataClassSchemaRegistry;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 class TransformDataClassToSchema
 {
     use Runnable;
-
-    public function __construct(
-        protected DataClassSchemaRegistry $registry,
-    ) {}
 
     public function handle(string $dataClass, ?SchemaTree $tree = null): ObjectSchema
     {
@@ -23,13 +18,13 @@ class TransformDataClassToSchema
 
         $tree->incrementDataClassCount($dataClass);
 
-        if ($this->registry->has($dataClass)) {
-            return $this->registry->get($dataClass);
+        if ($tree->hasRegisteredSchema($dataClass)) {
+            return $tree->getRegisteredSchema($dataClass);
         }
 
         $class = ClassWrapper::make($dataClass);
         $schema = ObjectSchema::make();
-        $this->registry->register($dataClass, $schema);
+        $tree->registerSchema($dataClass, $schema);
 
         $schema->class($class->getName())
             ->type('object')

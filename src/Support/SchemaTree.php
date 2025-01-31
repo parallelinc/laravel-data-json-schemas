@@ -2,23 +2,39 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Support;
 
+use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 
 class SchemaTree
 {
-    protected array $dataClassCounts = [];
-
     protected ?string $rootClass = null;
 
-    public function __construct(protected DataClassSchemaRegistry $registry) {}
+    protected array $registeredSchemas = [];
+
+    protected array $dataClassCounts = [];
 
     public function rootClass(string $dataClass): self
     {
         $this->rootClass = $dataClass;
 
         return $this;
+    }
+
+    public function registerSchema(string $dataClass, ObjectSchema $schema): void
+    {
+        $this->registeredSchemas[$dataClass] = $schema;
+    }
+
+    public function getRegisteredSchema(string $dataClass): ObjectSchema
+    {
+        return $this->registeredSchemas[$dataClass];
+    }
+
+    public function hasRegisteredSchema(string $dataClass): bool
+    {
+        return isset($this->registeredSchemas[$dataClass]);
     }
 
     public function incrementDataClassCount(string $dataClass): void
@@ -94,6 +110,6 @@ class SchemaTree
     {
         $name = Str::after($this->getRefName($dataClass), '#/$defs/');
 
-        return [$name => $this->registry->get($dataClass)->buildSchema()];
+        return [$name => $this->getRegisteredSchema($dataClass)->buildSchema()];
     }
 }

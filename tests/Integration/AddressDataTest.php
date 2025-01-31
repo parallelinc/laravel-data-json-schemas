@@ -4,7 +4,7 @@ use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\AddressData;
 
 it('can transform the AddressData class', function () {
-    $output = JsonSchema::make(AddressData::class)->toArray();
+    $output = JsonSchema::toArray(AddressData::class);
 
     $expected = [
         '$schema' => 'https://json-schema.org/draft/2019-09/schema',

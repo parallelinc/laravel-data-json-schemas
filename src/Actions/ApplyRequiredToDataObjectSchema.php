@@ -3,7 +3,7 @@
 namespace BasilLangevin\LaravelDataSchemas\Actions;
 
 use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use Spatie\LaravelData\Attributes\Validation\Present;
@@ -13,7 +13,7 @@ class ApplyRequiredToDataObjectSchema
 {
     use Runnable;
 
-    public function handle(Schema $schema, ClassWrapper $class): Schema
+    public function handle(ObjectSchema $schema, ClassWrapper $class): ObjectSchema
     {
         $required = $this->getRequired($class);
 

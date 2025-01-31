@@ -49,6 +49,8 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
 
     /**
      * Check if the value is an enum.
+     *
+     * @phpstan-assert-if-true class-string<\BackedEnum> $this->get()
      */
     protected function isEnum(): bool
     {

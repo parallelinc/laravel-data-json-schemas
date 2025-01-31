@@ -8,7 +8,9 @@ use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 /**
- * @property static DataType $type The type of the schema.
+ * @property \BasilLangevin\LaravelDataSchemas\Enums\DataType $type The type of the schema.
+ *
+ * @method static type(DataType $type) Set the type of the schema using the TypeKeyword class.
  */
 trait SingleTypeSchemaTrait
 {
@@ -21,12 +23,11 @@ trait SingleTypeSchemaTrait
 
     public static function getDataType(): DataType
     {
-        if (! isset(static::$type)) {
+        if (! property_exists(static::class, 'type')) {
             throw new \Exception('SingleType schemas must have a $type.');
         }
 
-        /** @disregard P1014 because the if statement ensures the property exists */
-        return static::$type;
+        return static::class::$type;
     }
 
     public function applyType(): self

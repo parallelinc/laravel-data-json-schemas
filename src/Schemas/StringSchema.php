@@ -9,10 +9,20 @@ use BasilLangevin\LaravelDataSchemas\Keywords\String\MinLengthKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\String\PatternKeyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\StringSchemaKeywordMethodAnnotations;
 
 class StringSchema implements SingleTypeSchema
 {
+    // DocBlock annotations
+    use AnnotationKeywordMethodAnnotations;
+
+    use CompositionKeywordMethodAnnotations;
+    use GeneralKeywordMethodAnnotations;
     use SingleTypeSchemaTrait;
+    use StringSchemaKeywordMethodAnnotations;
 
     public static DataType $type = DataType::String;
 

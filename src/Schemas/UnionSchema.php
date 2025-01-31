@@ -10,6 +10,13 @@ use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\ConstructsSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\HasKeywords;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\ArraySchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\NumberSchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\ObjectSchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\StringSchemaKeywordMethodAnnotations;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\PipeCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
@@ -17,15 +24,25 @@ use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 use Illuminate\Support\Collection;
 use ReflectionNamedType;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\Support\Types\Type;
 
 class UnionSchema implements Schema
 {
+    // General DocBlock annotations
+    use AnnotationKeywordMethodAnnotations;
+    // Constituent schemas DocBlock annotations
+    use ArraySchemaKeywordMethodAnnotations;
+    use CompositionKeywordMethodAnnotations;
     use ConstructsSchema;
+
+    use GeneralKeywordMethodAnnotations;
     use HasKeywords {
         __call as __callUnionKeyword;
     }
+    use NumberSchemaKeywordMethodAnnotations;
+
+    use ObjectSchemaKeywordMethodAnnotations;
     use PipeCallbacks;
+    use StringSchemaKeywordMethodAnnotations;
     use WhenCallbacks;
 
     public static array $keywords = [

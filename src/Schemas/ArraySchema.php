@@ -9,9 +9,19 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Array\MinItemsKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\ArraySchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
 
 class ArraySchema implements SingleTypeSchema
 {
+    use AnnotationKeywordMethodAnnotations;
+
+    // DocBlock annotations
+    use ArraySchemaKeywordMethodAnnotations;
+    use CompositionKeywordMethodAnnotations;
+    use GeneralKeywordMethodAnnotations;
     use SingleTypeSchemaTrait;
 
     public static DataType $type = DataType::Array;

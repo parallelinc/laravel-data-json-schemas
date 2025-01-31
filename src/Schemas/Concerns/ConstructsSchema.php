@@ -2,13 +2,11 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\Concerns;
 
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-
 trait ConstructsSchema
 {
     public function __construct() {}
 
-    public static function make(): Schema
+    public static function make(): static
     {
         return new static;
     }

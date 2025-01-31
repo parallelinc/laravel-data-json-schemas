@@ -10,9 +10,19 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Object\PropertiesKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\Object\RequiredKeyword;
 use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\ObjectSchemaKeywordMethodAnnotations;
 
 class ObjectSchema implements SingleTypeSchema
 {
+    // DocBlock annotations
+    use AnnotationKeywordMethodAnnotations;
+
+    use CompositionKeywordMethodAnnotations;
+    use GeneralKeywordMethodAnnotations;
+    use ObjectSchemaKeywordMethodAnnotations;
     use SingleTypeSchemaTrait;
 
     public static DataType $type = DataType::Object;

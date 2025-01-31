@@ -4,6 +4,7 @@ namespace BasilLangevin\LaravelDataSchemas\Actions;
 
 use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
@@ -12,7 +13,7 @@ class ApplyPropertiesToDataObjectSchema
 {
     use Runnable;
 
-    public function handle(Schema $schema, ClassWrapper $class, SchemaTree $tree): Schema
+    public function handle(ObjectSchema $schema, ClassWrapper $class, SchemaTree $tree): ObjectSchema
     {
         $properties = $this->getProperties($class, $tree);
 

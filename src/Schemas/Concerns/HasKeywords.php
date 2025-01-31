@@ -25,7 +25,7 @@ trait HasKeywords
      */
     protected function getKeywords(): array
     {
-        if (! isset(static::$keywords)) {
+        if (! property_exists(static::class, 'keywords')) {
             throw new KeywordNotSetException('The keywords property is not set for this schema type.');
         }
 

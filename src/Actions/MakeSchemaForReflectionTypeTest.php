@@ -46,6 +46,8 @@ class MakeSchemaForReflectionTypeTest extends Data
 
         public ?string $nullableProperty,
         public string|int $unionProperty,
+
+        public Closure $unsupportedProperty,
     ) {}
 }
 
@@ -71,6 +73,13 @@ it('creates the correct Schema type from a Data class property', function ($prop
     ['nullableProperty', UnionSchema::class],
     ['unionProperty', UnionSchema::class],
 ]);
+
+it('throws an exception if the type is not supported', function () {
+    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'unsupportedProperty')->getReflectionType();
+    $action = new MakeSchemaForReflectionType;
+
+    $action->handle($wrapper, 'unsupportedProperty');
+})->throws(\Exception::class, 'JSON Schema transformation is not supported for the "Closure" type.');
 
 it('makes a UnionSchema for a nullable type by default', function () {
     $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'nullableProperty')->getReflectionType();

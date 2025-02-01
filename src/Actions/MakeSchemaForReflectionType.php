@@ -61,6 +61,8 @@ class MakeSchemaForReflectionType
             is_subclass_of($name, DataCollection::class) => ArraySchema::class,
 
             is_subclass_of($name, Data::class) => ObjectSchema::class,
+
+            default => throw new \Exception("JSON Schema transformation is not supported for the \"{$name}\" type."),
         };
     }
 
@@ -69,9 +71,8 @@ class MakeSchemaForReflectionType
         $reflector = new \ReflectionEnum($enum);
         $type = $reflector->getBackingType()->getName();
 
-        return match ($type) {
-            'string' => StringSchema::class,
-            'int' => IntegerSchema::class,
-        };
+        return $type === 'int'
+            ? IntegerSchema::class
+            : StringSchema::class;
     }
 }

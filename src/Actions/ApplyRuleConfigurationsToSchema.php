@@ -14,7 +14,6 @@ use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
@@ -91,10 +90,10 @@ class ApplyRuleConfigurationsToSchema
             ArraySchema::class => 'array',
             BooleanSchema::class => 'boolean',
             IntegerSchema::class => ['integer', 'number'],
-            NullSchema::class => [],
             NumberSchema::class => 'number',
             ObjectSchema::class => 'object',
             StringSchema::class => 'string',
+            default => [],
         };
 
         return collect(static::$contracts)

@@ -3,6 +3,7 @@
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\MakeSchemaForReflectionType;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresAnySchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresArraySchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresBooleanSchema;
@@ -16,6 +17,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\Alpha;
 use Spatie\LaravelData\Attributes\Validation\Min;
+use Spatie\LaravelData\Attributes\Validation\Same;
 use Spatie\LaravelData\Attributes\Validation\ValidationAttribute;
 
 covers(ApplyRuleConfigurationsToSchema::class);
@@ -58,6 +60,21 @@ it('applies the correct rule configurations to a union schema', function () {
     expect($stringSchema->getMinLength())->toBe(1);
 
     expect($integerSchema->getMinimum())->toBe(1);
+});
+
+it('does not apply any rule configurations to the union schema itself', function () {
+    $this->class->addProperty('string|int', 'name', [Same::class => 'otherProperty']);
+    $this->class->addStringProperty('otherProperty');
+
+    $property = $this->class->getClassProperty('name');
+
+    $action = new ApplyRuleConfigurationsToSchema;
+
+    $schema = (new UnionSchema)->applyType($property, $this->tree);
+
+    $result = $action->handle($schema, $property);
+
+    expect(fn () => $result->getCustomAnnotation())->toThrow(KeywordNotSetException::class, 'The keyword "customAnnotation" has not been set.');
 });
 
 test('getConfigurableAttributes only includes validation attributes', function () {

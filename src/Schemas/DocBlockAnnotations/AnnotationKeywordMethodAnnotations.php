@@ -2,6 +2,9 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations;
 
+use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
+use Illuminate\Support\Collection;
+
 /**
  * @method static dialect(JsonSchemaDialect $dialect) Set the dialect keyword of the schema.
  * @method JsonSchemaDialect|Collection<int, JsonSchemaDialect> getDialect() Get the value(s) passed to the dialect method.

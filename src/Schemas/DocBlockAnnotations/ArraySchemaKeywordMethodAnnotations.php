@@ -2,6 +2,9 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations;
 
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use Illuminate\Support\Collection;
+
 /**
  * @method static maxItems(int $maxItems) Set the maxItems keyword of the schema.
  * @method int|Collection<int, int> getMaxItems() Get the value(s) passed to the maxItems method.

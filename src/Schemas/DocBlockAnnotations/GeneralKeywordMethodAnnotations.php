@@ -2,6 +2,10 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations;
 
+use BasilLangevin\LaravelDataSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataSchemas\Enums\Format;
+use Illuminate\Support\Collection;
+
 /**
  * @method static type(DataType $type) Set the type keyword of the schema.
  * @method DataType|Collection<int, DataType> getType() Get the value(s) passed to the type method.

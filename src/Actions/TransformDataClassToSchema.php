@@ -3,6 +3,7 @@
 namespace BasilLangevin\LaravelDataSchemas\Actions;
 
 use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
@@ -26,7 +27,7 @@ class TransformDataClassToSchema
         $tree->registerSchema($dataClass, $schema);
 
         $schema->class($class->getName())
-            ->type('object')
+            ->type(DataType::Object)
             ->pipe(fn (ObjectSchema $schema) => ApplyAnnotationsToSchema::run($schema, $class))
             ->pipe(fn (ObjectSchema $schema) => ApplyRuleConfigurationsToSchema::run($schema, $class))
             ->pipe(fn (ObjectSchema $schema) => ApplyPropertiesToDataObjectSchema::run($schema, $class, $tree))

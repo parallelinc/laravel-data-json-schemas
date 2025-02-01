@@ -7,7 +7,6 @@ use BasilLangevin\LaravelDataSchemas\Attributes\Title;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use Illuminate\Support\Stringable;
 
 class TitleAnnotator implements AnnotatesSchema
@@ -57,9 +56,9 @@ class TitleAnnotator implements AnnotatesSchema
     /**
      * Get the title from the class name if it is a data object.
      */
-    protected static function getTitleFromClass(ClassWrapper|PropertyWrapper $entity): ?string
+    protected static function getTitleFromClass(EntityWrapper $entity): ?string
     {
-        if (! $entity->isDataObject()) {
+        if (! $entity instanceof ClassWrapper) {
             return null;
         }
 

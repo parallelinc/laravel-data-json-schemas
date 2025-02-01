@@ -2,6 +2,8 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations;
 
+use Illuminate\Support\Collection;
+
 /**
  * @method static multipleOf(int|float $multipleOf) Set the multipleOf keyword of the schema.
  * @method int|float|Collection<int, int|float> getMultipleOf() Get the value(s) passed to the multipleOf method.

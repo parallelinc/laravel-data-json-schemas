@@ -2,6 +2,8 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations;
 
+use Illuminate\Support\Collection;
+
 /**
  * @method static maxLength(int $maxLength) Set the maxLength keyword of the schema.
  * @method int|Collection<int, int> getMaxLength() Get the value(s) passed to the maxLength method.

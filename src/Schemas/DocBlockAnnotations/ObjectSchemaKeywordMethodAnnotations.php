@@ -2,6 +2,9 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations;
 
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use Illuminate\Support\Collection;
+
 /**
  * @method static properties(array<string, Schema> $properties) Set the properties keyword of the schema.
  * @method array<string, Schema>|Collection<int, array<string, Schema>> getProperties() Get the value(s) passed to the properties method.

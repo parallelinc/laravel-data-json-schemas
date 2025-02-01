@@ -64,8 +64,10 @@ class SchemaTree
             ->map->afterLast('\\')
             ->map->whenEndsWith('Data', fn (Stringable $name) => $name->beforeLast('Data'))
             ->map->kebab()
-            ->map->whenNotExactly('#', fn (Stringable $name) => $name->prepend('#/$defs/'));
+            ->map->whenNotExactly('#', fn (Stringable $name) => $name->prepend('#/$defs/'))
+            ->map->toString();
 
+        /** @var Collection<string, string> $names */
         return $names->map(function (string $name, string $dataClass) use ($names) {
             $index = $names->keys()->search(fn (string $value) => $value === $dataClass);
 

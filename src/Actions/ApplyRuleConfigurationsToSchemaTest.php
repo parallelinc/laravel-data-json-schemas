@@ -47,7 +47,7 @@ it('applies the correct rule configurations to a union schema', function () {
 
     $action = new ApplyRuleConfigurationsToSchema;
 
-    $schema = (new UnionSchema)->applyType($property, $this->tree);
+    $schema = (new UnionSchema)->buildConstituentSchemas($property, $this->tree);
 
     $result = $action->handle($schema, $property);
 
@@ -70,7 +70,7 @@ it('does not apply any rule configurations to the union schema itself', function
 
     $action = new ApplyRuleConfigurationsToSchema;
 
-    $schema = (new UnionSchema)->applyType($property, $this->tree);
+    $schema = (new UnionSchema)->buildConstituentSchemas($property, $this->tree);
 
     $result = $action->handle($schema, $property);
 

@@ -6,7 +6,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 
-interface ConfiguresIntegerSchema
+interface ConfiguresIntegerSchema extends ConfiguresSchema
 {
     public static function configureIntegerSchema(
         IntegerSchema $schema,

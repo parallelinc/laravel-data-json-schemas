@@ -8,5 +8,5 @@ interface HasDataType
 {
     public static function getDataType(): DataType;
 
-    public function applyType(): self;
+    public function applyType(): static;
 }

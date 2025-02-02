@@ -16,9 +16,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\StringSchemaKey
 
 class StringSchema implements SingleTypeSchema
 {
-    // DocBlock annotations
     use AnnotationKeywordMethodAnnotations;
-
     use CompositionKeywordMethodAnnotations;
     use GeneralKeywordMethodAnnotations;
     use SingleTypeSchemaTrait;
@@ -26,6 +24,9 @@ class StringSchema implements SingleTypeSchema
 
     public static DataType $type = DataType::String;
 
+    /**
+     * @var array<class-string<Keyword>|array<class-string<Keyword>>>
+     */
     public static array $keywords = [
         Keyword::ANNOTATION_KEYWORDS,
         Keyword::GENERAL_KEYWORDS,

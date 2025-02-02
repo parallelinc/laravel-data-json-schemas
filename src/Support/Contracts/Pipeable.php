@@ -2,7 +2,17 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Support\Contracts;
 
+use Closure;
+
 interface Pipeable
 {
-    public function pipe(callable $callback);
+    /**
+     * Pipe the callback to the object.
+     *
+     * @template TReturn The type of the value returned by the callback.
+     *
+     * @param  Closure(static): TReturn  $callback
+     * @return TReturn
+     */
+    public function pipe(Closure $callback): mixed;
 }

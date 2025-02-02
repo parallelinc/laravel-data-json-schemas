@@ -11,6 +11,9 @@ use BasilLangevin\LaravelDataSchemas\Attributes\Contracts\ArrayAttribute;
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_CLASS | Attribute::TARGET_PROPERTY)]
 class CustomAnnotation implements ArrayAttribute
 {
+    /**
+     * @param  string|array<string, string>  $annotation
+     */
     public function __construct(protected string|array $annotation, protected ?string $value = null) {}
 
     public function getValue(): array

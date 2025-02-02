@@ -9,10 +9,15 @@ use Illuminate\Support\Str;
 
 class CustomAnnotationKeyword extends Keyword implements HandlesMultipleInstances
 {
+    /**
+     * @param  string|array<string, string>  $annotation
+     */
     public function __construct(protected string|array $annotation, protected ?string $value = null) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
+     *
+     * @return array<string, string>
      */
     public function get(): array
     {
@@ -26,7 +31,7 @@ class CustomAnnotationKeyword extends Keyword implements HandlesMultipleInstance
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {
@@ -34,10 +39,13 @@ class CustomAnnotationKeyword extends Keyword implements HandlesMultipleInstance
     }
 
     /**
-     * Apply multiple instances of the keyword to the schema.
+     * {@inheritdoc}
      */
     public static function applyMultiple(Collection $schema, Collection $instances): Collection
     {
-        return $schema->merge($instances->flatMap->get());
+        /** @var Collection<string, string> $annotations */
+        $annotations = $instances->flatMap->get();
+
+        return $schema->merge($annotations);
     }
 }

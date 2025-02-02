@@ -11,6 +11,7 @@ use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 class ApplyPropertiesToDataObjectSchema
 {
+    /** @use Runnable<ObjectSchema> */
     use Runnable;
 
     public function handle(ObjectSchema $schema, ClassWrapper $class, SchemaTree $tree): ObjectSchema
@@ -26,6 +27,8 @@ class ApplyPropertiesToDataObjectSchema
 
     /**
      * Get the properties of the class, transforming each into a Schema object.
+     *
+     * @return array<string, Schema>
      */
     protected function getProperties(ClassWrapper $class, SchemaTree $tree): array
     {

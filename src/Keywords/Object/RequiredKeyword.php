@@ -8,10 +8,15 @@ use Illuminate\Support\Collection;
 
 class RequiredKeyword extends Keyword implements HandlesMultipleInstances
 {
+    /**
+     * @param  array<string>  $value
+     */
     public function __construct(protected array $value) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
+     *
+     * @return array<string>
      */
     public function get(): array
     {
@@ -19,7 +24,7 @@ class RequiredKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * Apply the keyword to the schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {
@@ -29,7 +34,7 @@ class RequiredKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * Apply multiple instances of the keyword to the schema.
+     * {@inheritdoc}
      */
     public static function applyMultiple(Collection $schema, Collection $instances): Collection
     {

@@ -5,25 +5,45 @@ namespace BasilLangevin\LaravelDataSchemas\Support\Concerns;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use Illuminate\Support\Collection;
+use Spatie\LaravelData\Data;
 
 trait AccessesAttributes
 {
     /**
      * Get the attributes of the property as a collection of AttributeWrappers.
+     *
+     * @template T of object
+     *
+     * @param  class-string<T>|null  $name
+     * @return \Illuminate\Support\Collection<int, AttributeWrapper>
      */
     public function attributes(?string $name = null): Collection
     {
+        /** @var \ReflectionClass<Data>|\ReflectionProperty $reflector */
         $reflector = $this instanceof ClassWrapper ? $this->class : $this->property;
 
-        return collect($reflector->getAttributes($name))
-            ->map(fn (\ReflectionAttribute $attribute) => new AttributeWrapper($attribute));
+        /** @var array<int, \ReflectionAttribute<T>> $attributes */
+        $attributes = $reflector->getAttributes($name);
+
+        return collect($attributes)
+            ->map(fn (\ReflectionAttribute $attribute): AttributeWrapper => new AttributeWrapper($attribute));
     }
 
+    /**
+     * @template T of object
+     *
+     * @param  class-string<T>  $name
+     */
     public function hasAttribute(string $name): bool
     {
         return $this->attributes($name)->isNotEmpty();
     }
 
+    /**
+     * @template T of object
+     *
+     * @param  class-string<T>  $name
+     */
     public function getAttribute(string $name): AttributeWrapper|Collection|null
     {
         $attributes = $this->attributes($name);

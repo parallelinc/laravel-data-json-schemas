@@ -9,7 +9,7 @@ interface AppliesKeywords
     /**
      * Set the value for the appropriate keyword.
      */
-    public function setKeyword(string $name, ...$arguments): self;
+    public function setKeyword(string $name, mixed ...$arguments): self;
 
     /**
      * Get the value for the appropriate keyword.
@@ -18,6 +18,9 @@ interface AppliesKeywords
 
     /**
      * Add the definition for a keyword to the given schema.
+     *
+     * @param  Collection<string, mixed>  $schema
+     * @return Collection<string, mixed>
      */
     public function applyKeyword(string $name, Collection $schema): Collection;
 
@@ -29,5 +32,5 @@ interface AppliesKeywords
     /**
      * Allow keyword methods to be called on the schema type.
      */
-    public function __call($name, $arguments);
+    public function __call(mixed $name, mixed $arguments): mixed;
 }

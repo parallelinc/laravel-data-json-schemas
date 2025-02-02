@@ -15,6 +15,9 @@ class NotKeyword extends Keyword implements MergesMultipleInstancesIntoAllOf, Re
 
     public function __construct(protected Closure $callback) {}
 
+    /**
+     * {@inheritdoc}
+     */
     public function parentSchema(Schema $parentSchema): self
     {
         $this->parentSchema = $parentSchema;
@@ -23,7 +26,7 @@ class NotKeyword extends Keyword implements MergesMultipleInstancesIntoAllOf, Re
     }
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
      */
     public function get(): Closure
     {
@@ -31,7 +34,7 @@ class NotKeyword extends Keyword implements MergesMultipleInstancesIntoAllOf, Re
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {

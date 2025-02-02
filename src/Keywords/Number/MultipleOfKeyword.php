@@ -10,7 +10,7 @@ class MultipleOfKeyword extends Keyword
     public function __construct(protected int|float $value) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
      */
     public function get(): int|float
     {
@@ -18,7 +18,7 @@ class MultipleOfKeyword extends Keyword
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {

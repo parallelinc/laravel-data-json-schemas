@@ -9,6 +9,7 @@ use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresBoole
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresIntegerSchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
+use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresSchema;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
@@ -27,8 +28,10 @@ use ReflectionMethod;
 
 class ApplyRuleConfigurationsToSchema
 {
+    /** @use Runnable<Schema> */
     use Runnable;
 
+    /** @var array<string, interface-string<ConfiguresSchema>> */
     protected static array $contracts = [
         '*' => ConfiguresAnySchema::class,
         'array' => ConfiguresArraySchema::class,
@@ -64,14 +67,16 @@ class ApplyRuleConfigurationsToSchema
         $configurator = $attribute->getRuleConfigurator();
 
         $this->getApplicableContracts($schema)
-            ->intersect(class_implements($configurator))
-            ->flatMap(fn ($contract) => $this->getContractMethods($contract))
+            ->intersect(array_values(class_implements($configurator))) // @pest-mutate-ignore The array_values call is required by PHPStan but doesn't impact the output.
+            ->flatMap(fn (string $contract) => $this->getContractMethods($contract))
             ->unique()
-            ->each(fn ($method) => $configurator::{$method}($schema, $entity, $attribute));
+            ->each(fn (string $method) => $configurator::{$method}($schema, $entity, $attribute));
     }
 
     /**
      * Get the attributes that have a RuleConfigurator.
+     *
+     * @return Collection<int, AttributeWrapper>
      */
     protected function getConfigurableAttributes(EntityWrapper $entity): Collection
     {
@@ -82,6 +87,8 @@ class ApplyRuleConfigurationsToSchema
 
     /**
      * Get the contracts that are applicable to the entity.
+     *
+     * @return Collection<int, interface-string<ConfiguresSchema>>
      */
     protected function getApplicableContracts(Schema $schema): Collection
     {
@@ -106,6 +113,8 @@ class ApplyRuleConfigurationsToSchema
      *
      * If the contract is ConfiguresIntegerSchema, also get the
      * methods defined in ConfiguresNumberSchema.
+     *
+     * @return Collection<int, string>
      */
     protected function getContractMethods(string $contract): Collection
     {

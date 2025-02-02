@@ -18,9 +18,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\NumberSchemaKey
 
 class NumberSchema implements SingleTypeSchema
 {
-    // DocBlock annotations
     use AnnotationKeywordMethodAnnotations;
-
     use CompositionKeywordMethodAnnotations;
     use GeneralKeywordMethodAnnotations;
     use NumberSchemaKeywordMethodAnnotations;
@@ -28,6 +26,9 @@ class NumberSchema implements SingleTypeSchema
 
     public static DataType $type = DataType::Number;
 
+    /**
+     * @var array<class-string<Keyword>|array<class-string<Keyword>>>
+     */
     public static array $keywords = [
         Keyword::ANNOTATION_KEYWORDS,
         Keyword::GENERAL_KEYWORDS,

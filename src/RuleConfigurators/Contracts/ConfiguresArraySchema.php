@@ -6,7 +6,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 
-interface ConfiguresArraySchema
+interface ConfiguresArraySchema extends ConfiguresSchema
 {
     public static function configureArraySchema(
         ArraySchema $schema,

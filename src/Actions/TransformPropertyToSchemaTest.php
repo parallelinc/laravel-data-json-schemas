@@ -5,7 +5,7 @@ use BasilLangevin\LaravelDataSchemas\Actions\ApplyEnumToSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyPropertiesToDataObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyRequiredToDataObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyTypeToSchema;
+use BasilLangevin\LaravelDataSchemas\Actions\SetupSchema;
 use BasilLangevin\LaravelDataSchemas\Actions\TransformPropertyToSchema;
 use BasilLangevin\LaravelDataSchemas\Enums\Format;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
@@ -44,10 +44,10 @@ class PropertyTransformActionTest extends Data
     ) {}
 }
 
-it('calls the ApplyTypeToSchema action', function () {
+it('calls the SetupSchema action', function () {
     $property = PropertyWrapper::make(PropertyTransformActionTest::class, 'stringProperty');
 
-    $mock = $this->mock(ApplyTypeToSchema::class);
+    $mock = $this->mock(SetupSchema::class);
 
     $mock->shouldReceive('handle')->once()
         ->andReturn(StringSchema::make());

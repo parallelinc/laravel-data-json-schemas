@@ -9,18 +9,23 @@ use Illuminate\Support\Collection;
 
 class PropertiesKeyword extends Keyword implements HandlesMultipleInstances
 {
+    /**
+     * @param  array<string, Schema>  $value
+     */
     public function __construct(protected array $value) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
+     *
+     * @return array<string, Schema>
      */
-    public function get(): mixed
+    public function get(): array
     {
         return $this->value;
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {
@@ -32,19 +37,23 @@ class PropertiesKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * Apply multiple instances of the keyword to the schema.
+     * {@inheritdoc}
      */
     public static function applyMultiple(Collection $schema, Collection $instances): Collection
     {
-        $properties = self::resolveProperties(
-            $instances->flatMap->get()->unique(fn ($property, $name) => $name)
-        );
+        /** @var Collection<string, Schema> */
+        $properties = $instances->flatMap->get()->unique(fn ($property, $name) => $name);
+
+        $properties = self::resolveProperties($properties);
 
         return $schema->merge(compact('properties'));
     }
 
     /**
-     * Resolve the properties from the given collection.
+     * Transform each property into its JSON Schema array representation.
+     *
+     * @param  Collection<string, Schema>  $properties
+     * @return array<string, array<string, mixed>>
      */
     protected static function resolveProperties(Collection $properties): array
     {

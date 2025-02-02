@@ -11,8 +11,14 @@ class SchemaTree
 {
     protected ?string $rootClass = null;
 
+    /**
+     * @var array<string, ObjectSchema>
+     */
     protected array $registeredSchemas = [];
 
+    /**
+     * @var array<string, int>
+     */
     protected array $dataClassCounts = [];
 
     public function rootClass(string $dataClass): self
@@ -56,6 +62,9 @@ class SchemaTree
         return $this->getDataClassCount($dataClass) > 1;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getRefNames(): array
     {
         $names = collect($this->dataClassCounts)->keys()
@@ -88,6 +97,9 @@ class SchemaTree
         return $this->getRefNames()[$dataClass];
     }
 
+    /**
+     * @return \Illuminate\Support\Collection<int, string>
+     */
     protected function getDefClasses(): Collection
     {
         return collect($this->dataClassCounts)
@@ -101,6 +113,9 @@ class SchemaTree
         return $this->getDefClasses()->isNotEmpty();
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function getDefs(): array
     {
         return $this->getDefClasses()
@@ -108,6 +123,9 @@ class SchemaTree
             ->toArray();
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     protected function getDef(string $dataClass): array
     {
         $name = Str::after($this->getRefName($dataClass), '#/$defs/');

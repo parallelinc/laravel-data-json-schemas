@@ -10,15 +10,15 @@ class TitleKeyword extends Keyword
     public function __construct(protected string $value) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
      */
-    public function get(): mixed
+    public function get(): string
     {
         return $this->value;
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {

@@ -64,6 +64,9 @@ abstract class Keyword
 
     /**
      * Add the definition for the keyword to the given schema.
+     *
+     * @param  Collection<string, mixed>  $schema
+     * @return Collection<string, mixed>
      */
     abstract public function apply(Collection $schema): Collection;
 }

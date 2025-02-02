@@ -6,7 +6,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 
-interface ConfiguresNumberSchema
+interface ConfiguresNumberSchema extends ConfiguresSchema
 {
     public static function configureNumberSchema(
         NumberSchema $schema,

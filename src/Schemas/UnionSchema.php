@@ -35,6 +35,8 @@ class UnionSchema implements Schema
     use CompositionKeywordMethodAnnotations;
     use ConstructsSchema;
     use GeneralKeywordMethodAnnotations;
+
+    // Traits
     use HasKeywords {
         __call as __callUnionKeyword;
     }
@@ -44,18 +46,31 @@ class UnionSchema implements Schema
     use StringSchemaKeywordMethodAnnotations;
     use WhenCallbacks;
 
+    /**
+     * @var array<class-string<Keyword>|array<class-string<Keyword>>>
+     */
     public static array $keywords = [
         Keyword::ANNOTATION_KEYWORDS,
     ];
 
+    /**
+     * The constituent schemas of the union.
+     *
+     * @var Collection<int, SingleTypeSchema>
+     */
     protected Collection $constituentSchemas;
 
+    /**
+     * Get the constituent schemas of the union.
+     *
+     * @return Collection<int, SingleTypeSchema>
+     */
     public function getConstituentSchemas(): Collection
     {
         return $this->constituentSchemas;
     }
 
-    public function applyType(PropertyWrapper $property, SchemaTree $tree): self
+    public function buildConstituentSchemas(PropertyWrapper $property, SchemaTree $tree): static
     {
         $this->constituentSchemas = $property->getReflectionTypes()
             ->map(fn (ReflectionNamedType $type) => $this->makeConstituentSchema($type, $tree));
@@ -87,7 +102,7 @@ class UnionSchema implements Schema
         return $schema;
     }
 
-    public function tree(SchemaTree $tree): self
+    public function tree(SchemaTree $tree): static
     {
         $this->getConstituentSchemas()->each->tree($tree);
 
@@ -97,7 +112,7 @@ class UnionSchema implements Schema
     /**
      * Allow keyword methods to be called on the schema type.
      */
-    public function __call($name, $arguments)
+    public function __call(mixed $name, mixed $arguments): mixed
     {
         try {
             return $this->__callUnionKeyword($name, $arguments);
@@ -133,7 +148,7 @@ class UnionSchema implements Schema
         return $results;
     }
 
-    public function cloneBaseStructure(): self
+    public function cloneBaseStructure(): static
     {
         $clone = new static;
 
@@ -143,12 +158,20 @@ class UnionSchema implements Schema
         return $clone;
     }
 
+    /**
+     * Check if the constituent schemas can be consolidated into a single schema.
+     */
     protected function canBeConsolidated(): bool
     {
         return $this->getConstituentSchemas()
             ->doesntContain(fn (SingleTypeSchema $schema) => $schema instanceof ObjectSchema);
     }
 
+    /**
+     * Consolidate the constituent schemas into a single schema.
+     *
+     * @return array<string, mixed>
+     */
     protected function buildConsolidatedSchema(): array
     {
         $types = $this->getConstituentSchemas()
@@ -166,6 +189,11 @@ class UnionSchema implements Schema
         ];
     }
 
+    /**
+     * Consolidate the constituent schemas into an anyOf schema.
+     *
+     * @return array<string, mixed>
+     */
     protected function buildAnyOfSchema(): array
     {
         $constituentSchemas = $this->getConstituentSchemas()

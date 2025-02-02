@@ -19,6 +19,9 @@ class ClassWrapper implements EntityWrapper
     use AccessesAttributes;
     use AccessesDocBlock;
 
+    /**
+     * @param  \ReflectionClass<Data>  $class
+     */
     public function __construct(protected ReflectionClass $class) {}
 
     /**

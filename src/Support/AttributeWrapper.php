@@ -15,6 +15,9 @@ class AttributeWrapper
 {
     protected object $instance;
 
+    /**
+     * @param  \ReflectionAttribute<ValidationAttribute|StringAttribute|ArrayAttribute>  $attribute
+     */
     public function __construct(protected \ReflectionAttribute $attribute)
     {
         $this->instance = $attribute->newInstance();

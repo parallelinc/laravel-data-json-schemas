@@ -12,15 +12,16 @@ use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordM
 
 class NullSchema implements SingleTypeSchema
 {
-    // DocBlock annotations
     use AnnotationKeywordMethodAnnotations;
-
     use CompositionKeywordMethodAnnotations;
     use GeneralKeywordMethodAnnotations;
     use SingleTypeSchemaTrait;
 
     public static DataType $type = DataType::Null;
 
+    /**
+     * @var array<class-string<Keyword>|array<class-string<Keyword>>>
+     */
     public static array $keywords = [
         Keyword::ANNOTATION_KEYWORDS,
         Keyword::GENERAL_KEYWORDS,

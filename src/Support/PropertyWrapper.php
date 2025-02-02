@@ -7,6 +7,8 @@ use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesDocBlock;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
+use ReflectionIntersectionType;
+use ReflectionNamedType;
 use ReflectionProperty;
 use ReflectionType;
 use ReflectionUnionType;
@@ -53,19 +55,28 @@ class PropertyWrapper implements EntityWrapper
         return $this->dataProperty->type;
     }
 
-    public function getReflectionType(): ?ReflectionType
+    public function getReflectionType(): ReflectionType
     {
         return $this->property->getType();
     }
 
+    /**
+     * Get the reflection types of the property as a collection.
+     *
+     * @return \Illuminate\Support\Collection<int, ReflectionNamedType>
+     */
     public function getReflectionTypes(): Collection
     {
         $type = $this->getReflectionType();
 
-        if ($type instanceof ReflectionUnionType) {
-            return collect($type->getTypes());
+        if ($type instanceof ReflectionUnionType || $type instanceof ReflectionIntersectionType) {
+            /** @var array<int, ReflectionNamedType> $types */
+            $types = $type->getTypes();
+
+            return collect($types);
         }
 
+        /** @var ReflectionNamedType $type */
         return collect([$type]);
     }
 
@@ -94,6 +105,11 @@ class PropertyWrapper implements EntityWrapper
         return Collection::make([$type]);
     }
 
+    /**
+     * Get the names of the types of the property as a collection.
+     *
+     * @return \Illuminate\Support\Collection<int, string>
+     */
     public function getTypeNames(): Collection
     {
         return $this->getTypes()->map->name;
@@ -247,6 +263,8 @@ class PropertyWrapper implements EntityWrapper
 
     /**
      * Get the siblings of the property as a collection.
+     *
+     * @return \Illuminate\Support\Collection<int, PropertyWrapper>
      */
     public function siblings(): Collection
     {
@@ -259,6 +277,8 @@ class PropertyWrapper implements EntityWrapper
 
     /**
      * Get the sibling names of the property as a collection.
+     *
+     * @return \Illuminate\Support\Collection<int, string>
      */
     public function siblingNames(): Collection
     {

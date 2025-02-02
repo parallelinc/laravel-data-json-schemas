@@ -8,15 +8,15 @@ use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
-class ApplyTypeToSchema
+class SetupSchema
 {
+    /** @use Runnable<Schema> */
     use Runnable;
 
     public function handle(Schema $schema, PropertyWrapper $property, SchemaTree $tree): Schema
     {
-        // This check exists to satisfy PHPStan.
-        if ($schema instanceof UnionSchema) { // @pest-mutate-ignore
-            return $schema->applyType($property, $tree);
+        if ($schema instanceof UnionSchema) {
+            return $schema->buildConstituentSchemas($property, $tree);
         }
 
         return $schema->applyType();

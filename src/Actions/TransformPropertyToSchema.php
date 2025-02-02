@@ -9,6 +9,7 @@ use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 class TransformPropertyToSchema
 {
+    /** @use Runnable<Schema> */
     use Runnable;
 
     public function handle(PropertyWrapper $property, SchemaTree $tree): Schema
@@ -18,7 +19,7 @@ class TransformPropertyToSchema
         }
 
         return MakeSchemaForReflectionType::run($property->getReflectionType())
-            ->pipe(fn (Schema $schema) => ApplyTypeToSchema::run($schema, $property, $tree))
+            ->pipe(fn (Schema $schema) => SetupSchema::run($schema, $property, $tree))
             ->pipe(fn (Schema $schema) => ApplyAnnotationsToSchema::run($schema, $property))
             ->when($property->isEnum(), fn (Schema $schema) => ApplyEnumToSchema::run($schema, $property))
             ->when($property->isDateTime(), fn (Schema $schema) => ApplyDateTimeFormatToSchema::run($schema))

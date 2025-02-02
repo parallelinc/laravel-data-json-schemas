@@ -11,7 +11,7 @@ class DialectKeyword extends Keyword
     public function __construct(protected JsonSchemaDialect $value) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
      */
     public function get(): JsonSchemaDialect
     {
@@ -19,7 +19,7 @@ class DialectKeyword extends Keyword
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {

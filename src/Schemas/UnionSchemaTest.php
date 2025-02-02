@@ -24,7 +24,7 @@ test('applyType creates the set of constituent schemas', function () {
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(2);
     expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
@@ -36,7 +36,7 @@ test('applyType adds a constituent null schema if the property is nullable', fun
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(2);
     expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
@@ -48,7 +48,7 @@ test('applyType never adds more than one constituent null schema', function () {
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     expect($schema->getConstituentSchemas())->toBeCollection()->toHaveCount(3);
     expect($schema->getConstituentSchemas()->first())->toBeInstanceOf(StringSchema::class);
@@ -61,7 +61,7 @@ test('applyType adds types to the constituent schemas if one of them is an objec
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     expect($schema->getConstituentSchemas()->last()->getType())->toBe(DataType::String);
 });
@@ -71,7 +71,7 @@ test('applyType does not add types to the constituent schemas if none of them is
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     expect(fn () => $schema->getConstituentSchemas()->first()->getType())->toThrow(\Exception::class, 'The keyword "type" has not been set.');
 });
@@ -81,7 +81,7 @@ test('the tree method adds the tree to each of the constituent schemas', functio
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     $schema->tree($this->tree);
 
@@ -148,7 +148,7 @@ it('can call keyword methods on its constituent schemas', function () {
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     $result = $schema->minLength(42);
 
@@ -161,7 +161,7 @@ it('throws a BadMethodCallException if a keyword method is not supported by any 
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     $schema->minItems(42);
 })
@@ -172,7 +172,7 @@ it('applies a keyword to all of its applicable constituent schemas', function ()
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     $schema->const(null);
 
@@ -185,7 +185,7 @@ test('a getter keyword method returns the value from the constituent schema that
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     $schema->minLength(42);
 
@@ -197,7 +197,7 @@ test('a getter keyword method throws an exception if the keyword is not set on a
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     expect(fn () => $schema->getMinLength())->toThrow(\Exception::class, 'The keyword "minLength" has not been set.');
 });
@@ -207,7 +207,7 @@ test('a getter keyword method returns a collection of the values from the consti
     $property = $this->class->getClassProperty('property');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     $schema->const(null);
 
@@ -219,7 +219,7 @@ it('can clone its base structure', function () {
     $property = $this->class->getClassProperty('name');
 
     $schema = UnionSchema::make();
-    $schema->applyType($property, $this->tree);
+    $schema->buildConstituentSchemas($property, $this->tree);
 
     $schema->description('test description');
 

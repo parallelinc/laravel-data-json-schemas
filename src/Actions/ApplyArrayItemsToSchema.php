@@ -19,6 +19,7 @@ use Spatie\LaravelData\Support\Types\NamedType;
 
 class ApplyArrayItemsToSchema
 {
+    /** @use Runnable<ArraySchema|UnionSchema> */
     use Runnable;
 
     public function handle(ArraySchema|UnionSchema $schema, PropertyWrapper $property, SchemaTree $tree): ArraySchema|UnionSchema
@@ -63,7 +64,7 @@ class ApplyArrayItemsToSchema
             default => null,
         };
 
-        if (! $schemaClass) {
+        if (is_null($schemaClass)) {
             return null;
         }
 

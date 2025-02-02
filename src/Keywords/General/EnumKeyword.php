@@ -9,6 +9,9 @@ use Illuminate\Support\Collection;
 
 class EnumKeyword extends Keyword implements HandlesMultipleInstances
 {
+    /**
+     * @param  string|array<int, int|string>  $value
+     */
     public function __construct(protected string|array $value)
     {
         if (is_array($value)) {
@@ -27,7 +30,9 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
+     *
+     * @return string|array<int, int|string>
      */
     public function get(): string|array
     {
@@ -35,7 +40,7 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {
@@ -45,6 +50,30 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
         ]);
 
         return $schema->merge($keywords);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function applyMultiple(Collection $schema, Collection $instances): Collection
+    {
+        $values = $instances->map(fn ($instance) => $instance->getValues());
+
+        $commonValues = $values
+            // The skip(1) is not technically needed, but it improves performance.
+            ->skip(1) // @pest-mutate-ignore
+            ->reduce(function (Collection $result, array $instanceValues) {
+                return $result->intersect($instanceValues);
+            }, collect($values->first()))
+            ->values();
+
+        if ($commonValues->isEmpty()) {
+            throw new SchemaConfigurationException('Multiple enums were set with no overlapping values.');
+        }
+
+        return $schema->merge([
+            'enum' => $commonValues->toArray(),
+        ]);
     }
 
     /**
@@ -58,7 +87,7 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * Get the values for the keyword.
+     * @return array<int, int|string>
      */
     protected function getValues(): array
     {
@@ -79,6 +108,8 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
 
     /**
      * Get the value descriptions for the enum if the enum backing type is an integer.
+     *
+     * @return array<string, int>|null
      */
     protected function getValueDescriptions(): ?array
     {
@@ -95,26 +126,5 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
         return collect($this->get()::cases())->mapWithKeys(function ($value) {
             return [$value->name => $value->value];
         })->toArray();
-    }
-
-    public static function applyMultiple(Collection $schema, Collection $instances): Collection
-    {
-        $values = $instances->map(fn ($instance) => $instance->getValues());
-
-        $commonValues = $values
-            // The skip(1) is not technically needed, but it improves performance.
-            ->skip(1) // @pest-mutate-ignore
-            ->reduce(function (Collection $result, array $instanceValues) {
-                return $result->intersect($instanceValues);
-            }, collect($values->first()))
-            ->values();
-
-        if ($commonValues->isEmpty()) {
-            throw new SchemaConfigurationException('Multiple enums were set with no overlapping values.');
-        }
-
-        return $schema->merge([
-            'enum' => $commonValues->toArray(),
-        ]);
     }
 }

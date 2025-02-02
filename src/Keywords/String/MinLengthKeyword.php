@@ -11,7 +11,7 @@ class MinLengthKeyword extends Keyword implements HandlesMultipleInstances
     public function __construct(protected int $value) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
      */
     public function get(): int
     {
@@ -19,7 +19,7 @@ class MinLengthKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {
@@ -27,7 +27,7 @@ class MinLengthKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * Apply multiple instances of the keyword to the schema.
+     * {@inheritdoc}
      */
     public static function applyMultiple(Collection $schema, Collection $instances): Collection
     {

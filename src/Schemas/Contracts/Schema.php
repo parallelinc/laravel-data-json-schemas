@@ -7,7 +7,7 @@ use BasilLangevin\LaravelDataSchemas\Support\Contracts\Whenable;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 /**
- * @property array $keywords The keywords that are available for this schema type.
+ * @property array<class-string<Keyword>|array<class-string<Keyword>>> $keywords The keywords that are available for this schema type.
  *
  * @see https://json-schema.org/draft/2020-12/json-schema-validation
  *
@@ -49,11 +49,17 @@ interface Schema extends AppliesKeywords, Pipeable, Whenable
 {
     public function __construct();
 
-    public static function make(): self;
+    public static function make(): static;
 
-    public function tree(SchemaTree $tree): self;
+    public function tree(SchemaTree $tree): static;
 
-    public function cloneBaseStructure(): self;
+    public function cloneBaseStructure(): static;
 
+    /**
+     * Convert the schema to an array.
+     *
+     * @param  bool  $nested  Whether this schema is nested in another schema.
+     * @return array<string, mixed>
+     */
     public function toArray(bool $nested = false): array;
 }

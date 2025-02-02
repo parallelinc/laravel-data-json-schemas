@@ -51,6 +51,8 @@ class DocBlockParser
 
     /**
      * Get the children of the doc block.
+     *
+     * @return \PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocChildNode[]
      */
     protected function getChildren(): array
     {
@@ -59,6 +61,8 @@ class DocBlockParser
 
     /**
      * Get the text nodes of the doc block.
+     *
+     * @return \PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTextNode[]
      */
     protected function getTextNodes(): array
     {
@@ -69,7 +73,7 @@ class DocBlockParser
     }
 
     /**
-     * Get the description of the doc block.
+     * Get the summary of the doc block.
      */
     public function getSummary(): ?string
     {
@@ -154,6 +158,8 @@ class DocBlockParser
 
     /**
      * Get a Collection of the doc block's var tags.
+     *
+     * @return \Illuminate\Support\Collection<int, \PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode>
      */
     protected function getVarTagValues(): Collection
     {

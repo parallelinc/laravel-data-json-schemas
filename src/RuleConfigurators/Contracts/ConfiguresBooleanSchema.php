@@ -6,7 +6,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 
-interface ConfiguresBooleanSchema
+interface ConfiguresBooleanSchema extends ConfiguresSchema
 {
     public static function configureBooleanSchema(
         BooleanSchema $schema,

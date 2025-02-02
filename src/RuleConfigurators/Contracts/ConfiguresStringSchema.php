@@ -6,7 +6,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 
-interface ConfiguresStringSchema
+interface ConfiguresStringSchema extends ConfiguresSchema
 {
     public static function configureStringSchema(
         StringSchema $schema,

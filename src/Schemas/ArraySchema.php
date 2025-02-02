@@ -17,8 +17,6 @@ use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordM
 class ArraySchema implements SingleTypeSchema
 {
     use AnnotationKeywordMethodAnnotations;
-
-    // DocBlock annotations
     use ArraySchemaKeywordMethodAnnotations;
     use CompositionKeywordMethodAnnotations;
     use GeneralKeywordMethodAnnotations;
@@ -26,6 +24,9 @@ class ArraySchema implements SingleTypeSchema
 
     public static DataType $type = DataType::Array;
 
+    /**
+     * @var array<class-string<Keyword>|array<class-string<Keyword>>>
+     */
     public static array $keywords = [
         Keyword::ANNOTATION_KEYWORDS,
         Keyword::GENERAL_KEYWORDS,
@@ -35,6 +36,9 @@ class ArraySchema implements SingleTypeSchema
         ItemsKeyword::class,
     ];
 
+    /**
+     * {@inheritdoc}
+     */
     public function toArray(bool $nested = false): array
     {
         if ($nested || ! $this->tree->hasDefs()) {

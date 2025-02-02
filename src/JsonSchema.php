@@ -7,18 +7,14 @@ use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use Spatie\LaravelData\Data;
 
 class JsonSchema
 {
     /**
-     * The Spatie Data class to transform into a JSON Schema.
-     */
-    protected string $dataClass;
-
-    public function __construct() {}
-
-    /**
      * Transform a Spatie Data class into a JSON Schema.
+     *
+     * @param  class-string<Data>  $dataClass
      */
     public function make(string $dataClass): ObjectSchema
     {
@@ -33,6 +29,8 @@ class JsonSchema
 
     /**
      * Wrap the JSON Schema for a Spatie Data class in an ArraySchema.
+     *
+     * @param  class-string<Data>  $dataClass
      */
     public function collect(string $dataClass): ArraySchema
     {
@@ -50,6 +48,9 @@ class JsonSchema
 
     /**
      * Transform the JSON Schema for a Spatie Data class into an array.
+     *
+     * @param  class-string<Data>  $dataClass
+     * @return array<string, mixed>
      */
     public function toArray(string $dataClass): array
     {
@@ -58,6 +59,9 @@ class JsonSchema
 
     /**
      * Transform the array-wrapped JSON Schema for a Spatie Data class into an array.
+     *
+     * @param  class-string<Data>  $dataClass
+     * @return array<string, mixed>
      */
     public function collectToArray(string $dataClass): array
     {

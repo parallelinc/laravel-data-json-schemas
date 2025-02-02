@@ -14,12 +14,11 @@ use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\AnnotationKeywo
 use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
 use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
 use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\ObjectSchemaKeywordMethodAnnotations;
+use Spatie\LaravelData\Data;
 
 class ObjectSchema implements SingleTypeSchema
 {
-    // DocBlock annotations
     use AnnotationKeywordMethodAnnotations;
-
     use CompositionKeywordMethodAnnotations;
     use GeneralKeywordMethodAnnotations;
     use ObjectSchemaKeywordMethodAnnotations;
@@ -27,6 +26,9 @@ class ObjectSchema implements SingleTypeSchema
 
     public static DataType $type = DataType::Object;
 
+    /**
+     * @var array<class-string<Keyword>|array<class-string<Keyword>>>
+     */
     public static array $keywords = [
         Keyword::ANNOTATION_KEYWORDS,
         Keyword::GENERAL_KEYWORDS,
@@ -37,15 +39,28 @@ class ObjectSchema implements SingleTypeSchema
         MinPropertiesKeyword::class,
     ];
 
+    /**
+     * The class of the object that this schema represents.
+     *
+     * @var class-string<Data>
+     */
     protected string $class;
 
-    public function class(string $class): self
+    /**
+     * Set the class of the object that this schema represents.
+     *
+     * @param  class-string<Data>  $class
+     */
+    public function class(string $class): static
     {
         $this->class = $class;
 
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function toArray(bool $nested = false): array
     {
         if ($nested && isset($this->class) && $this->tree->hasMultiple($this->class)) {

@@ -11,7 +11,7 @@ class PatternKeyword extends Keyword implements MergesMultipleInstancesIntoAllOf
     public function __construct(protected string $value) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
      */
     public function get(): string
     {
@@ -19,7 +19,7 @@ class PatternKeyword extends Keyword implements MergesMultipleInstancesIntoAllOf
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {

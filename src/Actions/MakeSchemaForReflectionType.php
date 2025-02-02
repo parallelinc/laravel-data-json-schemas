@@ -21,6 +21,7 @@ use Spatie\LaravelData\DataCollection;
 
 class MakeSchemaForReflectionType
 {
+    /** @use Runnable<Schema> */
     use Runnable;
 
     public function __construct(protected bool $unionNullableTypes = true) {}

@@ -14,6 +14,7 @@ class DateFormatRuleConfigurator implements ConfiguresStringSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
+        /** @var array<int, string> $formats */
         $formats = $attribute->getValue();
 
         $formatString = collect($formats)

@@ -30,7 +30,10 @@ trait SingleTypeSchemaTrait
         return static::class::$type;
     }
 
-    public function applyType(): self
+    /**
+     * Apply the type keyword to the schema.
+     */
+    public function applyType(): static
     {
         return $this->type(static::getDataType());
     }
@@ -38,12 +41,15 @@ trait SingleTypeSchemaTrait
     /**
      * Clone the base structure of the schema.
      */
-    public function cloneBaseStructure(): self
+    public function cloneBaseStructure(): static
     {
         return new static;
     }
 
-    public function tree(SchemaTree $tree): self
+    /**
+     * Set the tree for the schema.
+     */
+    public function tree(SchemaTree $tree): static
     {
         $this->tree = $tree;
 
@@ -51,7 +57,7 @@ trait SingleTypeSchemaTrait
     }
 
     /**
-     * Convert the schema to an array.
+     * {@inheritdoc}
      */
     public function toArray(bool $nested = false): array
     {

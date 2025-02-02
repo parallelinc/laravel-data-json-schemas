@@ -10,6 +10,7 @@ use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Enumerable;
 use Spatie\LaravelData\Support\DataProperty;
 use Spatie\LaravelData\Support\DataPropertyType;
 use Spatie\LaravelData\Support\Types\Type;
@@ -24,6 +25,8 @@ class TestPropertyWrapperClass
     public array $testArray;
 
     public Collection $testCollection;
+
+    public Collection&Enumerable $testIntersection;
 
     public bool $testBoolean;
 
@@ -52,6 +55,8 @@ class TestPropertyWrapperClass
     public PersonData $testDataObject;
 
     protected string $hidden;
+
+    protected $typeless;
 
     public function test()
     {
@@ -83,8 +88,45 @@ it('can get its data type', function () {
 it('can get its reflection type', function () {
     $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
-    expect($property->getReflectionType())->toBeInstanceOf(ReflectionNamedType::class);
-    expect($property->getReflectionType()->getName())->toBe('string');
+    $type = $property->getReflectionType();
+
+    expect($type)->toBeInstanceOf(ReflectionNamedType::class);
+
+    /** @var \ReflectionNamedType $type */
+    expect($type->getName())->toBe('string');
+});
+
+it('can get the reflection types of a property', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($property->getReflectionTypes())->toBeCollection()->toHaveCount(1);
+    expect($property->getReflectionTypes()->first())
+        ->toBeInstanceOf(ReflectionNamedType::class)
+        ->getName()->toBe('string');
+});
+
+it('can get the reflection types of an intersection property', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testIntersection');
+
+    expect($property->getReflectionTypes())->toBeCollection()->toHaveCount(2);
+    expect($property->getReflectionTypes()->first())
+        ->toBeInstanceOf(ReflectionNamedType::class)
+        ->getName()->toBe(Collection::class);
+    expect($property->getReflectionTypes()->last())
+        ->toBeInstanceOf(ReflectionNamedType::class)
+        ->getName()->toBe(Enumerable::class);
+});
+
+it('can get the reflection types of a union property', function () {
+    $property = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
+
+    expect($property->getReflectionTypes())->toBeCollection()->toHaveCount(2);
+    expect($property->getReflectionTypes()->first())
+        ->toBeInstanceOf(ReflectionNamedType::class)
+        ->getName()->toBe('string');
+    expect($property->getReflectionTypes()->last())
+        ->toBeInstanceOf(ReflectionNamedType::class)
+        ->getName()->toBe('int');
 });
 
 it('can get the constituent types of a union property', function () {
@@ -326,16 +368,16 @@ it('can get its siblings', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->siblings())->toBeCollection()
-        ->toHaveCount(15)
+        ->toHaveCount(16)
         ->each->toBeInstanceOf(PropertyWrapper::class);
 
     expect($reflector->siblings()->map->getName()->toArray())
-        ->toBe(['testArray', 'testCollection', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testNullable', 'testUnion', 'testNullableUnion', 'testDataObject']);
+        ->toBe(['testArray', 'testCollection', 'testIntersection', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testNullable', 'testUnion', 'testNullableUnion', 'testDataObject']);
 });
 
 it('can get its sibling names', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
 
     expect($reflector->siblingNames())->toBeCollection();
-    expect($reflector->siblingNames()->toArray())->toBe(['testArray', 'testCollection', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testNullable', 'testUnion', 'testNullableUnion', 'testDataObject']);
+    expect($reflector->siblingNames()->toArray())->toBe(['testArray', 'testCollection', 'testIntersection', 'testBoolean', 'testEnum', 'testFloat', 'testInt', 'testObject', 'testDateTime', 'testDateTimeInterface', 'testCarbonInterface', 'testCarbon', 'testNullable', 'testUnion', 'testNullableUnion', 'testDataObject']);
 });

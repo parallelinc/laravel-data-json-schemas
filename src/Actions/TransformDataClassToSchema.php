@@ -4,12 +4,14 @@ namespace BasilLangevin\LaravelDataSchemas\Actions;
 
 use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
 use BasilLangevin\LaravelDataSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 class TransformDataClassToSchema
 {
+    /** @use Runnable<ObjectSchema> */
     use Runnable;
 
     public function handle(string $dataClass, ?SchemaTree $tree = null): ObjectSchema
@@ -28,10 +30,10 @@ class TransformDataClassToSchema
 
         $schema->class($class->getName())
             ->type(DataType::Object)
-            ->pipe(fn (ObjectSchema $schema) => ApplyAnnotationsToSchema::run($schema, $class))
-            ->pipe(fn (ObjectSchema $schema) => ApplyRuleConfigurationsToSchema::run($schema, $class))
-            ->pipe(fn (ObjectSchema $schema) => ApplyPropertiesToDataObjectSchema::run($schema, $class, $tree))
-            ->pipe(fn (ObjectSchema $schema) => ApplyRequiredToDataObjectSchema::run($schema, $class))
+            ->pipe(fn (Schema $schema) => ApplyAnnotationsToSchema::run($schema, $class))
+            ->pipe(fn (Schema $schema) => ApplyRuleConfigurationsToSchema::run($schema, $class))
+            ->pipe(fn (Schema $schema) => ApplyPropertiesToDataObjectSchema::run($schema, $class, $tree))
+            ->pipe(fn (Schema $schema) => ApplyRequiredToDataObjectSchema::run($schema, $class))
             ->tree($tree);
 
         return $schema;

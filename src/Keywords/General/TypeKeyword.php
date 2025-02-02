@@ -11,7 +11,7 @@ class TypeKeyword extends Keyword
     public function __construct(protected string|DataType $value) {}
 
     /**
-     * Get the value of the keyword.
+     * {@inheritdoc}
      */
     public function get(): string|DataType
     {
@@ -19,7 +19,7 @@ class TypeKeyword extends Keyword
     }
 
     /**
-     * Add the definition for the keyword to the given schema.
+     * {@inheritdoc}
      */
     public function apply(Collection $schema): Collection
     {

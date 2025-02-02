@@ -12,16 +12,21 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use to;
 
 trait HasKeywords
 {
     /**
      * The instances of each keyword that has been set.
+     *
+     * @var array<string, array<int, Keyword>>
      */
     private array $keywordInstances = [];
 
     /**
      * Get the keywords that are available for this schema type.
+     *
+     * @return array<class-string<Keyword>>
      */
     protected function getKeywords(): array
     {
@@ -108,7 +113,7 @@ trait HasKeywords
     /**
      * Set the value for the appropriate keyword.
      */
-    public function setKeyword(string $name, ...$arguments): self
+    public function setKeyword(string $name, mixed ...$arguments): self
     {
         if (is_subclass_of($name, Keyword::class)) {
             $keyword = $name;
@@ -150,6 +155,11 @@ trait HasKeywords
         return $result;
     }
 
+    /**
+     * Build the base JSON Schema array with the keywords that have been set.
+     *
+     * @return array<string, mixed>
+     */
     public function buildSchema(): array
     {
         return collect($this->getKeywords())
@@ -163,6 +173,9 @@ trait HasKeywords
 
     /**
      * Add the definition for a keyword to the given schema.
+     *
+     * @param  Collection<string, mixed>  $schema  The schema to add the keyword to.
+     * @return Collection<string, mixed>
      */
     public function applyKeyword(string $name, Collection $schema): Collection
     {
@@ -173,10 +186,12 @@ trait HasKeywords
         }
 
         if (is_subclass_of($name, MergesMultipleInstancesIntoAllOf::class)) {
+            /** @var Collection<int, Keyword&MergesMultipleInstancesIntoAllOf> $instances */
             return $this->mergeAllOf($schema, $instances);
         }
 
         if (is_subclass_of($name, HandlesMultipleInstances::class)) {
+            /** @var Collection<int, HandlesMultipleInstances> $instances */
             return $name::applyMultiple($schema, $instances);
         }
 
@@ -185,11 +200,17 @@ trait HasKeywords
 
     /**
      * Merge the given instances into an allOf keyword.
+     *
+     * @param  Collection<string, mixed>  $schema  The JSON Schema array to add the keyword to.
+     * @param  Collection<int, Keyword&MergesMultipleInstancesIntoAllOf>  $instances  The instances of the keyword to merge.
+     * @return Collection<string, mixed>
      */
     protected function mergeAllOf(Collection $schema, Collection $instances): Collection
     {
+        /** @var array<string, mixed> $allOf */
         $allOf = $schema->get('allOf', []);
 
+        /** @var Collection<string, mixed> $subschemas */
         $subschemas = $instances->map(function ($instance) {
             return $this->cloneBaseStructure()->setKeyword(get_class($instance), $instance->get());
         })->map->toArray()->unique();
@@ -218,7 +239,7 @@ trait HasKeywords
     /**
      * Allow keyword methods to be called on the schema type.
      */
-    public function __call($name, $arguments)
+    public function __call(mixed $name, mixed $arguments): mixed
     {
         if ($this->keywordMethodExists($name)) {
             return $this->setKeyword($name, ...$arguments);

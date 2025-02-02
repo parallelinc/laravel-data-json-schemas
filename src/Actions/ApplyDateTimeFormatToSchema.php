@@ -9,6 +9,7 @@ use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 
 class ApplyDateTimeFormatToSchema
 {
+    /** @use Runnable<StringSchema|UnionSchema> */
     use Runnable;
 
     public function handle(StringSchema|UnionSchema $schema): StringSchema|UnionSchema

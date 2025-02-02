@@ -14,6 +14,7 @@ class DoesntEndWithRuleConfigurator implements ConfiguresStringSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
+        /** @var array<int, string> $values */
         $values = $attribute->getValue();
 
         $regexValues = collect($values)

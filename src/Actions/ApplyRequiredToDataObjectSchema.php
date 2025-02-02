@@ -11,6 +11,7 @@ use Spatie\LaravelData\Attributes\Validation\Required;
 
 class ApplyRequiredToDataObjectSchema
 {
+    /** @use Runnable<ObjectSchema> */
     use Runnable;
 
     public function handle(ObjectSchema $schema, ClassWrapper $class): ObjectSchema
@@ -26,6 +27,8 @@ class ApplyRequiredToDataObjectSchema
 
     /**
      * Get the required properties of the class.
+     *
+     * @return array<string>
      */
     protected function getRequired(ClassWrapper $class): array
     {
@@ -40,6 +43,8 @@ class ApplyRequiredToDataObjectSchema
 
     /**
      * Get the class properties that are not nullable.
+     *
+     * @return array<string>
      */
     protected function getNotNullProperties(ClassWrapper $class): array
     {
@@ -55,6 +60,8 @@ class ApplyRequiredToDataObjectSchema
 
     /**
      * Get the class properties that have the Present attribute.
+     *
+     * @return array<string>
      */
     protected function getPresentProperties(ClassWrapper $class): array
     {
@@ -68,6 +75,8 @@ class ApplyRequiredToDataObjectSchema
 
     /**
      * Get the class properties that have the Required attribute.
+     *
+     * @return array<string>
      */
     protected function getRequiredProperties(ClassWrapper $class): array
     {

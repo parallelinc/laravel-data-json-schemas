@@ -78,6 +78,7 @@ class SchemaTree
 
         /** @var Collection<string, string> $names */
         return $names->map(function (string $name, string $dataClass) use ($names) {
+            /** @var int $index */
             $index = $names->keys()->search(fn (string $value) => $value === $dataClass);
 
             $duplicates = $names->values()->filter(fn (string $value) => $value === $name);

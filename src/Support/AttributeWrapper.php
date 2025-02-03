@@ -4,6 +4,7 @@ namespace BasilLangevin\LaravelDataSchemas\Support;
 
 use BasilLangevin\LaravelDataSchemas\Attributes\Contracts\ArrayAttribute;
 use BasilLangevin\LaravelDataSchemas\Attributes\Contracts\StringAttribute;
+use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresSchema;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Attributes\Validation\Enum;
 use Spatie\LaravelData\Attributes\Validation\In;
@@ -13,6 +14,12 @@ use Spatie\LaravelData\Attributes\Validation\ValidationAttribute;
 
 class AttributeWrapper
 {
+    const SUPPORTED_ATTRIBUTES = [
+        StringAttribute::class,
+        ArrayAttribute::class,
+        ValidationAttribute::class,
+    ];
+
     protected object $instance;
 
     /**
@@ -20,7 +27,24 @@ class AttributeWrapper
      */
     public function __construct(protected \ReflectionAttribute $attribute)
     {
+        if (! self::supports($attribute)) {
+            throw new \InvalidArgumentException("AttributeWrapper does not support the \"{$attribute->getName()}\" attribute.");
+        }
+
         $this->instance = $attribute->newInstance();
+    }
+
+    /**
+     * Check if the attribute is supported by the AttributeWrapper.
+     *
+     * @param  \ReflectionAttribute<object>  $attribute
+     *
+     * @phpstan-assert-if-true \ReflectionAttribute<ValidationAttribute|StringAttribute|ArrayAttribute> $attribute
+     */
+    public static function supports(\ReflectionAttribute $attribute): bool
+    {
+        return collect(self::SUPPORTED_ATTRIBUTES)
+            ->some(fn (string $class) => is_subclass_of($attribute->getName(), $class));
     }
 
     /**
@@ -53,7 +77,9 @@ class AttributeWrapper
 
     protected function getStringValidationAttributeValue(): mixed
     {
-        $parameters = $this->instance->parameters();
+        /** @var StringValidationAttribute $attribute */
+        $attribute = $this->instance;
+        $parameters = $attribute->parameters();
 
         if ($parameters === []) {
             return null;
@@ -97,6 +123,8 @@ class AttributeWrapper
 
     /**
      * Get the rule configurator class name.
+     *
+     * @return class-string<ConfiguresSchema>|null
      */
     public function getRuleConfigurator(): ?string
     {
@@ -104,6 +132,7 @@ class AttributeWrapper
             return null;
         }
 
+        /** @var class-string<ConfiguresSchema> */
         return $this->getRuleConfiguratorClassName();
     }
 }

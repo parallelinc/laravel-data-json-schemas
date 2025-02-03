@@ -1,21 +1,81 @@
 <?php
 
 use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataSchemas\Attributes\Description;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
 use BasilLangevin\LaravelDataSchemas\RuleConfigurators\AlphaRuleConfigurator;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Argument;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use Illuminate\Container\Attributes\Tag;
 use Spatie\LaravelData\Attributes\Validation\After;
 use Spatie\LaravelData\Attributes\Validation\Alpha;
 use Spatie\LaravelData\Attributes\Validation\Enum;
 use Spatie\LaravelData\Attributes\Validation\In;
 use Spatie\LaravelData\Attributes\Validation\NotIn;
+use Spatie\LaravelData\Attributes\Validation\ValidationAttribute;
+use Spatie\LaravelData\Data;
 
 covers(AttributeWrapper::class);
 
 uses(TestsSchemaTransformation::class);
+
+it('can check if an attribute is supported', function () {
+    class SupportedAttributesTest extends Data
+    {
+        public function __construct(
+            #[Title('test'), CustomAnnotation('test'), Description('test'), After('2025-01-01')]
+            public string $test,
+        ) {}
+    }
+
+    $property = new ReflectionProperty(SupportedAttributesTest::class, 'test');
+    $attributes = $property->getAttributes();
+
+    collect($attributes)->each(function (ReflectionAttribute $attribute) {
+        expect(AttributeWrapper::supports($attribute))->toBeTrue();
+    });
+});
+
+it('can check if an attribute is not supported', function () {
+    #[\Attribute]
+    class UnsupportedAttribute {}
+
+    class UnsupportedAttributesTest extends Data
+    {
+        public function __construct(
+            #[UnsupportedAttribute, Tag('test')]
+            public string $test,
+        ) {}
+    }
+
+    $property = new ReflectionProperty(UnsupportedAttributesTest::class, 'test');
+    $attributes = $property->getAttributes();
+
+    collect($attributes)->each(function (ReflectionAttribute $attribute) {
+        expect(AttributeWrapper::supports($attribute))->toBeFalse();
+    });
+});
+
+it('throws an exception when instantiating an unsupported attribute', function () {
+    #[\Attribute]
+    class UnsupportedInstantiationAttribute {}
+
+    class UnsupportedInstantiationAttributesTest extends Data
+    {
+        public function __construct(
+            #[UnsupportedInstantiationAttribute]
+            public string $test,
+        ) {}
+    }
+
+    $property = new ReflectionProperty(UnsupportedInstantiationAttributesTest::class, 'test');
+    $attributes = $property->getAttributes();
+
+    expect(AttributeWrapper::supports($attributes[0]))->toBeFalse();
+    expect(fn () => new AttributeWrapper($attributes[0]))->toThrow(\InvalidArgumentException::class, 'AttributeWrapper does not support the "UnsupportedInstantiationAttribute" attribute.');
+});
 
 it('can get the name of the attribute', function () {
     $this->class->addStringProperty('test', [Title::class => 'test']);
@@ -81,13 +141,23 @@ it('can get the value of a NotIn attribute', function () {
     expect($attribute->getValue())->toBe(['one', 'two']);
 });
 
-#[Attribute]
-class TestAttribute
-{
-    public function __construct(public string $value) {}
-}
-
 it('throws an exception when getting the value of an unsupported attribute', function () {
+    #[Attribute]
+    class TestAttribute extends ValidationAttribute
+    {
+        public function __construct(public string $value) {}
+
+        public static function keyword(): string
+        {
+            return 'test';
+        }
+
+        public static function create(string ...$parameters): static
+        {
+            return new static($parameters[0]);
+        }
+    }
+
     $this->class->addStringProperty('test', [TestAttribute::class => 'test']);
     $property = $this->class->getClassProperty('test');
     $attribute = $property->getAttribute(TestAttribute::class);

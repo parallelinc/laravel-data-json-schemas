@@ -11,6 +11,7 @@ class CustomAnnotationAnnotator implements AnnotatesSchema
 {
     public static function annotateSchema(Schema $schema, EntityWrapper $entity): Schema
     {
+        /** @var \Illuminate\Support\Collection<int, array<string, string>> $annotations */
         $annotations = $entity->attributes(CustomAnnotation::class)
             ->flatMap->getValue();
 

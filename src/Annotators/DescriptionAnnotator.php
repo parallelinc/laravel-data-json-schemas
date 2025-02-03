@@ -5,6 +5,7 @@ namespace BasilLangevin\LaravelDataSchemas\Annotators;
 use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
 use BasilLangevin\LaravelDataSchemas\Attributes\Description;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
@@ -14,6 +15,7 @@ class DescriptionAnnotator implements AnnotatesSchema
     public static function annotateSchema(Schema $schema, EntityWrapper $entity): Schema
     {
         if ($attribute = $entity->getAttribute(Description::class)) {
+            /** @var AttributeWrapper $attribute */
             return $schema->description($attribute->getValue());
         }
 

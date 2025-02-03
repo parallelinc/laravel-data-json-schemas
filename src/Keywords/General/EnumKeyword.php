@@ -91,6 +91,7 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
      */
     protected function getValues(): array
     {
+        /** @var array<int, \BackedEnum|int|string> $values */
         $values = $this->isEnum() ? $this->get()::cases() : $this->get();
 
         return collect($values)->map(function ($value) {

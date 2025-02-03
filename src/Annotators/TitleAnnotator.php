@@ -5,6 +5,7 @@ namespace BasilLangevin\LaravelDataSchemas\Annotators;
 use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 use Illuminate\Support\Stringable;
@@ -29,11 +30,12 @@ class TitleAnnotator implements AnnotatesSchema
      */
     protected static function getTitleAttribute(EntityWrapper $entity): ?string
     {
-        if (! $entity->hasAttribute(Title::class)) {
+        if (! $title = $entity->getAttribute(Title::class)) {
             return null;
         }
 
-        return $entity->getAttribute(Title::class)->getValue();
+        /** @var AttributeWrapper $title */
+        return $title->getValue();
     }
 
     /**

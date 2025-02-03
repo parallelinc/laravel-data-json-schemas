@@ -26,6 +26,8 @@ class ClassWrapper implements EntityWrapper
 
     /**
      * Create a new class wrapper from a class name.
+     *
+     * @param  class-string<Data>  $className
      */
     public static function make(string $className): self
     {
@@ -91,7 +93,7 @@ class ClassWrapper implements EntityWrapper
     /**
      * Get the constructor of the class.
      */
-    public function getConstructor(): ?ReflectionMethod
+    public function getConstructor(): ReflectionMethod
     {
         return $this->class->getMethod('__construct');
     }
@@ -105,6 +107,8 @@ class ClassWrapper implements EntityWrapper
             return null;
         }
 
-        return DocBlockParser::make($this->getConstructor()->getDocComment());
+        $docComment = $this->getConstructor()->getDocComment();
+
+        return DocBlockParser::make($docComment);
     }
 }

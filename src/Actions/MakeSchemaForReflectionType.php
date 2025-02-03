@@ -2,6 +2,7 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Actions;
 
+use BackedEnum;
 use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
 use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
@@ -43,6 +44,11 @@ class MakeSchemaForReflectionType
             return UnionSchema::class;
         }
 
+        if (enum_exists($name)) {
+            /** @var class-string<BackedEnum> $name */
+            return $this->getEnumSchemaClass($name);
+        }
+
         return match (true) {
             $name === 'array' => ArraySchema::class,
             $name === 'bool' => BooleanSchema::class,
@@ -51,8 +57,6 @@ class MakeSchemaForReflectionType
             $name === 'null' => NullSchema::class,
             $name === 'string' => StringSchema::class,
             $name === 'object' => ObjectSchema::class,
-
-            enum_exists($name) => $this->getEnumSchemaClass($name),
 
             $name === 'DateTimeInterface' => StringSchema::class,
             is_subclass_of($name, DateTimeInterface::class) => StringSchema::class,
@@ -67,6 +71,12 @@ class MakeSchemaForReflectionType
         };
     }
 
+    /**
+     * Get the schema class for an enum.
+     *
+     * @param  class-string<BackedEnum>  $enum
+     * @return class-string<Schema>
+     */
     protected function getEnumSchemaClass(string $enum): string
     {
         $reflector = new \ReflectionEnum($enum);

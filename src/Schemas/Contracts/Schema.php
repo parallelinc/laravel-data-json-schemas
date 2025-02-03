@@ -5,6 +5,7 @@ namespace BasilLangevin\LaravelDataSchemas\Schemas\Contracts;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\Pipeable;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\Whenable;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use Closure;
 
 /**
  * @property array<class-string<Keyword>|array<class-string<Keyword>>> $keywords The keywords that are available for this schema type.
@@ -42,8 +43,8 @@ use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
  * --------------------------------------------------------------------------
  * Composition keywords:
  * --------------------------------------------------------------------------
- * @method static not(Closure(Schema $schema): void $callback) Set the not keyword of the schema.
- * @method Closure(Schema $schema): void|Collection<int, Closure(Schema $schema): void> getNot() Get the value(s) passed to the not method.
+ * @method static not(Closure $callback) Set the not keyword of the schema.
+ * @method Closure|Collection<int, Closure> getNot() Get the value(s) passed to the not method.
  */
 interface Schema extends AppliesKeywords, Pipeable, Whenable
 {

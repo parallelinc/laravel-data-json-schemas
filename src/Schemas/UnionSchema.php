@@ -179,6 +179,7 @@ class UnionSchema implements Schema
             ->map->value
             ->toArray();
 
+        /** @var array<string, mixed> */
         $constituentSchemas = $this->getConstituentSchemas()
             ->flatMap->toArray(true);
 

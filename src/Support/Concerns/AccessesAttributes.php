@@ -26,6 +26,7 @@ trait AccessesAttributes
         $attributes = $reflector->getAttributes($name);
 
         return collect($attributes)
+            ->filter(fn (\ReflectionAttribute $attribute): bool => AttributeWrapper::supports($attribute))
             ->map(fn (\ReflectionAttribute $attribute): AttributeWrapper => new AttributeWrapper($attribute));
     }
 

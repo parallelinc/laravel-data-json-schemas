@@ -4,6 +4,7 @@ use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
 use BasilLangevin\LaravelDataSchemas\Attributes\Title;
 use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataSchemas\Support\DocBlockParser;
 use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 use Spatie\LaravelData\Data;
 
@@ -24,14 +25,23 @@ class TestClassWrapperClass
     {
         return 'test';
     }
+
+    /**
+     * A constructor with parameters.
+     */
+    public function __construct(
+        string $test,
+        int $testInt,
+        bool $testBoolean,
+    ) {}
 }
 
 it('can get its name')
-    ->expect(ClassWrapper::make(TestClassWrapperClass::class)->getName())
+    ->expect(fn () => ClassWrapper::make(TestClassWrapperClass::class)->getName())
     ->toBe('TestClassWrapperClass');
 
 it('can get its short name')
-    ->expect(ClassWrapper::make(TestClassWrapperClass::class)->getShortName())
+    ->expect(fn () => ClassWrapper::make(TestClassWrapperClass::class)->getShortName())
     ->toBe('TestClassWrapperClass');
 
 it('can check if it is a data object', function () {
@@ -89,4 +99,41 @@ it('can get a property', function () {
     expect($reflector->getProperty('test'))
         ->toBeInstanceOf(PropertyWrapper::class)
         ->getName()->toBe('test');
+});
+
+it('can check if it has a constructor', function () {
+    $reflector = ClassWrapper::make(TestClassWrapperClass::class);
+
+    expect($reflector->hasConstructor())->toBe(true);
+});
+
+it('can get the constructor', function () {
+    $reflector = ClassWrapper::make(TestClassWrapperClass::class);
+
+    expect($reflector->getConstructor())->toBeInstanceOf(ReflectionMethod::class);
+});
+
+it('can get the constructor doc block', function () {
+    $reflector = ClassWrapper::make(TestClassWrapperClass::class);
+
+    expect($reflector->getConstructorDocBlock())->toBeInstanceOf(DocBlockParser::class);
+});
+
+test('getConstructorDocBlock returns null if the class does not have a constructor', function () {
+    class NoConstructorTestClass {}
+
+    $reflector = ClassWrapper::make(NoConstructorTestClass::class);
+
+    expect($reflector->getConstructorDocBlock())->toBeNull();
+});
+
+test('getConstructorDocBlock returns null if the constructor has no doc block', function () {
+    class NoDocBlockConstructorTestClass
+    {
+        public function __construct() {}
+    }
+
+    $reflector = ClassWrapper::make(NoDocBlockConstructorTestClass::class);
+
+    expect($reflector->getConstructorDocBlock())->toBeNull();
 });

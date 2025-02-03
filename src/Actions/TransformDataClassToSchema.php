@@ -8,12 +8,18 @@ use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use Spatie\LaravelData\Data;
 
 class TransformDataClassToSchema
 {
     /** @use Runnable<ObjectSchema> */
     use Runnable;
 
+    /**
+     * Transform a data class to a schema.
+     *
+     * @param  class-string<Data>  $dataClass
+     */
     public function handle(string $dataClass, ?SchemaTree $tree = null): ObjectSchema
     {
         $tree ??= app(SchemaTree::class)->rootClass($dataClass);
@@ -28,7 +34,7 @@ class TransformDataClassToSchema
         $schema = ObjectSchema::make();
         $tree->registerSchema($dataClass, $schema);
 
-        $schema->class($class->getName())
+        $schema->class($dataClass)
             ->type(DataType::Object)
             ->pipe(fn (Schema $schema) => ApplyAnnotationsToSchema::run($schema, $class))
             ->pipe(fn (Schema $schema) => ApplyRuleConfigurationsToSchema::run($schema, $class))

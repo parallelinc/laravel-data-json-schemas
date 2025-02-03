@@ -34,6 +34,8 @@ class PropertyWrapper implements EntityWrapper
 
     /**
      * Create a new property wrapper from a reflection property.
+     *
+     * @param  class-string<Data>  $className
      */
     public static function make(string $className, string $propertyName): self
     {
@@ -205,6 +207,8 @@ class PropertyWrapper implements EntityWrapper
 
     /**
      * Get the name of the data class of the property.
+     *
+     * @return class-string<Data>|null
      */
     public function getDataClassName(): ?string
     {
@@ -214,6 +218,7 @@ class PropertyWrapper implements EntityWrapper
             return null;
         }
 
+        /** @var class-string<Data> */
         return $type->dataClass;
     }
 

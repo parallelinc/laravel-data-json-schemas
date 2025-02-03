@@ -67,7 +67,7 @@ class ApplyRuleConfigurationsToSchema
         $configurator = $attribute->getRuleConfigurator();
 
         $this->getApplicableContracts($schema)
-            ->intersect(array_values(class_implements($configurator))) // @pest-mutate-ignore The array_values call is required by PHPStan but doesn't impact the output.
+            ->intersect(class_implements($configurator) ?: []) // @phpstan-ignore-line
             ->flatMap(fn (string $contract) => $this->getContractMethods($contract))
             ->unique()
             ->each(fn (string $method) => $configurator::{$method}($schema, $entity, $attribute));
@@ -114,6 +114,7 @@ class ApplyRuleConfigurationsToSchema
      * If the contract is ConfiguresIntegerSchema, also get the
      * methods defined in ConfiguresNumberSchema.
      *
+     * @param  interface-string<ConfiguresSchema>  $contract
      * @return Collection<int, string>
      */
     protected function getContractMethods(string $contract): Collection

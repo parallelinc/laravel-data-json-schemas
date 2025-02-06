@@ -28,6 +28,8 @@ class ApplyAnnotationsToSchema
     ];
 
     /**
+     * Apply each applicable annotation keyword to the Schema.
+     *
      * @param  TSchema  $schema
      * @return TSchema
      */

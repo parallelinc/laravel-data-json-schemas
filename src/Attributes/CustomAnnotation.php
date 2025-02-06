@@ -6,7 +6,10 @@ use Attribute;
 use BasilLangevin\LaravelDataSchemas\Attributes\Contracts\ArrayAttribute;
 
 /**
- * Adds a custom annotation to a Data object or property.
+ * Adds custom annotation(s) to a Data object or property.
+ *
+ * The annotation can be created with an array of key-value pairs
+ * or a string key and value.
  */
 #[Attribute(Attribute::IS_REPEATABLE | Attribute::TARGET_CLASS | Attribute::TARGET_PROPERTY)]
 class CustomAnnotation implements ArrayAttribute
@@ -21,6 +24,11 @@ class CustomAnnotation implements ArrayAttribute
         }
     }
 
+    /**
+     * Get the annotation(s) as an array of key-value pairs.
+     *
+     * @return array<string, string>
+     */
     public function getValue(): array
     {
         if (is_array($this->annotation)) {

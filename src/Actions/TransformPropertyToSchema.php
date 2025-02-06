@@ -15,6 +15,9 @@ class TransformPropertyToSchema
     /** @use Runnable<array{PropertyWrapper, SchemaTree}, Schema> */
     use Runnable;
 
+    /**
+     * Transform a property to a Schema with the appropriate keywords.
+     */
     public function handle(PropertyWrapper $property, SchemaTree $tree): Schema
     {
         if ($property->isDataObject()) {

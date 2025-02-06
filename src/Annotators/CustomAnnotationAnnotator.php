@@ -9,6 +9,9 @@ use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 
 class CustomAnnotationAnnotator implements AnnotatesSchema
 {
+    /**
+     * Add any custom annotations defined by CustomAnnotation attributes to the Schema.
+     */
     public static function annotateSchema(Schema $schema, EntityWrapper $entity): Schema
     {
         /** @var array<string, string> $annotations */

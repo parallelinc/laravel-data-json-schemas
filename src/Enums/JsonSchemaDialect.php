@@ -2,6 +2,9 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Enums;
 
+/**
+ * The available JSON Schema dialects.
+ */
 enum JsonSchemaDialect: string
 {
     case Draft4 = 'http://json-schema.org/draft-04/schema#';

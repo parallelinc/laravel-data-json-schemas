@@ -14,6 +14,9 @@ class ApplyPropertiesToDataObjectSchema
     /** @use Runnable<array{ObjectSchema, ClassWrapper, SchemaTree}, ObjectSchema> */
     use Runnable;
 
+    /**
+     * Create Schemas for each property and add them to the "properties" keyword.
+     */
     public function handle(ObjectSchema $schema, ClassWrapper $class, SchemaTree $tree): ObjectSchema
     {
         $properties = $this->getProperties($class, $tree);

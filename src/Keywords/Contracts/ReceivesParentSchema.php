@@ -4,6 +4,9 @@ namespace BasilLangevin\LaravelDataSchemas\Keywords\Contracts;
 
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 
+/**
+ * Implemented by keywords that need to know the parent schema.
+ */
 interface ReceivesParentSchema
 {
     /**

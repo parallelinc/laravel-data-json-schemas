@@ -12,7 +12,7 @@ class ApplyEnumToSchema
     use Runnable;
 
     /**
-     * Apply the enum to the schema.
+     * Set the Schema's "enum" keyword to the enum's values.
      */
     public function handle(Schema $schema, PropertyWrapper $property): Schema
     {

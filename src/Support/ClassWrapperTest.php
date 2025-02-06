@@ -50,13 +50,6 @@ it('can get its short name')
     ->expect(fn () => ClassWrapper::make(TestClassWrapperClass::class)->getShortName())
     ->toBe('TestClassWrapperClass');
 
-it('can check if it is a data object', function () {
-    class IsDataObjectTestClass extends Data {}
-    $reflector = ClassWrapper::make(IsDataObjectTestClass::class);
-
-    expect($reflector->isDataObject())->toBe(true);
-});
-
 it('can check if it has an attribute', function () {
     $reflector = ClassWrapper::make(TestClassWrapperClass::class);
 

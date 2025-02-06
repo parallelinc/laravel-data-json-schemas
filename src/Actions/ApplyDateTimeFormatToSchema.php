@@ -12,6 +12,9 @@ class ApplyDateTimeFormatToSchema
     /** @use Runnable<array{StringSchema|UnionSchema}, StringSchema|UnionSchema> */
     use Runnable;
 
+    /**
+     * Set the Schema's "format" keyword to "date-time".
+     */
     public function handle(StringSchema|UnionSchema $schema): StringSchema|UnionSchema
     {
         return $schema->format(Format::DateTime);

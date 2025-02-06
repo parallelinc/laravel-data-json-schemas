@@ -8,12 +8,16 @@ use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 use ReflectionMethod;
-use Reflector;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Support\DataClass;
 use Spatie\LaravelData\Support\DataProperty;
 use Spatie\LaravelData\Support\Factories\DataClassFactory;
 
+/**
+ * The ClassWrapper provides convenient access to the
+ * properties, methods, and doc blocks of a Spatie
+ * Data class, simplifying schema construction.
+ */
 class ClassWrapper implements EntityWrapper
 {
     use AccessesAttributes;
@@ -40,6 +44,9 @@ class ClassWrapper implements EntityWrapper
         return new self(new ReflectionClass($className));
     }
 
+    /**
+     * Get the Spatie DataClass instance for the class.
+     */
     public function getDataClass(): DataClass
     {
         return app(DataClassFactory::class)->build($this->class);
@@ -62,15 +69,7 @@ class ClassWrapper implements EntityWrapper
     }
 
     /**
-     * Check if the class is a data object.
-     */
-    public function isDataObject(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Get the properties of the reflector as a collection.
+     * Get the properties of the class as a collection of PropertyWrapper instances.
      *
      * @return \Illuminate\Support\Collection<int, PropertyWrapper>
      */
@@ -83,6 +82,9 @@ class ClassWrapper implements EntityWrapper
             ->values();
     }
 
+    /**
+     * Get a property wrapper for the given property name.
+     */
     public function getProperty(string $propertyName): PropertyWrapper
     {
         return $this->properties()

@@ -12,6 +12,11 @@ use Spatie\LaravelData\Attributes\Validation\NotIn;
 use Spatie\LaravelData\Attributes\Validation\StringValidationAttribute;
 use Spatie\LaravelData\Attributes\Validation\ValidationAttribute;
 
+/**
+ * The AttributeWrapper provides convenient access to the name,
+ * value, and rule configurator for ValidationAttributes and
+ * AnnotationAttributes, simplifying schema construction.
+ */
 class AttributeWrapper
 {
     const SUPPORTED_ATTRIBUTES = [
@@ -80,6 +85,9 @@ class AttributeWrapper
         };
     }
 
+    /**
+     * Get the value of a StringValidationAttribute.
+     */
     protected function getStringValidationAttributeValue(): mixed
     {
         /** @var StringValidationAttribute $attribute */
@@ -127,6 +135,11 @@ class AttributeWrapper
         return $this->instance instanceof ValidationAttribute;
     }
 
+    /**
+     * Get the expected class name of the rule configurator for the attribute.
+     *
+     * @return class-string<ConfiguresSchema>
+     */
     protected function getRuleConfiguratorClassName(): string
     {
         $namespace = 'BasilLangevin\LaravelDataSchemas\RuleConfigurators';

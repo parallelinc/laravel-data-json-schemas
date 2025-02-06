@@ -12,6 +12,14 @@ use Illuminate\Support\Stringable;
 
 class TitleAnnotator implements AnnotatesSchema
 {
+    /**
+     * Set the Schema's "title" keyword to the title of the property or class.
+     *
+     * The title is set in the following order of precedence:
+     * 1. The Title attribute.
+     * 2. The docblock summary (if a description is also present).
+     * 3. The class name.
+     */
     public static function annotateSchema(Schema $schema, EntityWrapper $entity): Schema
     {
         $title = self::getTitleAttribute($entity)

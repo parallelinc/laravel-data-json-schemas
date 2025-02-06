@@ -19,6 +19,11 @@ use Spatie\LaravelData\Support\Types\CombinationType;
 use Spatie\LaravelData\Support\Types\NamedType;
 use Spatie\LaravelData\Support\Types\Type;
 
+/**
+ * The PropertyWrapper provides convenient access to the types,
+ * name, default value, sibling properties, and Data classes
+ * of a property, supporting the construction of Schemas.
+ */
 class PropertyWrapper implements EntityWrapper
 {
     use AccessesAttributes;
@@ -42,21 +47,33 @@ class PropertyWrapper implements EntityWrapper
         return ClassWrapper::make($className)->getProperty($propertyName);
     }
 
+    /**
+     * Get the ReflectionProperty instance.
+     */
     public function getReflection(): ReflectionProperty
     {
         return $this->property;
     }
 
+    /**
+     * Get the Spatie DataProperty instance.
+     */
     public function getDataProperty(): DataProperty
     {
         return $this->dataProperty;
     }
 
+    /**
+     * Get the DataPropertyType of the DataProperty instance.
+     */
     public function getDataType(): DataPropertyType
     {
         return $this->dataProperty->type;
     }
 
+    /**
+     * Get the ReflectionType of the property.
+     */
     public function getReflectionType(): ReflectionType
     {
         // The PropertyWrapper doesn't support typeless properties.
@@ -67,7 +84,9 @@ class PropertyWrapper implements EntityWrapper
     }
 
     /**
-     * Get the reflection types of the property as a collection.
+     * Get the named reflection types of the property as a collection.
+     *
+     * Union and intersection types are flattened into their constituent named types.
      *
      * @return \Illuminate\Support\Collection<int, ReflectionNamedType>
      */
@@ -86,13 +105,16 @@ class PropertyWrapper implements EntityWrapper
         return collect([$type]);
     }
 
+    /**
+     * Get the Spatie Type of the property.
+     */
     public function getType(): Type
     {
         return $this->getDataType()->type;
     }
 
     /**
-     * Get the types of the property as a collection.
+     * Get the Spatie Types of the property as a collection.
      *
      * @return \Illuminate\Support\Collection<int, NamedType>
      */
@@ -112,7 +134,7 @@ class PropertyWrapper implements EntityWrapper
     }
 
     /**
-     * Get the names of the types of the property as a collection.
+     * Get the names of the Spatie Types of the property as a collection.
      *
      * @return \Illuminate\Support\Collection<int, string>
      */
@@ -138,11 +160,17 @@ class PropertyWrapper implements EntityWrapper
         };
     }
 
+    /**
+     * Determine if the property has a type name.
+     */
     public function hasTypeName(string $type): bool
     {
         return $this->getTypeName() === $type;
     }
 
+    /**
+     * Get the name of the type of the property.
+     */
     public function getTypeName(): ?string
     {
         $type = $this->getType();
@@ -154,6 +182,9 @@ class PropertyWrapper implements EntityWrapper
         return null;
     }
 
+    /**
+     * Determine if the property is a DateTime.
+     */
     public function isDateTime(): bool
     {
         $typeName = $this->getTypeName();
@@ -166,6 +197,9 @@ class PropertyWrapper implements EntityWrapper
             || $typeName === 'DateTimeInterface';
     }
 
+    /**
+     * Determine if the property is an array.
+     */
     public function isArray(): bool
     {
         $type = $this->getType();
@@ -180,7 +214,7 @@ class PropertyWrapper implements EntityWrapper
     }
 
     /**
-     * Determine if the reflected property is an enum.
+     * Determine if the property is an enum.
      */
     public function isEnum(): bool
     {
@@ -194,7 +228,7 @@ class PropertyWrapper implements EntityWrapper
     }
 
     /**
-     * Determine if the reflected property is a Spatie data object.
+     * Determine if the property is a Spatie data object.
      */
     public function isDataObject(): bool
     {
@@ -216,7 +250,7 @@ class PropertyWrapper implements EntityWrapper
     }
 
     /**
-     * Determine if the reflected property is nullable.
+     * Determine if the property is nullable.
      */
     public function isNullable(): bool
     {

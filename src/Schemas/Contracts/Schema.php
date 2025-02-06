@@ -13,6 +13,10 @@ use Closure;
 use Illuminate\Support\Collection;
 
 /**
+ * A schema is a representation of a JSON Schema for a specific type/union of types.
+ *
+ * Schemas can be nested within one another to create more complex schemas.
+ *
  * @property array<class-string<Keyword>|array<class-string<Keyword>>> $keywords The keywords that are available for this schema type.
  *
  * @see https://json-schema.org/draft/2020-12/json-schema-validation

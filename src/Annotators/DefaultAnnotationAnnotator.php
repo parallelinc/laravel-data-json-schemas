@@ -11,6 +11,9 @@ use ReflectionParameter;
 
 class DefaultAnnotationAnnotator implements AnnotatesSchema
 {
+    /**
+     * Set the Schema's "default" keyword to the default value of the property.
+     */
     public static function annotateSchema(Schema $schema, EntityWrapper $entity): Schema
     {
         if (! $entity instanceof PropertyWrapper) {
@@ -24,6 +27,9 @@ class DefaultAnnotationAnnotator implements AnnotatesSchema
         }
     }
 
+    /**
+     * Get the default value for the property.
+     */
     protected static function getDefaultValue(PropertyWrapper $property): mixed
     {
         if ($property->hasDefaultValue()) {

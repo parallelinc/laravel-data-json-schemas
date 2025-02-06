@@ -14,6 +14,9 @@ class ApplyRequiredToDataObjectSchema
     /** @use Runnable<array{ObjectSchema, ClassWrapper}, ObjectSchema> */
     use Runnable;
 
+    /**
+     * Add each of the Data object's required properties to the "required" keyword.
+     */
     public function handle(ObjectSchema $schema, ClassWrapper $class): ObjectSchema
     {
         $required = $this->getRequired($class);

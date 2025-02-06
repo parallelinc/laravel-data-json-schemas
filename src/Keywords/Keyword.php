@@ -14,6 +14,27 @@ use BasilLangevin\LaravelDataSchemas\Keywords\General\FormatKeyword;
 use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
 use Illuminate\Support\Collection;
 
+/**
+ * A keyword is a class that adds a specific property to a Schema.
+ *
+ * When the Schema type supports a keyword, the keyword can be
+ * set by calling the keyword's name as a camelCased method
+ * with the values defined in the keyword's constructor.
+ *
+ * @example
+ * ```php
+ * $schema = StringSchema::make()->minLength(10);
+ * ```
+ *
+ * Similarly, the value(s) of the keyword can be retrieved by
+ * calling the keyword's name prefixed by "get" as a camel
+ * cased method. This returns every value that was set.
+ *
+ * @example
+ * ```php
+ * $value = $schema->getMinLength();
+ * ```
+ */
 abstract class Keyword
 {
     const ANNOTATION_KEYWORDS = [

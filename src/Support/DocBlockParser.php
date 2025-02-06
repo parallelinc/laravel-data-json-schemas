@@ -15,6 +15,9 @@ use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPStan\PhpDocParser\ParserConfig;
 
+/**
+ * The DocBlockParser helps with extracting information from PHPDoc blocks.
+ */
 class DocBlockParser
 {
     protected PhpDocNode $phpDocNode;

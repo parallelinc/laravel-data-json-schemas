@@ -4,6 +4,9 @@ namespace BasilLangevin\LaravelDataSchemas\Keywords\Contracts;
 
 use Illuminate\Support\Collection;
 
+/**
+ * Implemented by keywords that can apply multiple instances to a schema.
+ */
 interface HandlesMultipleInstances
 {
     /**

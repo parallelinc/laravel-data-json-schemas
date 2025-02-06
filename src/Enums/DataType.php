@@ -2,6 +2,9 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Enums;
 
+/**
+ * The types that can be used in a JSON Schema's "type" keyword.
+ */
 enum DataType: string
 {
     case String = 'string';

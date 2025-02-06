@@ -28,13 +28,16 @@ class MakeSchemaForReflectionType
 
     public function __construct(protected bool $unionNullableTypes = true) {}
 
+    /**
+     * Make a Schema object based on the type of a property.
+     */
     public function handle(ReflectionType $type): Schema
     {
         return $this->getSchemaClass($type)::make();
     }
 
     /**
-     * Get the schema class for a reflection type.
+     * Get the appropriate Schema class for a reflection type.
      *
      * @return class-string<Schema>
      */
@@ -82,7 +85,7 @@ class MakeSchemaForReflectionType
     }
 
     /**
-     * Get the schema class for an enum.
+     * Get the Schema class for an enum based on its backing type.
      *
      * @param  class-string<BackedEnum>  $enum
      * @return class-string<Schema>

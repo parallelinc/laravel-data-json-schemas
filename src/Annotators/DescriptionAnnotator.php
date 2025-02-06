@@ -12,6 +12,15 @@ use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 
 class DescriptionAnnotator implements AnnotatesSchema
 {
+    /**
+     * Set the Schema's "description" keyword to the description of the property or class.
+     *
+     * The description is set in the following order of precedence:
+     * 1. The Description attribute.
+     * 2. The docblock param/var description.
+     * 3. The docblock description.
+     * 4. The docblock summary.
+     */
     public static function annotateSchema(Schema $schema, EntityWrapper $entity): Schema
     {
         if ($attribute = $entity->getAttribute(Description::class)) {

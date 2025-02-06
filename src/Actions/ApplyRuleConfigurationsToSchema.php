@@ -25,6 +25,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 use ReflectionMethod;
+use Spatie\LaravelData\Attributes\Validation\ValidationAttribute;
 
 /**
  * @template TSchema of Schema
@@ -34,7 +35,11 @@ class ApplyRuleConfigurationsToSchema
     /** @use Runnable<array{TSchema, EntityWrapper}, TSchema> */
     use Runnable;
 
-    /** @var array<string, interface-string<ConfiguresSchema>> */
+    /**
+     * The RuleConfigurator contracts that are applicable to each Schema type.
+     *
+     * @var array<string, interface-string<ConfiguresSchema>>
+     */
     protected static array $contracts = [
         '*' => ConfiguresAnySchema::class,
         'array' => ConfiguresArraySchema::class,
@@ -46,6 +51,8 @@ class ApplyRuleConfigurationsToSchema
     ];
 
     /**
+     * For every ValidationAttribute, add the appropriate keywords to satisfy the rule.
+     *
      * @param  TSchema  $schema
      * @return TSchema
      */
@@ -94,7 +101,7 @@ class ApplyRuleConfigurationsToSchema
     }
 
     /**
-     * Get the contracts that are applicable to the entity.
+     * Get the contracts that are applicable to the Schema type.
      *
      * @return Collection<int, interface-string<ConfiguresSchema>>
      */
@@ -120,7 +127,7 @@ class ApplyRuleConfigurationsToSchema
     }
 
     /**
-     * Get the name of the configure method defined in the contract.
+     * Get the names of the configure methods defined in the contract.
      *
      * If the contract is ConfiguresIntegerSchema, also get the
      * methods defined in ConfiguresNumberSchema.

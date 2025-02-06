@@ -16,6 +16,8 @@ class TransformDataClassToSchema
     use Runnable;
 
     /**
+     * Dependency injection improves type inference.
+     *
      * @param  ApplyAnnotationsToSchema<ObjectSchema>  $annotator
      * @param  ApplyRuleConfigurationsToSchema<ObjectSchema>  $ruleConfigurator
      */
@@ -25,7 +27,7 @@ class TransformDataClassToSchema
     ) {}
 
     /**
-     * Transform a data class to a schema.
+     * Transform a data class to a Schema with the appropriate keywords.
      *
      * @param  class-string<Data>  $dataClass
      */

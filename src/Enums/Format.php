@@ -3,7 +3,7 @@
 namespace BasilLangevin\LaravelDataSchemas\Enums;
 
 /**
- * This Enum contains all of the valid formats for the `format` keyword.
+ * The valid formats for the JSON Schema's "format" keyword.
  *
  * @see https://json-schema.org/draft/2020-12/json-schema-validation.html#rfc.section.7.3
  */

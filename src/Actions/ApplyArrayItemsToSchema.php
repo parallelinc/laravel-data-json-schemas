@@ -22,6 +22,9 @@ class ApplyArrayItemsToSchema
     /** @use Runnable<array{ArraySchema|UnionSchema, PropertyWrapper, SchemaTree}, ArraySchema|UnionSchema> */
     use Runnable;
 
+    /**
+     * Set the Schema's "items" keyword to the Schema of the items.
+     */
     public function handle(ArraySchema|UnionSchema $schema, PropertyWrapper $property, SchemaTree $tree): ArraySchema|UnionSchema
     {
         $itemsSchema = $this->getDataClassSchema($property, $tree)

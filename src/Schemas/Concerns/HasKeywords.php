@@ -12,7 +12,6 @@ use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use to;
 
 trait HasKeywords
 {

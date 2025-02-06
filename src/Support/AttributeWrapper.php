@@ -137,8 +137,6 @@ class AttributeWrapper
 
     /**
      * Get the expected class name of the rule configurator for the attribute.
-     *
-     * @return class-string<ConfiguresSchema>
      */
     protected function getRuleConfiguratorClassName(): string
     {

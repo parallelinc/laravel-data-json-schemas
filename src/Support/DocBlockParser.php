@@ -40,7 +40,7 @@ class DocBlockParser
     /**
      * Create a new DocBlockParser instance.
      */
-    public static function make(?string $docComment): ?self
+    public static function make(string|false $docComment): ?self
     {
         if (empty($docComment)) {
             return null;
@@ -111,8 +111,10 @@ class DocBlockParser
             return null;
         }
 
+        $summary = $this->getSummary() ?? ''; // @pest-mutate-ignore Strict type assertion for PHPStan.
+
         $description = str($this->getTextNodes()[0]->text)
-            ->after($this->getSummary())
+            ->after($summary)
             ->trim()
             ->toString();
 

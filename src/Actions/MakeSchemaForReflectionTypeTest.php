@@ -23,6 +23,8 @@ class MakeSchemaForReflectionTypeCollectionInheritance extends Collection {}
 
 class MakeSchemaForReflectionTypeDataCollectionInheritance extends DataCollection {}
 
+enum NonBackedEnum {}
+
 class MakeSchemaForReflectionTypeTest extends Data
 {
     public function __construct(
@@ -35,6 +37,7 @@ class MakeSchemaForReflectionTypeTest extends Data
 
         public TestStringEnum $stringEnumProperty,
         public TestIntegerEnum $intEnumProperty,
+        public NonBackedEnum $nonBackedEnumProperty,
 
         public DateTimeInterface $dateTimeProperty,
         public CarbonInterface $carbonInterfaceProperty,
@@ -80,6 +83,13 @@ it('throws an exception if the type is not supported', function () {
 
     $action->handle($wrapper, 'unsupportedProperty');
 })->throws(\Exception::class, 'JSON Schema transformation is not supported for the "Closure" type.');
+
+it('throws an exception if the enum is not backed', function () {
+    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'nonBackedEnumProperty')->getReflectionType();
+    $action = new MakeSchemaForReflectionType;
+
+    expect(fn () => $action->handle($wrapper, 'nonBackedEnumProperty'))->toThrow(\Exception::class, 'Enum "NonBackedEnum" is not a backed enum.');
+});
 
 it('makes a UnionSchema for a nullable type by default', function () {
     $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'nullableProperty')->getReflectionType();

@@ -120,7 +120,10 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
 
         $reflection = new \ReflectionEnum($this->get());
 
-        if ($reflection->getBackingType()->getName() !== 'int') {
+        /** @var \ReflectionNamedType $backingType */
+        $backingType = $reflection->getBackingType();
+
+        if ($backingType->getName() !== 'int') {
             return null;
         }
 

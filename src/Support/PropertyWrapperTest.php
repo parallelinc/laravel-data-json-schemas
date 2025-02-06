@@ -245,6 +245,12 @@ test('isDateTime returns false if the reflected property is not a DateTime', fun
     expect($reflector->isDateTime())->toBe(false);
 });
 
+test('isDateTime returns false if the reflected property is a union', function () {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
+
+    expect($reflector->isDateTime())->toBe(false);
+});
+
 it('can check if the reflected property is an array', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testArray');
 
@@ -271,6 +277,12 @@ it('can check if the reflected property is an enum', function () {
 
 test('isEnum returns false if the reflected property is not an enum', function () {
     $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'test');
+
+    expect($reflector->isEnum())->toBe(false);
+});
+
+test('isEnum returns false if the reflected property is a union', function () {
+    $reflector = PropertyWrapper::make(TestPropertyWrapperClass::class, 'testUnion');
 
     expect($reflector->isEnum())->toBe(false);
 });

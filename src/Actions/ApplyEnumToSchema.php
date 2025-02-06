@@ -11,8 +11,17 @@ class ApplyEnumToSchema
     /** @use Runnable<Schema> */
     use Runnable;
 
+    /**
+     * Apply the enum to the schema.
+     */
     public function handle(Schema $schema, PropertyWrapper $property): Schema
     {
-        return $schema->enum($property->getTypeName());
+        $enum = $property->getTypeName();
+
+        if (is_null($enum) || ! enum_exists($enum)) {
+            return $schema;
+        }
+
+        return $schema->enum($enum);
     }
 }

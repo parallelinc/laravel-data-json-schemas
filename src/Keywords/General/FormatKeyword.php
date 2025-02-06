@@ -41,6 +41,9 @@ class FormatKeyword extends Keyword implements HandlesMultipleInstances
             throw new SchemaConfigurationException('A schema cannot have more than one format.');
         }
 
-        return $instances->first()->apply($schema);
+        /** @var FormatKeyword $instance */
+        $instance = $instances->first();
+
+        return $instance->apply($schema);
     }
 }

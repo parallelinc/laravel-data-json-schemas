@@ -59,7 +59,11 @@ class PropertyWrapper implements EntityWrapper
 
     public function getReflectionType(): ReflectionType
     {
-        return $this->property->getType();
+        // The PropertyWrapper doesn't support typeless properties.
+        /** @var ReflectionType $type */
+        $type = $this->property->getType();
+
+        return $type;
     }
 
     /**
@@ -154,6 +158,10 @@ class PropertyWrapper implements EntityWrapper
     {
         $typeName = $this->getTypeName();
 
+        if (is_null($typeName)) {
+            return false; // @pest-mutate-ignore Strict type assertion for PHPStan.
+        }
+
         return is_subclass_of($typeName, DateTimeInterface::class)
             || $typeName === 'DateTimeInterface';
     }
@@ -176,7 +184,13 @@ class PropertyWrapper implements EntityWrapper
      */
     public function isEnum(): bool
     {
-        return enum_exists($this->getTypeName());
+        $typeName = $this->getTypeName();
+
+        if (is_null($typeName)) {
+            return false; // @pest-mutate-ignore Strict type assertion for PHPStan.
+        }
+
+        return enum_exists($typeName);
     }
 
     /**
@@ -192,6 +206,10 @@ class PropertyWrapper implements EntityWrapper
 
         if (! $type instanceof NamedType) {
             return false;
+        }
+
+        if (is_null($type->dataClass)) {
+            return false; // @pest-mutate-ignore Strict type assertion for PHPStan.
         }
 
         return is_subclass_of($type->dataClass, Data::class);
@@ -231,7 +249,10 @@ class PropertyWrapper implements EntityWrapper
             return null;
         }
 
-        return ClassWrapper::make($this->getDataClassName());
+        /** @var class-string<Data> */
+        $dataClassName = $this->getDataClassName();
+
+        return ClassWrapper::make($dataClassName);
     }
 
     /**

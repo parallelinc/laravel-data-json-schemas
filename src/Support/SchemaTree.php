@@ -9,7 +9,7 @@ use Illuminate\Support\Stringable;
 
 class SchemaTree
 {
-    protected ?string $rootClass = null;
+    protected string $rootClass = '';
 
     /**
      * @var array<string, ObjectSchema>

@@ -79,7 +79,9 @@ class ClassWrapper implements EntityWrapper
 
     public function getProperty(string $propertyName): PropertyWrapper
     {
-        return $this->properties()->first(fn (PropertyWrapper $property) => $property->getName() === $propertyName);
+        return $this->properties()
+            ->first(fn (PropertyWrapper $property) => $property->getName() === $propertyName)
+            ?? throw new \Exception("Property \"{$propertyName}\" not found in class \"{$this->getName()}\"");
     }
 
     /**

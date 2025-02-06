@@ -12,6 +12,10 @@ test('the make method returns null when given an empty value')
     ->expect(DocBlockParser::make(''))
     ->toBeNull();
 
+test('the make method returns null when given a false value')
+    ->expect(DocBlockParser::make(false))
+    ->toBeNull();
+
 it('can get a param description')
     ->expect(DocBlockParser::make('/** @param string $name The name of the person */'))
     ->getParamDescription('name')

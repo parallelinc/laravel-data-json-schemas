@@ -80,6 +80,10 @@ class MakeSchemaForReflectionType
     protected function getEnumSchemaClass(string $enum): string
     {
         $reflector = new \ReflectionEnum($enum);
+        if (! $reflector->isBacked()) {
+            throw new \Exception("Enum \"{$enum}\" is not a backed enum.");
+        }
+
         $type = $reflector->getBackingType()->getName();
 
         return $type === 'int'

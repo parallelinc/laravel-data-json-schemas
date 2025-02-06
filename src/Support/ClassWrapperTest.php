@@ -101,6 +101,12 @@ it('can get a property', function () {
         ->getName()->toBe('test');
 });
 
+it('throws an exception if a property is not found', function () {
+    $reflector = ClassWrapper::make(TestClassWrapperClass::class);
+
+    $reflector->getProperty('nonExistentProperty');
+})->throws(\Exception::class, 'Property "nonExistentProperty" not found in class "TestClassWrapperClass"');
+
 it('can check if it has a constructor', function () {
     $reflector = ClassWrapper::make(TestClassWrapperClass::class);
 

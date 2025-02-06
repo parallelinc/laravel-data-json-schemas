@@ -182,7 +182,10 @@ trait HasKeywords
         $instances = collect($this->getKeywordInstances($name));
 
         if ($instances->count() === 1) {
-            return $instances->first()->apply($schema);
+            /** @var Keyword $instance */
+            $instance = $instances->first();
+
+            return $instance->apply($schema);
         }
 
         if (is_subclass_of($name, MergesMultipleInstancesIntoAllOf::class)) {
@@ -195,7 +198,10 @@ trait HasKeywords
             return $name::applyMultiple($schema, $instances);
         }
 
-        return $instances->last()->apply($schema);
+        /** @var Keyword $instance */
+        $instance = $instances->last();
+
+        return $instance->apply($schema);
     }
 
     /**
@@ -216,7 +222,10 @@ trait HasKeywords
         })->map->toArray()->unique();
 
         if (count($subschemas) === 1) {
-            return $instances->first()->apply($schema);
+            /** @var Keyword $instance */
+            $instance = $instances->first();
+
+            return $instance->apply($schema);
         }
 
         $allOf = collect($allOf)->merge($subschemas)->all();

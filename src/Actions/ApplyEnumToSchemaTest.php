@@ -1,6 +1,7 @@
 <?php
 
 use BasilLangevin\LaravelDataSchemas\Actions\ApplyEnumToSchema;
+use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
 use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
@@ -19,4 +20,28 @@ it('applies the enum to the schema', function () {
     $result = $action->handle($schema, $property);
 
     expect($result->getEnum())->toBe(TestStringEnum::class);
+});
+
+it('does not apply the enum to the schema if the enum does not exist', function () {
+    $this->class->addProperty('NonExistentEnum', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = new StringSchema;
+
+    $action = new ApplyEnumToSchema;
+    $result = $action->handle($schema, $property);
+
+    expect(fn () => $result->getEnum())->toThrow(KeywordNotSetException::class);
+});
+
+it('does not apply the enum to the schema if the property is a union type', function () {
+    $this->class->addProperty('string|int', 'property');
+    $property = $this->class->getClassProperty('property');
+
+    $schema = new StringSchema;
+
+    $action = new ApplyEnumToSchema;
+    $result = $action->handle($schema, $property);
+
+    expect(fn () => $result->getEnum())->toThrow(KeywordNotSetException::class);
 });

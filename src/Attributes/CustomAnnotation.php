@@ -14,12 +14,20 @@ class CustomAnnotation implements ArrayAttribute
     /**
      * @param  string|array<string, string>  $annotation
      */
-    public function __construct(protected string|array $annotation, protected ?string $value = null) {}
+    public function __construct(protected string|array $annotation, protected ?string $value = null)
+    {
+        if (is_string($annotation) && is_null($value)) {
+            throw new \InvalidArgumentException('Custom annotations require a key and value.');
+        }
+    }
 
     public function getValue(): array
     {
-        return is_array($this->annotation)
-            ? $this->annotation
-            : [$this->annotation => $this->value];
+        if (is_array($this->annotation)) {
+            return $this->annotation;
+        }
+
+        /** @var array<string, string> */
+        return [$this->annotation => $this->value];
     }
 }

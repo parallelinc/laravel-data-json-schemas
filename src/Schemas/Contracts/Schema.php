@@ -21,10 +21,6 @@ use Illuminate\Support\Collection;
  *
  * @see https://json-schema.org/draft/2020-12/json-schema-validation
  *
- * @method static applyType() Apply the type keyword to the schema.
- *
- * --------------------------------------------------------------------------
- * Annotation keywords:
  * --------------------------------------------------------------------------
  * @method static dialect(JsonSchemaDialect $dialect) Set the dialect keyword of the schema.
  * @method JsonSchemaDialect|Collection<int, JsonSchemaDialect> getDialect() Get the value(s) passed to the dialect method.

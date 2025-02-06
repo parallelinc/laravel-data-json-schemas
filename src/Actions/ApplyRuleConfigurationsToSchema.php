@@ -111,8 +111,11 @@ class ApplyRuleConfigurationsToSchema
             default => [],
         };
 
+        /** @var array<string> $contractTypes */
+        $contractTypes = Arr::flatten($contractTypes);
+
         return collect(static::$contracts)
-            ->only(Arr::flatten($contractTypes))
+            ->only($contractTypes)
             ->values();
     }
 

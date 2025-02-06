@@ -29,7 +29,10 @@ class AttributeWrapper
     {
         /** @phpstan-ignore staticMethod.alreadyNarrowedType */
         if (! self::supports($attribute)) {
-            throw new \InvalidArgumentException("AttributeWrapper does not support the \"{$attribute->getName()}\" attribute.");
+            /** @var string $name */
+            $name = $attribute->getName();
+
+            throw new \InvalidArgumentException("AttributeWrapper does not support the \"{$name}\" attribute.");
         }
 
         $this->instance = $attribute->newInstance();
@@ -110,7 +113,10 @@ class AttributeWrapper
         /** @var array<int, mixed> $value */
         $value = $this->getInstancePropertyValue($property);
 
-        return Arr::flatten($value);
+        /** @var array<int, mixed> $result */
+        $result = Arr::flatten($value);
+
+        return $result;
     }
 
     /**

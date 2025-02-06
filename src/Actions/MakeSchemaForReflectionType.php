@@ -33,6 +33,11 @@ class MakeSchemaForReflectionType
         return $this->getSchemaClass($type)::make();
     }
 
+    /**
+     * Get the schema class for a reflection type.
+     *
+     * @return class-string<Schema>
+     */
     protected function getSchemaClass(ReflectionType $type): string
     {
         if ($type instanceof ReflectionUnionType) {

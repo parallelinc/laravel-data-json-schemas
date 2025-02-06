@@ -68,6 +68,8 @@ trait HasKeywords
 
     /**
      * Get the keyword class that has the method matching the given name.
+     *
+     * @return class-string<Keyword>|null
      */
     private function getKeywordByMethod(string $name): ?string
     {
@@ -115,11 +117,15 @@ trait HasKeywords
 
     /**
      * Set the value for the appropriate keyword.
+     *
+     * @param  class-string<Keyword>|string  $name
      */
     public function setKeyword(string $name, mixed ...$arguments): self
     {
         if (is_subclass_of($name, Keyword::class)) {
             $keyword = $name;
+
+            /** @var class-string<Keyword> $name */
             $name = $name::method();
         } else {
             $keyword = $this->getKeywordByMethod($name);
@@ -129,6 +135,7 @@ trait HasKeywords
             $this->keywordInstances[$name] = [];
         }
 
+        /** @var class-string<Keyword> $keyword */
         $instance = new $keyword(...$arguments);
 
         if ($instance instanceof ReceivesParentSchema) {
@@ -172,7 +179,7 @@ trait HasKeywords
             ->reduce(function (Collection $schema, string $keyword) {
                 return $this->applyKeyword($keyword, $schema);
             }, collect())
-            ->toArray();
+            ->all();
     }
 
     /**

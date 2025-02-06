@@ -16,9 +16,10 @@ trait Runnable
      */
     public static function run(...$arguments): mixed
     {
+        /** @var static $instance */
         $instance = app(static::class);
 
         /** @var TReturn */
-        return $instance->handle(...$arguments);
+        return call_user_func_array([$instance, 'handle'], $arguments);
     }
 }

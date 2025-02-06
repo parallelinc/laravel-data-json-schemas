@@ -29,7 +29,6 @@ use Illuminate\Support\Collection;
  * Similarly, the value(s) of the keyword can be retrieved by
  * calling the keyword's name prefixed by "get" as a camel
  * cased method. This returns every value that was set.
- *
  * @example
  * ```php
  * $value = $schema->getMinLength();

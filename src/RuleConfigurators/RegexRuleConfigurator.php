@@ -14,6 +14,9 @@ class RegexRuleConfigurator implements ConfiguresStringSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
-        return $schema->pattern($attribute->getValue());
+        /** @var string $pattern */
+        $pattern = $attribute->getValue();
+
+        return $schema->pattern($pattern);
     }
 }

@@ -19,7 +19,7 @@ use Spatie\LaravelData\Support\Types\NamedType;
 
 class ApplyArrayItemsToSchema
 {
-    /** @use Runnable<ArraySchema|UnionSchema> */
+    /** @use Runnable<array{ArraySchema|UnionSchema, PropertyWrapper, SchemaTree}, ArraySchema|UnionSchema> */
     use Runnable;
 
     public function handle(ArraySchema|UnionSchema $schema, PropertyWrapper $property, SchemaTree $tree): ArraySchema|UnionSchema

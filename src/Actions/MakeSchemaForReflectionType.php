@@ -16,26 +16,31 @@ use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use ReflectionNamedType;
+use ReflectionType;
 use ReflectionUnionType;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
 class MakeSchemaForReflectionType
 {
-    /** @use Runnable<Schema> */
+    /** @use Runnable<array{ReflectionType}, Schema> */
     use Runnable;
 
     public function __construct(protected bool $unionNullableTypes = true) {}
 
-    public function handle(ReflectionNamedType|ReflectionUnionType $type): Schema
+    public function handle(ReflectionType $type): Schema
     {
         return $this->getSchemaClass($type)::make();
     }
 
-    protected function getSchemaClass(ReflectionNamedType|ReflectionUnionType $type): string
+    protected function getSchemaClass(ReflectionType $type): string
     {
         if ($type instanceof ReflectionUnionType) {
             return UnionSchema::class;
+        }
+
+        if (! $type instanceof ReflectionNamedType) {
+            throw new \Exception('JSON Schema transformation is not supported for intersection types.');
         }
 
         $name = $type->getName();

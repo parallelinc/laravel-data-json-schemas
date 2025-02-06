@@ -10,7 +10,7 @@ use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 
 class SetupSchema
 {
-    /** @use Runnable<Schema> */
+    /** @use Runnable<array{Schema, PropertyWrapper, SchemaTree}, Schema> */
     use Runnable;
 
     public function handle(Schema $schema, PropertyWrapper $property, SchemaTree $tree): Schema

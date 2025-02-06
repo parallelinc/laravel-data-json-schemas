@@ -14,7 +14,10 @@ class DigitsBetweenRuleConfigurator implements ConfiguresNumberSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
-        [$minDigits, $maxDigits] = $attribute->getValue();
+        /** @var array<int, int> $values */
+        $values = $attribute->getValue();
+
+        [$minDigits, $maxDigits] = $values;
         $min = pow(10, $minDigits - 1);
         $max = pow(10, $maxDigits) - 1;
 

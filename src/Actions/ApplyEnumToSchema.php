@@ -8,7 +8,7 @@ use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
 
 class ApplyEnumToSchema
 {
-    /** @use Runnable<Schema> */
+    /** @use Runnable<array{Schema, PropertyWrapper}, Schema> */
     use Runnable;
 
     /**

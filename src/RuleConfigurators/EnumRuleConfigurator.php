@@ -16,7 +16,10 @@ class EnumRuleConfigurator implements ConfiguresNumberSchema, ConfiguresStringSc
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
-        return $schema->enum($attribute->getValue());
+        /** @var class-string $enum */
+        $enum = $attribute->getValue();
+
+        return $schema->enum($enum);
     }
 
     public static function configureStringSchema(
@@ -24,6 +27,9 @@ class EnumRuleConfigurator implements ConfiguresNumberSchema, ConfiguresStringSc
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
-        return $schema->enum($attribute->getValue());
+        /** @var class-string $enum */
+        $enum = $attribute->getValue();
+
+        return $schema->enum($enum);
     }
 }

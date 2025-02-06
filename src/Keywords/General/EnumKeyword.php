@@ -104,7 +104,7 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
             }
 
             throw new SchemaConfigurationException('Non-backed enum values are not supported.');
-        })->toArray();
+        })->all();
     }
 
     /**
@@ -127,8 +127,11 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
             return null;
         }
 
-        return collect($this->get()::cases())->mapWithKeys(function ($value) {
+        /** @var array<string, int> */
+        $result = collect($this->get()::cases())->mapWithKeys(function ($value) {
             return [$value->name => $value->value];
-        })->toArray();
+        })->all();
+
+        return $result;
     }
 }

@@ -14,6 +14,7 @@ class MaxDigitsRuleConfigurator implements ConfiguresNumberSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
+        /** @var int $maxDigits */
         $maxDigits = $attribute->getValue();
         $max = pow(10, $maxDigits) - 1;
 

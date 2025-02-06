@@ -26,9 +26,12 @@ use Illuminate\Support\Collection;
 use ReflectionClass;
 use ReflectionMethod;
 
+/**
+ * @template TSchema of Schema
+ */
 class ApplyRuleConfigurationsToSchema
 {
-    /** @use Runnable<Schema> */
+    /** @use Runnable<array{TSchema, EntityWrapper}, TSchema> */
     use Runnable;
 
     /** @var array<string, interface-string<ConfiguresSchema>> */
@@ -42,10 +45,15 @@ class ApplyRuleConfigurationsToSchema
         'string' => ConfiguresStringSchema::class,
     ];
 
+    /**
+     * @param  TSchema  $schema
+     * @return TSchema
+     */
     public function handle(Schema $schema, EntityWrapper $entity): Schema
     {
         if ($schema instanceof UnionSchema) {
-            $schema->getConstituentSchemas()->each(fn (Schema $schema) => $this->handle($schema, $entity));
+            $schema->getConstituentSchemas()
+                ->each(fn (Schema $schema) => app(self::class)->handle($schema, $entity));
 
             return $schema;
         }

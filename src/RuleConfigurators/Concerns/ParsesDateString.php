@@ -10,7 +10,7 @@ trait ParsesDateString
 
     protected static function parseDateString(PropertyWrapper $property, mixed $value): string
     {
-        if ($property->siblingNames()->contains($value)) {
+        if (is_string($value) && $property->siblingNames()->contains($value)) {
             return 'the value of '.$value;
         }
 

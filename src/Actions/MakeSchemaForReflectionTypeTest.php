@@ -14,6 +14,7 @@ use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Enumerable;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 
@@ -51,6 +52,8 @@ class MakeSchemaForReflectionTypeTest extends Data
         public string|int $unionProperty,
 
         public Closure $unsupportedProperty,
+
+        public Collection&Enumerable $unsupportedType,
     ) {}
 }
 
@@ -105,3 +108,10 @@ it('does not make a UnionSchema for a nullable type if the unionNullableTypes op
 
     expect($schema)->not->toBeInstanceOf(UnionSchema::class);
 });
+
+it('throws an exception if an intersection type is passed', function () {
+    $wrapper = PropertyWrapper::make(MakeSchemaForReflectionTypeTest::class, 'unsupportedType')->getReflectionType();
+    $action = new MakeSchemaForReflectionType;
+
+    $action->handle($wrapper, 'unsupportedType');
+})->throws(\Exception::class, 'JSON Schema transformation is not supported for intersection types.');

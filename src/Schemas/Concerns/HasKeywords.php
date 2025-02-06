@@ -42,7 +42,10 @@ trait HasKeywords
             $keywords->push(CustomAnnotationKeyword::class);
         }
 
-        return $keywords->values()->all();
+        /** @var array<int, class-string<Keyword>> $result */
+        $result = $keywords->values()->all();
+
+        return $result;
     }
 
     /**
@@ -162,9 +165,10 @@ trait HasKeywords
      */
     public function buildSchema(): array
     {
-        return collect($this->getKeywords())
-            ->flatten()
-            ->filter(fn (string $keyword) => $this->hasKeyword($keyword))
+        /** @var Collection<int, class-string<Keyword>> $keywords */
+        $keywords = collect($this->getKeywords())->flatten();
+
+        return $keywords->filter(fn (string $keyword) => $this->hasKeyword($keyword))
             ->reduce(function (Collection $schema, string $keyword) {
                 return $this->applyKeyword($keyword, $schema);
             }, collect())
@@ -247,6 +251,9 @@ trait HasKeywords
 
     /**
      * Allow keyword methods to be called on the schema type.
+     *
+     * @param  string  $name
+     * @param  array<int, mixed>  $arguments
      */
     public function __call(mixed $name, mixed $arguments): mixed
     {

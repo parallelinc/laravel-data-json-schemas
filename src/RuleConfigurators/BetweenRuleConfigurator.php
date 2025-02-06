@@ -21,8 +21,11 @@ class BetweenRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumber
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): ArraySchema {
-        return $schema->minItems($attribute->getValue()[0])
-            ->maxItems($attribute->getValue()[1]);
+        /** @var array<int, int> $values */
+        $values = $attribute->getValue();
+
+        return $schema->minItems($values[0])
+            ->maxItems($values[1]);
     }
 
     public static function configureNumberSchema(
@@ -30,8 +33,11 @@ class BetweenRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumber
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
-        return $schema->minimum($attribute->getValue()[0])
-            ->maximum($attribute->getValue()[1]);
+        /** @var array<int, int> $values */
+        $values = $attribute->getValue();
+
+        return $schema->minimum($values[0])
+            ->maximum($values[1]);
     }
 
     public static function configureObjectSchema(
@@ -39,8 +45,11 @@ class BetweenRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumber
         EntityWrapper $property,
         AttributeWrapper $attribute
     ): ObjectSchema {
-        return $schema->minProperties($attribute->getValue()[0])
-            ->maxProperties($attribute->getValue()[1]);
+        /** @var array<int, int> $values */
+        $values = $attribute->getValue();
+
+        return $schema->minProperties($values[0])
+            ->maxProperties($values[1]);
     }
 
     public static function configureStringSchema(
@@ -48,7 +57,10 @@ class BetweenRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumber
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
-        return $schema->minLength($attribute->getValue()[0])
-            ->maxLength($attribute->getValue()[1]);
+        /** @var array<int, int> $values */
+        $values = $attribute->getValue();
+
+        return $schema->minLength($values[0])
+            ->maxLength($values[1]);
     }
 }

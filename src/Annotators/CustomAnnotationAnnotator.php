@@ -11,14 +11,15 @@ class CustomAnnotationAnnotator implements AnnotatesSchema
 {
     public static function annotateSchema(Schema $schema, EntityWrapper $entity): Schema
     {
-        /** @var \Illuminate\Support\Collection<int, array<string, string>> $annotations */
+        /** @var array<string, string> $annotations */
         $annotations = $entity->attributes(CustomAnnotation::class)
-            ->flatMap->getValue();
+            ->flatMap->getValue()
+            ->toArray();
 
-        if ($annotations->isEmpty()) {
+        if (empty($annotations)) {
             return $schema;
         }
 
-        return $schema->customAnnotation($annotations->toArray());
+        return $schema->customAnnotation($annotations);
     }
 }

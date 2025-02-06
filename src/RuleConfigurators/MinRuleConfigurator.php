@@ -21,7 +21,10 @@ class MinRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSche
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): ArraySchema {
-        return $schema->minItems($attribute->getValue());
+        /** @var int $minItems */
+        $minItems = $attribute->getValue();
+
+        return $schema->minItems($minItems);
     }
 
     public static function configureNumberSchema(
@@ -29,7 +32,10 @@ class MinRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSche
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
-        return $schema->minimum($attribute->getValue());
+        /** @var int $min */
+        $min = $attribute->getValue();
+
+        return $schema->minimum($min);
     }
 
     public static function configureObjectSchema(
@@ -37,7 +43,10 @@ class MinRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSche
         EntityWrapper $entity,
         AttributeWrapper $attribute
     ): ObjectSchema {
-        return $schema->minProperties($attribute->getValue());
+        /** @var int $minProperties */
+        $minProperties = $attribute->getValue();
+
+        return $schema->minProperties($minProperties);
     }
 
     public static function configureStringSchema(
@@ -45,6 +54,9 @@ class MinRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSche
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
-        return $schema->minLength($attribute->getValue());
+        /** @var int $minLength */
+        $minLength = $attribute->getValue();
+
+        return $schema->minLength($minLength);
     }
 }

@@ -14,6 +14,7 @@ class DigitsRuleConfigurator implements ConfiguresNumberSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
+        /** @var int $digits */
         $digits = $attribute->getValue();
         $min = pow(10, $digits - 1);
         $max = pow(10, $digits) - 1;

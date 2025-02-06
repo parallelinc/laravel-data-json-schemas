@@ -14,6 +14,7 @@ class MinDigitsRuleConfigurator implements ConfiguresNumberSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
+        /** @var int $minDigits */
         $minDigits = $attribute->getValue();
         $min = pow(10, $minDigits - 1);
 

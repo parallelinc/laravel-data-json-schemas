@@ -21,7 +21,10 @@ class MaxRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSche
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): ArraySchema {
-        return $schema->maxItems($attribute->getValue());
+        /** @var int $maxItems */
+        $maxItems = $attribute->getValue();
+
+        return $schema->maxItems($maxItems);
     }
 
     public static function configureNumberSchema(
@@ -29,7 +32,10 @@ class MaxRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSche
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
-        return $schema->maximum($attribute->getValue());
+        /** @var int $max */
+        $max = $attribute->getValue();
+
+        return $schema->maximum($max);
     }
 
     public static function configureObjectSchema(
@@ -37,7 +43,10 @@ class MaxRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSche
         EntityWrapper $entity,
         AttributeWrapper $attribute
     ): ObjectSchema {
-        return $schema->maxProperties($attribute->getValue());
+        /** @var int $maxProperties */
+        $maxProperties = $attribute->getValue();
+
+        return $schema->maxProperties($maxProperties);
     }
 
     public static function configureStringSchema(
@@ -45,6 +54,9 @@ class MaxRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSche
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
-        return $schema->maxLength($attribute->getValue());
+        /** @var int $maxLength */
+        $maxLength = $attribute->getValue();
+
+        return $schema->maxLength($maxLength);
     }
 }

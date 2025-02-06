@@ -21,8 +21,11 @@ class SizeRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSch
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): ArraySchema {
-        return $schema->minItems($attribute->getValue())
-            ->maxItems($attribute->getValue());
+        /** @var int $size */
+        $size = $attribute->getValue();
+
+        return $schema->minItems($size)
+            ->maxItems($size);
     }
 
     public static function configureNumberSchema(
@@ -30,8 +33,11 @@ class SizeRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSch
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
-        return $schema->minimum($attribute->getValue())
-            ->maximum($attribute->getValue());
+        /** @var int $size */
+        $size = $attribute->getValue();
+
+        return $schema->minimum($size)
+            ->maximum($size);
     }
 
     public static function configureObjectSchema(
@@ -39,8 +45,11 @@ class SizeRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSch
         EntityWrapper $property,
         AttributeWrapper $attribute
     ): ObjectSchema {
-        return $schema->minProperties($attribute->getValue())
-            ->maxProperties($attribute->getValue());
+        /** @var int $size */
+        $size = $attribute->getValue();
+
+        return $schema->minProperties($size)
+            ->maxProperties($size);
     }
 
     public static function configureStringSchema(
@@ -48,7 +57,10 @@ class SizeRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSch
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
-        return $schema->minLength($attribute->getValue())
-            ->maxLength($attribute->getValue());
+        /** @var int $size */
+        $size = $attribute->getValue();
+
+        return $schema->minLength($size)
+            ->maxLength($size);
     }
 }

@@ -12,8 +12,17 @@ use Spatie\LaravelData\Data;
 
 class TransformDataClassToSchema
 {
-    /** @use Runnable<ObjectSchema> */
+    /** @use Runnable<array{class-string<Data>, ?SchemaTree}, ObjectSchema> */
     use Runnable;
+
+    /**
+     * @param  ApplyAnnotationsToSchema<ObjectSchema>  $annotator
+     * @param  ApplyRuleConfigurationsToSchema<ObjectSchema>  $ruleConfigurator
+     */
+    public function __construct(
+        protected ApplyAnnotationsToSchema $annotator,
+        protected ApplyRuleConfigurationsToSchema $ruleConfigurator,
+    ) {}
 
     /**
      * Transform a data class to a schema.
@@ -36,10 +45,10 @@ class TransformDataClassToSchema
 
         $schema->class($dataClass)
             ->type(DataType::Object)
-            ->pipe(fn (Schema $schema) => ApplyAnnotationsToSchema::run($schema, $class))
-            ->pipe(fn (Schema $schema) => ApplyRuleConfigurationsToSchema::run($schema, $class))
-            ->pipe(fn (Schema $schema) => ApplyPropertiesToDataObjectSchema::run($schema, $class, $tree))
-            ->pipe(fn (Schema $schema) => ApplyRequiredToDataObjectSchema::run($schema, $class))
+            ->pipe(fn (ObjectSchema $schema) => $this->annotator->handle($schema, $class))
+            ->pipe(fn (ObjectSchema $schema) => $this->ruleConfigurator->handle($schema, $class))
+            ->pipe(fn (ObjectSchema $schema) => ApplyPropertiesToDataObjectSchema::run($schema, $class, $tree))
+            ->pipe(fn (ObjectSchema $schema) => ApplyRequiredToDataObjectSchema::run($schema, $class))
             ->tree($tree);
 
         return $schema;

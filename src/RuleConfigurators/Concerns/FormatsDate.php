@@ -8,6 +8,7 @@ trait FormatsDate
 {
     protected static function formatDate(mixed $value): string
     {
+        /** @phpstan-ignore argument.type */
         $value = new Carbon($value);
 
         if ($value->isUtc()) {

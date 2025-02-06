@@ -3,6 +3,7 @@
 namespace BasilLangevin\LaravelDataSchemas;
 
 use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
+use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
 use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
@@ -21,6 +22,7 @@ class JsonSchema
         $schema = TransformDataClassToSchema::run($dataClass);
 
         if ($dialect = config('data-schemas.dialect')) {
+            /** @var JsonSchemaDialect $dialect */
             $schema->dialect($dialect);
         }
 
@@ -40,6 +42,7 @@ class JsonSchema
             ->items(TransformDataClassToSchema::run($dataClass, $tree));
 
         if ($dialect = config('data-schemas.dialect')) {
+            /** @var JsonSchemaDialect $dialect */
             $schema->dialect($dialect);
         }
 

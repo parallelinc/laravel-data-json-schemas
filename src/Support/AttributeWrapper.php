@@ -68,8 +68,8 @@ class AttributeWrapper
             // Spatie/laravel-data validation attributes
             $this->instance instanceof StringValidationAttribute => $this->getStringValidationAttributeValue(),
             $this->instance instanceof Enum => $this->getInstancePropertyValue('enum'),
-            $this->instance instanceof In => Arr::flatten($this->getInstancePropertyValue('values')),
-            $this->instance instanceof NotIn => Arr::flatten($this->getInstancePropertyValue('values')),
+            $this->instance instanceof In => $this->getFlattenedInstancePropertyValue('values'),
+            $this->instance instanceof NotIn => $this->getFlattenedInstancePropertyValue('values'),
 
             default => throw new \Exception('Attribute value not supported'),
         };
@@ -96,6 +96,19 @@ class AttributeWrapper
         $reflection = new \ReflectionObject($this->instance);
 
         return $reflection->getProperty($property)->getValue($this->instance);
+    }
+
+    /**
+     * Get the value of a property of the attribute instance and flatten it.
+     *
+     * @return array<int, mixed>
+     */
+    protected function getFlattenedInstancePropertyValue(string $property): array
+    {
+        /** @var array<int, mixed> $value */
+        $value = $this->getInstancePropertyValue($property);
+
+        return Arr::flatten($value);
     }
 
     /**

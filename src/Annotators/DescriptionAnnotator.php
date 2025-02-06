@@ -16,7 +16,10 @@ class DescriptionAnnotator implements AnnotatesSchema
     {
         if ($attribute = $entity->getAttribute(Description::class)) {
             /** @var AttributeWrapper $attribute */
-            return $schema->description($attribute->getValue());
+            /** @var string $description */
+            $description = $attribute->getValue();
+
+            return $schema->description($description);
         }
 
         $description = null;

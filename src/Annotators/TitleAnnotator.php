@@ -35,7 +35,10 @@ class TitleAnnotator implements AnnotatesSchema
         }
 
         /** @var AttributeWrapper $title */
-        return $title->getValue();
+        /** @var string|null $value */
+        $value = $title->getValue();
+
+        return $value;
     }
 
     /**

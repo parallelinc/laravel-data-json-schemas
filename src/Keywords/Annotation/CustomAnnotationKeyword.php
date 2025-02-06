@@ -21,13 +21,14 @@ class CustomAnnotationKeyword extends Keyword implements HandlesMultipleInstance
      */
     public function get(): array
     {
+        /** @var array<string, string> $annotations */
         $annotations = is_array($this->annotation)
             ? $this->annotation
             : [$this->annotation => $this->value];
 
         return collect($annotations)
             ->mapWithKeys(fn ($value, $key) => [Str::start($key, 'x-') => $value])
-            ->toArray();
+            ->all();
     }
 
     /**

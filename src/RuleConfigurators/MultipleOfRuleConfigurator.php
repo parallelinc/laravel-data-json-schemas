@@ -14,6 +14,7 @@ class MultipleOfRuleConfigurator implements ConfiguresNumberSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
+        /** @var int $multipleOf */
         $multipleOf = $attribute->getValue();
 
         return $schema->multipleOf($multipleOf);

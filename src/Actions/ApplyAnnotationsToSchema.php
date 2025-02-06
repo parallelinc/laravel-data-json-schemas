@@ -11,9 +11,12 @@ use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
 use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
 
+/**
+ * @template TSchema of Schema
+ */
 class ApplyAnnotationsToSchema
 {
-    /** @use Runnable<Schema> */
+    /** @use Runnable<array{TSchema, EntityWrapper}, TSchema> */
     use Runnable;
 
     /** @var array<class-string<AnnotatesSchema>> */
@@ -24,6 +27,10 @@ class ApplyAnnotationsToSchema
         DefaultAnnotationAnnotator::class,
     ];
 
+    /**
+     * @param  TSchema  $schema
+     * @return TSchema
+     */
     public function handle(Schema $schema, EntityWrapper $entity): Schema
     {
         foreach (self::$annotators as $annotator) {

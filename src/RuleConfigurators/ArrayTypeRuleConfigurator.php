@@ -14,6 +14,9 @@ class ArrayTypeRuleConfigurator implements ConfiguresObjectSchema
         EntityWrapper $entity,
         AttributeWrapper $attribute
     ): ObjectSchema {
-        return $schema->required($attribute->getValue());
+        /** @var array<int, string> $properties */
+        $properties = $attribute->getValue();
+
+        return $schema->required($properties);
     }
 }

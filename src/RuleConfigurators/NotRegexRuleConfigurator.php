@@ -14,6 +14,9 @@ class NotRegexRuleConfigurator implements ConfiguresStringSchema
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
-        return $schema->not(fn (StringSchema $schema) => $schema->pattern($attribute->getValue()));
+        /** @var string $pattern */
+        $pattern = $attribute->getValue();
+
+        return $schema->not(fn (StringSchema $schema) => $schema->pattern($pattern));
     }
 }

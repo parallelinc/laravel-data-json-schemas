@@ -90,7 +90,7 @@ class SchemaTree
             $number = $duplicates->keys()->flip()->get($index) + 1;
 
             return $name.'-'.$number;
-        })->toArray();
+        })->all();
     }
 
     public function getRefName(string $dataClass): string
@@ -121,7 +121,7 @@ class SchemaTree
     {
         return $this->getDefClasses()
             ->mapWithKeys(fn (string $dataClass) => $this->getDef($dataClass))
-            ->toArray();
+            ->all();
     }
 
     /**

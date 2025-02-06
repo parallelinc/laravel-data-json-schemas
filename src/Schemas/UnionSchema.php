@@ -111,6 +111,9 @@ class UnionSchema implements Schema
 
     /**
      * Allow keyword methods to be called on the schema type.
+     *
+     * @param  string  $name
+     * @param  array<int, mixed>  $arguments
      */
     public function __call(mixed $name, mixed $arguments): mixed
     {

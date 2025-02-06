@@ -16,7 +16,10 @@ class InRuleConfigurator implements ConfiguresNumberSchema, ConfiguresStringSche
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): NumberSchema {
-        return $schema->enum($attribute->getValue());
+        /** @var array<int, string|int> $values */
+        $values = $attribute->getValue();
+
+        return $schema->enum($values);
     }
 
     public static function configureStringSchema(
@@ -24,6 +27,9 @@ class InRuleConfigurator implements ConfiguresNumberSchema, ConfiguresStringSche
         PropertyWrapper $property,
         AttributeWrapper $attribute
     ): StringSchema {
-        return $schema->enum($attribute->getValue());
+        /** @var array<int, string> $values */
+        $values = $attribute->getValue();
+
+        return $schema->enum($values);
     }
 }

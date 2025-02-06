@@ -12,8 +12,8 @@ use Illuminate\Support\Collection;
  *
  * @see BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword
  *
- * @method static enum(string|array $enum) Set the enum keyword of the schema.
- * @method string|array|Collection<int, string|array> getEnum() Get the value(s) passed to the enum method.
+ * @method static enum(string|array<int, int|string|bool|\BackedEnum> $enum) Set the enum keyword of the schema.
+ * @method string|array<int, int|string|bool|\BackedEnum>|Collection<int, string|array<int, int|string|bool|\BackedEnum>> getEnum() Get the value(s) passed to the enum method.
  *
  * @see BasilLangevin\LaravelDataSchemas\Keywords\General\EnumKeyword
  *

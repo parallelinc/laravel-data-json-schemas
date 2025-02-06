@@ -27,6 +27,7 @@ class AttributeWrapper
      */
     public function __construct(protected \ReflectionAttribute $attribute)
     {
+        /** @phpstan-ignore staticMethod.alreadyNarrowedType */
         if (! self::supports($attribute)) {
             throw new \InvalidArgumentException("AttributeWrapper does not support the \"{$attribute->getName()}\" attribute.");
         }
@@ -44,6 +45,7 @@ class AttributeWrapper
     public static function supports(\ReflectionAttribute $attribute): bool
     {
         return collect(self::SUPPORTED_ATTRIBUTES)
+            /** @phpstan-ignore function.alreadyNarrowedType */
             ->some(fn (string $class) => is_subclass_of($attribute->getName(), $class));
     }
 

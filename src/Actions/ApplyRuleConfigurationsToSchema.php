@@ -123,7 +123,7 @@ class ApplyRuleConfigurationsToSchema
      * methods defined in ConfiguresNumberSchema.
      *
      * @param  interface-string<ConfiguresSchema>  $contract
-     * @return Collection<int, string>
+     * @return Collection<int, non-empty-string>
      */
     protected function getContractMethods(string $contract): Collection
     {

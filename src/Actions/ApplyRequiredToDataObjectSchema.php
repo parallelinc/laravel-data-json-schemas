@@ -51,11 +51,7 @@ class ApplyRequiredToDataObjectSchema
     {
         /** @var array<string> */
         return $class->properties()
-            ->filter(function (PropertyWrapper $property) {
-                $type = $property->getType();
-
-                return $type !== null && ! $property->isNullable();
-            })
+            ->filter(fn (PropertyWrapper $property) => ! $property->isNullable())
             ->map->getName()
             ->toArray();
     }

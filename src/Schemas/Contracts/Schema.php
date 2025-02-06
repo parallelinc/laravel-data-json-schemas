@@ -2,10 +2,15 @@
 
 namespace BasilLangevin\LaravelDataSchemas\Schemas\Contracts;
 
+use BasilLangevin\LaravelDataSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataSchemas\Enums\Format;
+use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
+use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\Pipeable;
 use BasilLangevin\LaravelDataSchemas\Support\Contracts\Whenable;
 use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
 use Closure;
+use Illuminate\Support\Collection;
 
 /**
  * @property array<class-string<Keyword>|array<class-string<Keyword>>> $keywords The keywords that are available for this schema type.
@@ -33,8 +38,8 @@ use Closure;
  * --------------------------------------------------------------------------
  * @method static type(DataType $type) Set the type keyword of the schema.
  * @method DataType|Collection<int, DataType> getType() Get the value(s) passed to the type method.
- * @method static enum(string|array $enum) Set the enum keyword of the schema.
- * @method string|array|Collection<int, string|array> getEnum() Get the value(s) passed to the enum method.
+ * @method static enum(string|array<int, int|string|bool|\BackedEnum> $enum) Set the enum keyword of the schema.
+ * @method string|array<int, int|string|bool|\BackedEnum>|Collection<int, string|array<int, int|string|bool|\BackedEnum>> getEnum() Get the value(s) passed to the enum method.
  * @method static const(mixed $const) Set the const keyword of the schema.
  * @method mixed|Collection<int, mixed> getConst() Get the value(s) passed to the const method.
  * @method static format(string|Format $format) Set the format keyword of the schema.

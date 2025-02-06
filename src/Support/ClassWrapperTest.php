@@ -11,7 +11,7 @@ use Spatie\LaravelData\Data;
 covers(ClassWrapper::class);
 
 #[Title('Test'), CustomAnnotation('test1', 'value1'), CustomAnnotation('test2', 'value2')]
-class TestClassWrapperClass
+class TestClassWrapperClass extends Data
 {
     public string $test;
 
@@ -36,6 +36,12 @@ class TestClassWrapperClass
     ) {}
 }
 
+class TestInvalidClassWrapperClass {}
+
+it('throws an exception if the class is not a data class', function () {
+    ClassWrapper::make(TestInvalidClassWrapperClass::class);
+})->throws(\InvalidArgumentException::class, 'Only data classes are supported.');
+
 it('can get its name')
     ->expect(fn () => ClassWrapper::make(TestClassWrapperClass::class)->getName())
     ->toBe('TestClassWrapperClass');
@@ -49,13 +55,6 @@ it('can check if it is a data object', function () {
     $reflector = ClassWrapper::make(IsDataObjectTestClass::class);
 
     expect($reflector->isDataObject())->toBe(true);
-});
-
-it('can check if it is not a data object', function () {
-    class IsNotDataObjectTestClass {}
-    $reflector = ClassWrapper::make(IsNotDataObjectTestClass::class);
-
-    expect($reflector->isDataObject())->toBe(false);
 });
 
 it('can check if it has an attribute', function () {
@@ -126,7 +125,7 @@ it('can get the constructor doc block', function () {
 });
 
 test('getConstructorDocBlock returns null if the class does not have a constructor', function () {
-    class NoConstructorTestClass {}
+    class NoConstructorTestClass extends Data {}
 
     $reflector = ClassWrapper::make(NoConstructorTestClass::class);
 
@@ -134,7 +133,7 @@ test('getConstructorDocBlock returns null if the class does not have a construct
 });
 
 test('getConstructorDocBlock returns null if the constructor has no doc block', function () {
-    class NoDocBlockConstructorTestClass
+    class NoDocBlockConstructorTestClass extends Data
     {
         public function __construct() {}
     }

@@ -22,7 +22,13 @@ class ClassWrapper implements EntityWrapper
     /**
      * @param  \ReflectionClass<Data>  $class
      */
-    public function __construct(protected ReflectionClass $class) {}
+    public function __construct(protected ReflectionClass $class)
+    {
+        /** @phpstan-ignore method.alreadyNarrowedType */
+        if (! $class->isSubclassOf(Data::class)) {
+            throw new \InvalidArgumentException('Only data classes are supported.');
+        }
+    }
 
     /**
      * Create a new class wrapper from a class name.
@@ -60,7 +66,7 @@ class ClassWrapper implements EntityWrapper
      */
     public function isDataObject(): bool
     {
-        return $this->class->isSubclassOf(Data::class);
+        return true;
     }
 
     /**

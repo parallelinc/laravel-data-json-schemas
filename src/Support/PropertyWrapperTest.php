@@ -11,13 +11,14 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Enumerable;
+use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Support\DataProperty;
 use Spatie\LaravelData\Support\DataPropertyType;
 use Spatie\LaravelData\Support\Types\Type;
 
 covers(PropertyWrapper::class);
 
-class TestPropertyWrapperClass
+class TestPropertyWrapperClass extends Data
 {
     #[Title('Test'), CustomAnnotation('test1', 'value1'), CustomAnnotation('test2', 'value2')]
     public string $test;

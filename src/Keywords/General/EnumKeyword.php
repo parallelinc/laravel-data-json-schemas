@@ -10,11 +10,13 @@ use Illuminate\Support\Collection;
 class EnumKeyword extends Keyword implements HandlesMultipleInstances
 {
     /**
-     * @param  string|array<int, int|string>  $value
+     * @param  string|array<int, int|string|bool|\BackedEnum>  $value
      */
     public function __construct(protected string|array $value)
     {
         if (is_array($value)) {
+            $this->validateArray($value);
+
             return;
         }
 
@@ -32,7 +34,7 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
     /**
      * {@inheritdoc}
      *
-     * @return string|array<int, int|string>
+     * @return string|array<int, int|string|bool|\BackedEnum>
      */
     public function get(): string|array
     {
@@ -77,6 +79,21 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
+     * Validate the array value.
+     *
+     * @param  array<int, int|string|bool|\BackedEnum>  $value
+     */
+    protected function validateArray(array $value): void
+    {
+        $enumValues = collect($value)->filter(fn ($value) => is_object($value));
+
+        /** @phpstan-ignore function.alreadyNarrowedType */
+        if ($enumValues->some(fn ($value) => ! property_exists($value, 'value'))) {
+            throw new SchemaConfigurationException('Non-backed enum values are not supported.');
+        }
+    }
+
+    /**
      * Check if the value is an enum.
      *
      * @phpstan-assert-if-true class-string<\BackedEnum> $this->get()
@@ -87,24 +104,16 @@ class EnumKeyword extends Keyword implements HandlesMultipleInstances
     }
 
     /**
-     * @return array<int, int|string>
+     * @return array<int, int|string|bool>
      */
     protected function getValues(): array
     {
-        /** @var array<int, \BackedEnum|int|string> $values */
+        /** @var array<int, \BackedEnum|int|string|bool> $values */
         $values = $this->isEnum() ? $this->get()::cases() : $this->get();
 
-        return collect($values)->map(function ($value) {
-            if (! is_object($value)) {
-                return $value;
-            }
-
-            if (property_exists($value, 'value')) {
-                return $value->value;
-            }
-
-            throw new SchemaConfigurationException('Non-backed enum values are not supported.');
-        })->all();
+        return collect($values)
+            ->map(fn ($value) => is_object($value) ? $value->value : $value)
+            ->all();
     }
 
     /**

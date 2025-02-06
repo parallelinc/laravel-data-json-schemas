@@ -46,7 +46,9 @@ it('adds properties to the schema', function () {
 });
 
 it('does not add properties to the schema if there are no properties', function () {
-    $class = ClassWrapper::make(Data::class);
+    class NoPropertiesDataClass extends Data {}
+
+    $class = ClassWrapper::make(NoPropertiesDataClass::class);
 
     $schema = ObjectSchema::make();
     ApplyPropertiesToDataObjectSchema::run($schema, $class, $this->tree);

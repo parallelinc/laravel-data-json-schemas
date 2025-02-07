@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Enums;
+namespace BasilLangevin\LaravelDataJsonSchemas\Enums;
 
 /**
  * The valid formats for the JSON Schema's "format" keyword.

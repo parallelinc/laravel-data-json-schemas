@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Object\MaxPropertiesKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\MaxPropertiesKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
 
 covers(MaxPropertiesKeyword::class);
 

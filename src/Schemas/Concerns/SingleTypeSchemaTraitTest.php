@@ -1,12 +1,12 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns;
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DescriptionKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\DescriptionKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 
 covers(SingleTypeSchemaTrait::class);
 

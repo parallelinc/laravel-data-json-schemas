@@ -1,14 +1,14 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns;
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\PipeCallbacks;
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Concerns\PipeCallbacks;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Concerns\WhenCallbacks;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
 
 /**
- * @property \BasilLangevin\LaravelDataSchemas\Enums\DataType $type The type of the schema.
+ * @property \BasilLangevin\LaravelDataJsonSchemas\Enums\DataType $type The type of the schema.
  *
  * @method static type(DataType $type) Set the type of the schema using the TypeKeyword class.
  */

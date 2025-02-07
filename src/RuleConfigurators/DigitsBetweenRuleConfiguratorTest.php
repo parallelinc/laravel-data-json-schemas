@@ -1,7 +1,7 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\DigitsBetweenRuleConfigurator;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\DigitsBetweenRuleConfigurator;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\DigitsBetween;
 
 covers(DigitsBetweenRuleConfigurator::class);

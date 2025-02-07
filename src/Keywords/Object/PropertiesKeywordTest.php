@@ -1,12 +1,12 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Object\PropertiesKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\TypeKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\PropertiesKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\BooleanSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
 
 covers(PropertiesKeyword::class);
 

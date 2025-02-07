@@ -1,7 +1,7 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\ActiveUrlRuleConfigurator;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\ActiveUrlRuleConfigurator;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\ActiveUrl;
 
 covers(ActiveUrlRuleConfigurator::class);

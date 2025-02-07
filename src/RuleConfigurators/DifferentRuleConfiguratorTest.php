@@ -1,7 +1,7 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\DifferentRuleConfigurator;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\DifferentRuleConfigurator;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\Different;
 
 covers(DifferentRuleConfigurator::class);

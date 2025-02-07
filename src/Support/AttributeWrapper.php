@@ -1,10 +1,10 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support;
 
-use BasilLangevin\LaravelDataSchemas\Attributes\Contracts\ArrayAttribute;
-use BasilLangevin\LaravelDataSchemas\Attributes\Contracts\StringAttribute;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Contracts\ArrayAttribute;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Contracts\StringAttribute;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresSchema;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Attributes\Validation\Enum;
 use Spatie\LaravelData\Attributes\Validation\In;
@@ -140,7 +140,7 @@ class AttributeWrapper
      */
     protected function getRuleConfiguratorClassName(): string
     {
-        $namespace = 'BasilLangevin\LaravelDataSchemas\RuleConfigurators';
+        $namespace = 'BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators';
 
         return $namespace.'\\'.class_basename($this->getName()).'RuleConfigurator';
     }

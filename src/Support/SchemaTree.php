@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support;
 
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;

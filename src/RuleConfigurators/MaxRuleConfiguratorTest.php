@@ -1,7 +1,7 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\MaxRuleConfigurator;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\MaxRuleConfigurator;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\Max;
 
 covers(MaxRuleConfigurator::class);

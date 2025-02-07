@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\Number;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\Number;
 
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
 use Illuminate\Support\Collection;
 
 class MultipleOfKeyword extends Keyword

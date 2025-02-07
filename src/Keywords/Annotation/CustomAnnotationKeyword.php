@@ -1,9 +1,9 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\Annotation;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation;
 
-use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\HandlesMultipleInstances;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts\HandlesMultipleInstances;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

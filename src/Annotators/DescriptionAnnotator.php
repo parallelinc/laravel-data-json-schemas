@@ -1,14 +1,14 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Annotators;
+namespace BasilLangevin\LaravelDataJsonSchemas\Annotators;
 
-use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
-use BasilLangevin\LaravelDataSchemas\Attributes\Description;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\Contracts\AnnotatesSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Description;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 
 class DescriptionAnnotator implements AnnotatesSchema
 {

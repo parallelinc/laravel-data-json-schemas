@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyRequiredToDataObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyRequiredToDataObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\ClassWrapper;
 use Spatie\LaravelData\Attributes\Validation\Present;
 use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;

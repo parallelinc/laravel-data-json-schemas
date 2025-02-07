@@ -1,10 +1,10 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts;
 
-use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 
 interface ConfiguresIntegerSchema extends ConfiguresSchema
 {

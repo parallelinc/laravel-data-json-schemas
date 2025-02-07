@@ -1,12 +1,12 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Enums\TestStringEnum;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;

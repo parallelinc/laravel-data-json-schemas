@@ -1,9 +1,9 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests;
 
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\DataClassBuilder;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\DataClassBuilder;
 
 trait TestsSchemaTransformation
 {

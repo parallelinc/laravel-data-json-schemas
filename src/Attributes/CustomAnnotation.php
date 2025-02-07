@@ -1,9 +1,9 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Attributes;
+namespace BasilLangevin\LaravelDataJsonSchemas\Attributes;
 
 use Attribute;
-use BasilLangevin\LaravelDataSchemas\Attributes\Contracts\ArrayAttribute;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Contracts\ArrayAttribute;
 
 /**
  * Adds custom annotation(s) to a Data object or property.

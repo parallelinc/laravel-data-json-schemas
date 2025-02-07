@@ -1,26 +1,26 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Actions;
+namespace BasilLangevin\LaravelDataJsonSchemas\Actions;
 
-use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresAnySchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresArraySchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresBooleanSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresIntegerSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresAnySchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresArraySchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresBooleanSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresIntegerSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ArraySchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\BooleanSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\UnionSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\EntityWrapper;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use ReflectionClass;

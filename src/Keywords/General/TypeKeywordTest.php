@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\TypeKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\BooleanSchema;
 
 covers(TypeKeyword::class);
 

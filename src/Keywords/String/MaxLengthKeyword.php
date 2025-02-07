@@ -1,9 +1,9 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\String;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\String;
 
-use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\HandlesMultipleInstances;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts\HandlesMultipleInstances;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
 use Illuminate\Support\Collection;
 
 class MaxLengthKeyword extends Keyword implements HandlesMultipleInstances

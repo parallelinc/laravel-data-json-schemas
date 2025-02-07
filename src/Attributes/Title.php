@@ -1,9 +1,9 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Attributes;
+namespace BasilLangevin\LaravelDataJsonSchemas\Attributes;
 
 use Attribute;
-use BasilLangevin\LaravelDataSchemas\Attributes\Contracts\StringAttribute;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Contracts\StringAttribute;
 
 /**
  * Adds a title to a Data object or property.

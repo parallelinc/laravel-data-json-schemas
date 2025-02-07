@@ -1,13 +1,13 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
-use BasilLangevin\LaravelDataSchemas\Attributes\Description;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\AlphaRuleConfigurator;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Argument;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Description;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\AlphaRuleConfigurator;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Argument;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Enums\TestStringEnum;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Illuminate\Container\Attributes\Tag;
 use Spatie\LaravelData\Attributes\Validation\After;
 use Spatie\LaravelData\Attributes\Validation\Alpha;

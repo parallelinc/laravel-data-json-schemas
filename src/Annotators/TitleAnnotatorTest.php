@@ -1,11 +1,11 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\TitleAnnotator;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\VehicleData;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
 

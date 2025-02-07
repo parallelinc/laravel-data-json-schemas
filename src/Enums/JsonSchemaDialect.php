@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Enums;
+namespace BasilLangevin\LaravelDataJsonSchemas\Enums;
 
 /**
  * The available JSON Schema dialects.

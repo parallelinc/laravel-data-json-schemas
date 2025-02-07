@@ -1,15 +1,15 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Actions;
+namespace BasilLangevin\LaravelDataJsonSchemas\Actions;
 
-use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
-use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
-use BasilLangevin\LaravelDataSchemas\Annotators\CustomAnnotationAnnotator;
-use BasilLangevin\LaravelDataSchemas\Annotators\DefaultAnnotationAnnotator;
-use BasilLangevin\LaravelDataSchemas\Annotators\DescriptionAnnotator;
-use BasilLangevin\LaravelDataSchemas\Annotators\TitleAnnotator;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\Contracts\AnnotatesSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\CustomAnnotationAnnotator;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\DefaultAnnotationAnnotator;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\DescriptionAnnotator;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\TitleAnnotator;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\EntityWrapper;
 
 /**
  * @template TSchema of Schema

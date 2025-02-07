@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Number\MultipleOfKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Number\MultipleOfKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NumberSchema;
 
 covers(MultipleOfKeyword::class);
 

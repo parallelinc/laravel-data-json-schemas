@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns;
 
 trait ConstructsSchema
 {

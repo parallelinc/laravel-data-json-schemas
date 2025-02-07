@@ -1,10 +1,10 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Actions;
+namespace BasilLangevin\LaravelDataJsonSchemas\Actions;
 
-use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 
 class ApplyEnumToSchema
 {

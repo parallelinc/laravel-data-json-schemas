@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts;
 
 use Illuminate\Support\Collection;
 

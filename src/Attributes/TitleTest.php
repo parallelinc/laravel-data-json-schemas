@@ -1,6 +1,6 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
 
 it('can be instantiated')
     ->expect(new Title('This is a title'))

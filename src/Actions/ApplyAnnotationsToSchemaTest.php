@@ -1,12 +1,12 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyAnnotationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
-use BasilLangevin\LaravelDataSchemas\Attributes\Description;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyAnnotationsToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Description;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Data;
 
 covers(ApplyAnnotationsToSchema::class);

@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\General;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\General;
 
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
 use Illuminate\Support\Collection;
 
 class ConstKeyword extends Keyword

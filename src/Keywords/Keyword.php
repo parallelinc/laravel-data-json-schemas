@@ -1,17 +1,17 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords;
 
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\CustomAnnotationKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DefaultKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DescriptionKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DialectKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\TitleKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Composition\NotKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\ConstKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\EnumKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\FormatKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\CustomAnnotationKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\DefaultKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\DescriptionKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\DialectKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\TitleKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Composition\NotKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\ConstKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\EnumKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\FormatKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\TypeKeyword;
 use Illuminate\Support\Collection;
 
 /**

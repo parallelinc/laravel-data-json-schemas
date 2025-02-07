@@ -1,6 +1,6 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Concerns\FormatsDate;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Concerns\FormatsDate;
 use Carbon\Carbon;
 
 covers(FormatsDate::class);

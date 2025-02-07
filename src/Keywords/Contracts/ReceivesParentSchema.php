@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts;
 
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
 
 /**
  * Implemented by keywords that need to know the parent schema.

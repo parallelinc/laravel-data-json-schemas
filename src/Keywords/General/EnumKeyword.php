@@ -1,10 +1,10 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\General;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\General;
 
-use BasilLangevin\LaravelDataSchemas\Exceptions\SchemaConfigurationException;
-use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\HandlesMultipleInstances;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Exceptions\SchemaConfigurationException;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts\HandlesMultipleInstances;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
 use Illuminate\Support\Collection;
 
 class EnumKeyword extends Keyword implements HandlesMultipleInstances

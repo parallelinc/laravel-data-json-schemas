@@ -1,10 +1,10 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Annotators\DescriptionAnnotator;
-use BasilLangevin\LaravelDataSchemas\Attributes\Description;
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\DescriptionAnnotator;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Description;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
 

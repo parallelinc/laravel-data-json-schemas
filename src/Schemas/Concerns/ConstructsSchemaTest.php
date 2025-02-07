@@ -1,9 +1,9 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DescriptionKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\ConstructsSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\DescriptionKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns\ConstructsSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\SingleTypeSchema;
 
 covers(ConstructsSchema::class);
 

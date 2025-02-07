@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;

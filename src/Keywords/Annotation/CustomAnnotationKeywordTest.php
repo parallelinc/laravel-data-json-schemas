@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\CustomAnnotationKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\CustomAnnotationKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
 
 covers(CustomAnnotationKeyword::class);
 

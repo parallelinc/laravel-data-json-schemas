@@ -1,12 +1,12 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyAnnotationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyPropertiesToDataObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyRequiredToDataObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyAnnotationsToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyPropertiesToDataObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyRequiredToDataObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyRuleConfigurationsToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformDataClassToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
 use Spatie\LaravelData\Data;
 
 covers(TransformDataClassToSchema::class);

@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Number\MaximumKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Number\MaximumKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\IntegerSchema;
 
 covers(MaximumKeyword::class);
 

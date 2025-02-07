@@ -1,20 +1,20 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\MakeSchemaForReflectionType;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresAnySchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresArraySchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresBooleanSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresIntegerSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyRuleConfigurationsToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\MakeSchemaForReflectionType;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Exceptions\KeywordNotSetException;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresAnySchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresArraySchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresBooleanSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresIntegerSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\UnionSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\Alpha;
 use Spatie\LaravelData\Attributes\Validation\Min;
 use Spatie\LaravelData\Attributes\Validation\Same;

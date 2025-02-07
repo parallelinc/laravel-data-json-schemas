@@ -1,13 +1,13 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Annotators;
+namespace BasilLangevin\LaravelDataJsonSchemas\Annotators;
 
-use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\Contracts\AnnotatesSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\EntityWrapper;
 use Illuminate\Support\Stringable;
 
 class TitleAnnotator implements AnnotatesSchema

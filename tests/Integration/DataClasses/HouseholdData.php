@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses;
 
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\Validation\Min;

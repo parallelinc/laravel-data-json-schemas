@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Exceptions;
+namespace BasilLangevin\LaravelDataJsonSchemas\Exceptions;
 
 use Exception;
 

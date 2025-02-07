@@ -1,19 +1,19 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators;
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Concerns\ResolvesPropertyName;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresArraySchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Concerns\ResolvesPropertyName;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresArraySchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ArraySchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 
 class LessThanOrEqualToRuleConfigurator implements ConfiguresArraySchema, ConfiguresNumberSchema, ConfiguresObjectSchema, ConfiguresStringSchema
 {

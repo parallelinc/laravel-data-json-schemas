@@ -1,10 +1,10 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
-use BasilLangevin\LaravelDataSchemas\Attributes\Description;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Description;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\BooleanSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\Accepted;
 
 covers(BooleanSchema::class);

@@ -1,11 +1,11 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\DocBlockParser;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\DocBlockParser;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 use Spatie\LaravelData\Data;
 
 covers(ClassWrapper::class);

@@ -1,9 +1,9 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\DescriptionKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\DescriptionKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\TypeKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
 
 covers(DescriptionKeyword::class);
 

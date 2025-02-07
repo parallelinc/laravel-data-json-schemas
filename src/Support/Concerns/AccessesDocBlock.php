@@ -1,9 +1,9 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support\Concerns;
 
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\DocBlockParser;
+use BasilLangevin\LaravelDataJsonSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\DocBlockParser;
 use Spatie\LaravelData\Data;
 
 trait AccessesDocBlock

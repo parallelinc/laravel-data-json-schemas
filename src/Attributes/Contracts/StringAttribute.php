@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Attributes\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Attributes\Contracts;
 
 interface StringAttribute
 {

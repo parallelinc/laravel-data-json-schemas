@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts;
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
 
 interface HasDataType
 {

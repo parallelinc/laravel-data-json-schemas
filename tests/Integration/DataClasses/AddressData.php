@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses;
 
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\Enums\ProvinceEnum;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\Enums\ProvinceEnum;
 use Spatie\LaravelData\Attributes\Validation\AlphaDash;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Attributes\Validation\Regex;

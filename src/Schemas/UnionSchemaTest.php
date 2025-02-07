@@ -1,15 +1,15 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\TransformPropertyToSchema;
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
-use BasilLangevin\LaravelDataSchemas\Attributes\Description;
-use BasilLangevin\LaravelDataSchemas\Attributes\Title;
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformPropertyToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Description;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Title;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NullSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\UnionSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Mockery\MockInterface;
 use Spatie\LaravelData\Attributes\Validation\Filled;
 use Spatie\LaravelData\Attributes\Validation\Min;
@@ -273,7 +273,7 @@ it('passes the nested flag to its consolidated constituent schemas', function ()
 });
 
 it('wraps constituent schemas in an anyOf schema if one of them is an object', function () {
-    $this->class->addProperty('\BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData|string', 'property', [Description::class => 'test description']);
+    $this->class->addProperty('\BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\PersonData|string', 'property', [Description::class => 'test description']);
 
     expect($this->class->getSchema('property'))->toBe([
         'description' => 'test description',

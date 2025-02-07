@@ -1,11 +1,11 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators;
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 
 class DoesntEndWithRuleConfigurator implements ConfiguresStringSchema
 {

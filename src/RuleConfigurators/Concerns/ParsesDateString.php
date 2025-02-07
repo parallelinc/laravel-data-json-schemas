@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Concerns;
 
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 
 trait ParsesDateString
 {

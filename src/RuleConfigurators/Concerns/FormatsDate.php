@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Concerns;
 
 use Carbon\Carbon;
 

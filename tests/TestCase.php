@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests;
 
-use BasilLangevin\LaravelDataSchemas\LaravelDataSchemasServiceProvider;
+use BasilLangevin\LaravelDataJsonSchemas\LaravelDataJsonSchemasServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\LaravelData\LaravelDataServiceProvider;
 
@@ -16,7 +16,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelDataSchemasServiceProvider::class,
+            LaravelDataJsonSchemasServiceProvider::class,
             LaravelDataServiceProvider::class,
         ];
     }

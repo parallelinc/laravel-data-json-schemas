@@ -1,9 +1,9 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformDataClassToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ArraySchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\PersonData;
 
 covers(ArraySchema::class);
 

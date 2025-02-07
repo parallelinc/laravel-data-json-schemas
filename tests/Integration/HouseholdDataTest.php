@@ -1,14 +1,14 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\AddressData;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\HouseholdData;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PetData;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VacationData;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformDataClassToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\AddressData;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\HouseholdData;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\PetData;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\VacationData;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\VehicleData;
 
 it('can transform the HouseholdData class', function () {
     $output = JsonSchema::toArray(HouseholdData::class);

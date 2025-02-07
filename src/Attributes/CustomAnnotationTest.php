@@ -1,6 +1,6 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
 
 covers(CustomAnnotation::class);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses;
 
 use Spatie\LaravelData\Attributes\Validation\In;
 use Spatie\LaravelData\Attributes\Validation\Max;

@@ -1,18 +1,18 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas;
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\String\MaxLengthKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\String\MinLengthKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\String\PatternKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\StringSchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\String\MaxLengthKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\String\MinLengthKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\String\PatternKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\StringSchemaKeywordMethodAnnotations;
 
 class StringSchema implements SingleTypeSchema
 {

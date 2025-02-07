@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support\Contracts;
 
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
 use Illuminate\Support\Collection;
 
 interface HasAttributes

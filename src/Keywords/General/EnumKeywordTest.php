@@ -1,10 +1,10 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Exceptions\SchemaConfigurationException;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\EnumKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Exceptions\SchemaConfigurationException;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\EnumKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
 
 covers(EnumKeyword::class);
 

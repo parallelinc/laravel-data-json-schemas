@@ -1,12 +1,12 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators;
 
-use BasilLangevin\LaravelDataSchemas\Enums\Format;
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\Format;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresStringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 
 class EmailRuleConfigurator implements ConfiguresStringSchema
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests\Support;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests\Support;
 
 class Argument
 {

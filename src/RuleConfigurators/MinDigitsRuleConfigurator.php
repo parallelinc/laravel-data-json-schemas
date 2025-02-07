@@ -1,11 +1,11 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators;
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts\ConfiguresNumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 
 class MinDigitsRuleConfigurator implements ConfiguresNumberSchema
 {

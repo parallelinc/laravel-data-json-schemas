@@ -1,11 +1,11 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Actions;
+namespace BasilLangevin\LaravelDataJsonSchemas\Actions;
 
-use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 use Spatie\LaravelData\Attributes\Validation\Present;
 use Spatie\LaravelData\Attributes\Validation\Required;
 

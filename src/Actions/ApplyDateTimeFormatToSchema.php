@@ -1,11 +1,11 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Actions;
+namespace BasilLangevin\LaravelDataJsonSchemas\Actions;
 
-use BasilLangevin\LaravelDataSchemas\Actions\Concerns\Runnable;
-use BasilLangevin\LaravelDataSchemas\Enums\Format;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\UnionSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\Format;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\UnionSchema;
 
 class ApplyDateTimeFormatToSchema
 {

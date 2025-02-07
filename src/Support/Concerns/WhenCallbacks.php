@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support\Concerns;
 
 use Closure;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts;
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Enums\Format;
-use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\Pipeable;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\Whenable;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\Format;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\JsonSchemaDialect;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\Pipeable;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\Whenable;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
 use Closure;
 use Illuminate\Support\Collection;
 

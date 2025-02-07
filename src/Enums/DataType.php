@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Enums;
+namespace BasilLangevin\LaravelDataJsonSchemas\Enums;
 
 /**
  * The types that can be used in a JSON Schema's "type" keyword.

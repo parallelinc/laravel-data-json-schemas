@@ -1,10 +1,10 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\Object;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\Object;
 
-use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\HandlesMultipleInstances;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts\HandlesMultipleInstances;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
 use Illuminate\Support\Collection;
 
 class PropertiesKeyword extends Keyword implements HandlesMultipleInstances

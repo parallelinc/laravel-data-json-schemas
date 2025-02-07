@@ -1,9 +1,9 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Annotators\CustomAnnotationAnnotator;
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\CustomAnnotationAnnotator;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Data;
 

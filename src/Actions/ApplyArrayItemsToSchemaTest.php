@@ -1,17 +1,17 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyArrayItemsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\BooleanSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\IntegerSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\NullSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyArrayItemsToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformDataClassToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ArraySchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\BooleanSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\IntegerSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NullSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\VehicleData;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 

@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\String\MinLengthKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\String\MinLengthKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
 
 covers(MinLengthKeyword::class);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests\Support\Enums;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Enums;
 
 enum TestStringEnum: string
 {

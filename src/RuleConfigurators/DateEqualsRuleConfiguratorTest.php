@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\DateEqualsRuleConfigurator;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Argument;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\DateEqualsRuleConfigurator;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Argument;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\DateEquals;
 
 covers(DateEqualsRuleConfigurator::class);

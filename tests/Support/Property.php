@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests\Support;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests\Support;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;

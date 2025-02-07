@@ -1,20 +1,20 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyAnnotationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyEnumToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyPropertiesToDataObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyRequiredToDataObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyRuleConfigurationsToSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\SetupSchema;
-use BasilLangevin\LaravelDataSchemas\Actions\TransformPropertyToSchema;
-use BasilLangevin\LaravelDataSchemas\Enums\Format;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestIntegerEnum;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyAnnotationsToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyEnumToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyPropertiesToDataObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyRequiredToDataObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyRuleConfigurationsToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\SetupSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformPropertyToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\Format;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Enums\TestIntegerEnum;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Enums\TestStringEnum;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Spatie\LaravelData\Data;

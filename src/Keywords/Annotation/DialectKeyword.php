@@ -1,9 +1,9 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Keywords\Annotation;
+namespace BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation;
 
-use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\JsonSchemaDialect;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
 use Illuminate\Support\Collection;
 
 class DialectKeyword extends Keyword

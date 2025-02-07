@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\String\MaxLengthKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\String\MaxLengthKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
 
 covers(MaxLengthKeyword::class);
 

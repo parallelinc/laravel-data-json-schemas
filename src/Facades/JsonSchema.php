@@ -1,16 +1,16 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Facades;
+namespace BasilLangevin\LaravelDataJsonSchemas\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \BasilLangevin\LaravelDataSchemas\LaravelDataSchemas
+ * @see \BasilLangevin\LaravelDataJsonSchemas\LaravelDataJsonSchemas
  */
 class JsonSchema extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \BasilLangevin\LaravelDataSchemas\JsonSchema::class;
+        return \BasilLangevin\LaravelDataJsonSchemas\JsonSchema::class;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Composition\NotKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Composition\NotKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
 use Mockery\MockInterface;
 
 covers(NotKeyword::class);

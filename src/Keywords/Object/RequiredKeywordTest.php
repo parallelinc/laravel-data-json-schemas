@@ -1,9 +1,9 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\General\TypeKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Object\RequiredKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\General\TypeKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\RequiredKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
 
 covers(RequiredKeyword::class);
 

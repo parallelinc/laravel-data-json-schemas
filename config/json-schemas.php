@@ -1,6 +1,6 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\JsonSchemaDialect;
 
 return [
     /*

@@ -1,14 +1,14 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns;
 
 use BadMethodCallException;
-use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
-use BasilLangevin\LaravelDataSchemas\Keywords\Annotation\CustomAnnotationKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\HandlesMultipleInstances;
-use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\MergesMultipleInstancesIntoAllOf;
-use BasilLangevin\LaravelDataSchemas\Keywords\Contracts\ReceivesParentSchema;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Exceptions\KeywordNotSetException;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Annotation\CustomAnnotationKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts\HandlesMultipleInstances;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts\MergesMultipleInstancesIntoAllOf;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Contracts\ReceivesParentSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;

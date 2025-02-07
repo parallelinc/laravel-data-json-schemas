@@ -1,9 +1,9 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support\Concerns;
 
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\ClassWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\ClassWrapper;
 use Illuminate\Support\Collection;
 use Spatie\LaravelData\Data;
 

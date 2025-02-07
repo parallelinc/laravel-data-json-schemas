@@ -1,26 +1,26 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas;
 
 use BadMethodCallException;
-use BasilLangevin\LaravelDataSchemas\Actions\MakeSchemaForReflectionType;
-use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\ConstructsSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\HasKeywords;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\ArraySchemaKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\NumberSchemaKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\ObjectSchemaKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\StringSchemaKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\PipeCallbacks;
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\WhenCallbacks;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\MakeSchemaForReflectionType;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformDataClassToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns\ConstructsSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns\HasKeywords;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\ArraySchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\NumberSchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\ObjectSchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\StringSchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Concerns\PipeCallbacks;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Concerns\WhenCallbacks;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
 use Illuminate\Support\Collection;
 use ReflectionNamedType;
 use Spatie\LaravelData\Data;

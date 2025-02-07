@@ -1,7 +1,7 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VacationData;
+use BasilLangevin\LaravelDataJsonSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\VacationData;
 use Carbon\Carbon;
 
 it('can transform the VacationData class', function () {

@@ -1,20 +1,20 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas;
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Number\ExclusiveMaximumKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Number\ExclusiveMinimumKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Number\MaximumKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Number\MinimumKeyword;
-use BasilLangevin\LaravelDataSchemas\Keywords\Number\MultipleOfKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\SingleTypeSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
-use BasilLangevin\LaravelDataSchemas\Schemas\DocBlockAnnotations\NumberSchemaKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Number\ExclusiveMaximumKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Number\ExclusiveMinimumKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Number\MaximumKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Number\MinimumKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Number\MultipleOfKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Concerns\SingleTypeSchemaTrait;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\AnnotationKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\CompositionKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\GeneralKeywordMethodAnnotations;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\DocBlockAnnotations\NumberSchemaKeywordMethodAnnotations;
 
 class NumberSchema implements SingleTypeSchema
 {

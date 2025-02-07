@@ -1,10 +1,10 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support;
 
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesAttributes;
-use BasilLangevin\LaravelDataSchemas\Support\Concerns\AccessesDocBlock;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Concerns\AccessesAttributes;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Concerns\AccessesDocBlock;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\EntityWrapper;
 use Illuminate\Support\Collection;
 use ReflectionClass;
 use ReflectionMethod;

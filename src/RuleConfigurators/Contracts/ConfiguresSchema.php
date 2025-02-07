@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Contracts;
 
 /**
  * Each ConfiguresSchema interface defines a specific type

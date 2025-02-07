@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
-use BasilLangevin\LaravelDataSchemas\Keywords\Number\ExclusiveMinimumKeyword;
-use BasilLangevin\LaravelDataSchemas\Schemas\NumberSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Number\ExclusiveMinimumKeyword;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\NumberSchema;
 
 covers(ExclusiveMinimumKeyword::class);
 

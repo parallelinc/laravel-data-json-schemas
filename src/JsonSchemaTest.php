@@ -1,13 +1,13 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\TransformDataClassToSchema;
-use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
-use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
-use BasilLangevin\LaravelDataSchemas\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
-use BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
-use BasilLangevin\LaravelDataSchemas\Support\SchemaTree;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PersonData;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformDataClassToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\JsonSchemaDialect;
+use BasilLangevin\LaravelDataJsonSchemas\Exceptions\KeywordNotSetException;
+use BasilLangevin\LaravelDataJsonSchemas\JsonSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ArraySchema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\PersonData;
 use Mockery\MockInterface;
 
 covers(JsonSchema::class);
@@ -27,7 +27,7 @@ test('make adds the 2019-09 dialect to the schema by default', function () {
 });
 
 test('make adds whatever dialect is set in the config', function () {
-    config(['data-schemas.dialect' => JsonSchemaDialect::Draft202012]);
+    config(['json-schemas.dialect' => JsonSchemaDialect::Draft202012]);
 
     $schema = app(JsonSchema::class)->make(PersonData::class);
 
@@ -35,7 +35,7 @@ test('make adds whatever dialect is set in the config', function () {
 });
 
 test('make does not add a dialect if it is not set in the config', function () {
-    config(['data-schemas.dialect' => null]);
+    config(['json-schemas.dialect' => null]);
 
     $schema = app(JsonSchema::class)->make(PersonData::class);
 
@@ -73,7 +73,7 @@ test('collect adds the 2019-09 dialect to the schema by default', function () {
 });
 
 test('collect adds whatever dialect is set in the config', function () {
-    config(['data-schemas.dialect' => JsonSchemaDialect::Draft202012]);
+    config(['json-schemas.dialect' => JsonSchemaDialect::Draft202012]);
 
     $schema = app(JsonSchema::class)->collect(PersonData::class);
 
@@ -81,7 +81,7 @@ test('collect adds whatever dialect is set in the config', function () {
 });
 
 test('collect does not add a dialect if it is not set in the config', function () {
-    config(['data-schemas.dialect' => null]);
+    config(['json-schemas.dialect' => null]);
 
     $schema = app(JsonSchema::class)->collect(PersonData::class);
 

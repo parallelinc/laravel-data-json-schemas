@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support\Contracts;
 
 use Closure;
 

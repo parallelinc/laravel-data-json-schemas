@@ -1,5 +1,5 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts;
 
 interface SingleTypeSchema extends HasDataType, Schema {}

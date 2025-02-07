@@ -1,6 +1,6 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Attributes\Description;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\Description;
 
 it('can be instantiated')
     ->expect(new Description('This is a description'))

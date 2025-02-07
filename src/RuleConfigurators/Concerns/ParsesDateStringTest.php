@@ -1,8 +1,8 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\Concerns\ParsesDateString;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Argument;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Concerns\ParsesDateString;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Argument;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Spatie\LaravelData\Attributes\Validation\After;

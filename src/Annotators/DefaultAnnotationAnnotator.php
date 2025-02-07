@@ -1,12 +1,12 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Annotators;
+namespace BasilLangevin\LaravelDataJsonSchemas\Annotators;
 
-use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
-use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
-use BasilLangevin\LaravelDataSchemas\Support\PropertyWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\Contracts\AnnotatesSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Exceptions\KeywordNotSetException;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 use ReflectionParameter;
 
 class DefaultAnnotationAnnotator implements AnnotatesSchema

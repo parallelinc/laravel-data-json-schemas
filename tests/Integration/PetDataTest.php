@@ -1,7 +1,7 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\PetData;
+use BasilLangevin\LaravelDataJsonSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\PetData;
 
 it('can transform the PetData class', function () {
     $output = JsonSchema::toArray(PetData::class);

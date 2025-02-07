@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Actions\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\Actions\Concerns;
 
 /**
  * @template TArguments

@@ -1,7 +1,7 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Facades\JsonSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\Integration\DataClasses\VehicleData;
+use BasilLangevin\LaravelDataJsonSchemas\Facades\JsonSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\DataClasses\VehicleData;
 
 it('can transform the VehicleData class', function () {
     $output = JsonSchema::collectToArray(VehicleData::class);

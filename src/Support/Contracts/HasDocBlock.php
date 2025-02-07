@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Support\Contracts;
+namespace BasilLangevin\LaravelDataJsonSchemas\Support\Contracts;
 
-use BasilLangevin\LaravelDataSchemas\Support\DocBlockParser;
+use BasilLangevin\LaravelDataJsonSchemas\Support\DocBlockParser;
 
 interface HasDocBlock
 {

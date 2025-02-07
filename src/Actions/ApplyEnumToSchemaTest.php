@@ -1,10 +1,10 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Actions\ApplyEnumToSchema;
-use BasilLangevin\LaravelDataSchemas\Exceptions\KeywordNotSetException;
-use BasilLangevin\LaravelDataSchemas\Schemas\StringSchema;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyEnumToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Exceptions\KeywordNotSetException;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Enums\TestStringEnum;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 
 covers(ApplyEnumToSchema::class);
 

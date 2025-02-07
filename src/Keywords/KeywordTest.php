@@ -1,6 +1,6 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
 
 covers(Keyword::class);
 
@@ -10,7 +10,7 @@ function makeClass(string $name, ?string $method = null)
         "public static string \$method = '{$method}';"
         : '';
 
-    eval("class {$name} extends \BasilLangevin\LaravelDataSchemas\Keywords\Keyword
+    eval("class {$name} extends \BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword
     {
         {$methodDefinition}
 

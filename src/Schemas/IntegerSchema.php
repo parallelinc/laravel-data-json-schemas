@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Schemas;
+namespace BasilLangevin\LaravelDataJsonSchemas\Schemas;
 
-use BasilLangevin\LaravelDataSchemas\Enums\DataType;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
 
 class IntegerSchema extends NumberSchema
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\RuleConfigurators\Concerns;
+namespace BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\Concerns;
 
-use BasilLangevin\LaravelDataSchemas\Support\AttributeWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Support\AttributeWrapper;
 use Spatie\LaravelData\Support\Validation\References\FieldReference;
 
 trait ResolvesPropertyName

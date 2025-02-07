@@ -1,9 +1,9 @@
 <?php
 
-use BasilLangevin\LaravelDataSchemas\RuleConfigurators\EnumRuleConfigurator;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestIntegerEnum;
-use BasilLangevin\LaravelDataSchemas\Tests\Support\Enums\TestStringEnum;
-use BasilLangevin\LaravelDataSchemas\Tests\TestsSchemaTransformation;
+use BasilLangevin\LaravelDataJsonSchemas\RuleConfigurators\EnumRuleConfigurator;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Enums\TestIntegerEnum;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\Support\Enums\TestStringEnum;
+use BasilLangevin\LaravelDataJsonSchemas\Tests\TestsSchemaTransformation;
 use Spatie\LaravelData\Attributes\Validation\Enum;
 
 covers(EnumRuleConfigurator::class);

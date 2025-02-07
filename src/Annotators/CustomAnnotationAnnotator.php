@@ -1,11 +1,11 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Annotators;
+namespace BasilLangevin\LaravelDataJsonSchemas\Annotators;
 
-use BasilLangevin\LaravelDataSchemas\Annotators\Contracts\AnnotatesSchema;
-use BasilLangevin\LaravelDataSchemas\Attributes\CustomAnnotation;
-use BasilLangevin\LaravelDataSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataSchemas\Support\Contracts\EntityWrapper;
+use BasilLangevin\LaravelDataJsonSchemas\Annotators\Contracts\AnnotatesSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Attributes\CustomAnnotation;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\Contracts\EntityWrapper;
 
 class CustomAnnotationAnnotator implements AnnotatesSchema
 {

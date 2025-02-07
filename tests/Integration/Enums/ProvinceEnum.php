@@ -1,6 +1,6 @@
 <?php
 
-namespace BasilLangevin\LaravelDataSchemas\Tests\Integration\Enums;
+namespace BasilLangevin\LaravelDataJsonSchemas\Tests\Integration\Enums;
 
 enum ProvinceEnum: string
 {

@@ -2,12 +2,12 @@
 
 namespace BasilLangevin\LaravelDataJsonSchemas\Actions;
 
-use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\Concerns\Runnable;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
+use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\SingleTypeSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
-use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
-use BasilLangevin\LaravelDataJsonSchemas\Actions\Concerns\Runnable;
-use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\SingleTypeSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
 
 class SetupSchema
 {
@@ -21,7 +21,7 @@ class SetupSchema
     {
         if ($schema instanceof UnionSchema) {
             $schema->buildConstituentSchemas($property, $tree);
-        } else if ($schema instanceof SingleTypeSchema) { // @pest-mutate-ignore Required to narrow type
+        } elseif ($schema instanceof SingleTypeSchema) { // @pest-mutate-ignore Required to narrow type
             $schema->applyType();
         }
 

@@ -28,7 +28,6 @@ class ClassWrapper implements EntityWrapper
      */
     public function __construct(protected ReflectionClass $class)
     {
-        /** @phpstan-ignore method.alreadyNarrowedType */
         if (! $class->isSubclassOf(Data::class)) {
             throw new \InvalidArgumentException('Only data classes are supported.');
         }

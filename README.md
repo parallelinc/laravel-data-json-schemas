@@ -217,6 +217,8 @@ class BikeData extends Data
 
 **2. Using the summary of a PHPDoc block (when it also has a description):**
 
+> **Note:** This method is not currently supported on Windows Servers.
+
 ```php
 /**
  * The title of a data class.
@@ -277,6 +279,8 @@ class BikeData extends Data
 
 **3. Using the summary of a PHPDoc block (when it has no description):**
 
+> **Note:** This method is not currently supported on Windows Servers.
+
 ```php
 /**
  * The description of a data class.
@@ -291,6 +295,8 @@ class BikeData extends Data
 ```
 
 **4. Using the description of a PHPDoc block (when it also has a summary):**
+
+> **Note:** This method is not currently supported on Windows Servers.
 
 ```php
 /**

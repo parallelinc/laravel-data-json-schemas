@@ -1,5 +1,5 @@
 {
-    "name": "basillangevin/laravel-data-schemas",
+    "name": "basillangevin/laravel-data-json-schemas",
     "description": "Transforms Spatie Data objects into JSON Schemas with built-in validation",
     "keywords": [
         "BasilLangevin",

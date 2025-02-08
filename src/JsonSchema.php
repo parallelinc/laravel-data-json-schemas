@@ -5,7 +5,6 @@ namespace BasilLangevin\LaravelDataJsonSchemas;
 use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Enums\JsonSchemaDialect;
 use BasilLangevin\LaravelDataJsonSchemas\Schemas\ArraySchema;
-use BasilLangevin\LaravelDataJsonSchemas\Schemas\Contracts\Schema;
 use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
 use Spatie\LaravelData\Data;

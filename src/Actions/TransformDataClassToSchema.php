@@ -51,6 +51,7 @@ class TransformDataClassToSchema
             ->pipe(fn (ObjectSchema $schema) => $this->ruleConfigurator->handle($schema, $class))
             ->pipe(fn (ObjectSchema $schema) => ApplyPropertiesToDataObjectSchema::run($schema, $class, $tree))
             ->pipe(fn (ObjectSchema $schema) => ApplyRequiredToDataObjectSchema::run($schema, $class))
+            ->pipe(fn (ObjectSchema $schema) => DisallowAdditionalProperties::run($schema))
             ->tree($tree);
 
         return $schema;

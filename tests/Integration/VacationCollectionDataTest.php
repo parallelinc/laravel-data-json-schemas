@@ -30,6 +30,7 @@ it('can transform the VacationData class', function () {
                 'destination',
                 'startDate',
             ],
+            'additionalProperties' => false,
         ],
     ];
 

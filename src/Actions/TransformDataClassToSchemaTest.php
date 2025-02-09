@@ -4,6 +4,7 @@ use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyAnnotationsToSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyPropertiesToDataObjectSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyRequiredToDataObjectSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Actions\ApplyRuleConfigurationsToSchema;
+use BasilLangevin\LaravelDataJsonSchemas\Actions\DisallowAdditionalProperties;
 use BasilLangevin\LaravelDataJsonSchemas\Actions\TransformDataClassToSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
@@ -110,6 +111,15 @@ it('calls the ApplyPropertiesToDataObjectSchema action', function () {
 
 it('calls the ApplyRequiredToDataObjectSchema action', function () {
     $mock = $this->mock(ApplyRequiredToDataObjectSchema::class);
+
+    $mock->shouldReceive('handle')->once()->andReturn(ObjectSchema::make());
+
+    $action = app(TransformDataClassToSchema::class);
+    $action->handle(DataClassTransformActionTest::class);
+});
+
+it('calls the DisallowAdditionalProperties action', function () {
+    $mock = $this->mock(DisallowAdditionalProperties::class);
 
     $mock->shouldReceive('handle')->once()->andReturn(ObjectSchema::make());
 

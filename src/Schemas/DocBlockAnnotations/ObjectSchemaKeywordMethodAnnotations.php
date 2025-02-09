@@ -25,5 +25,10 @@ use Illuminate\Support\Collection;
  * @method int|Collection<int, int> getMinProperties() Get the value(s) passed to the minProperties method.
  *
  * @see BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\MinPropertiesKeyword
+ *
+ * @method static additionalProperties(bool $additionalProperties) Set the additionalProperties keyword of the schema.
+ * @method bool|Collection<int, bool> getAdditionalProperties() Get the value(s) passed to the additionalProperties method.
+ *
+ * @see BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\AdditionalPropertiesKeyword
  */
 trait ObjectSchemaKeywordMethodAnnotations {}

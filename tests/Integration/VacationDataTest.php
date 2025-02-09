@@ -29,6 +29,7 @@ it('can transform the VacationData class', function () {
             'destination',
             'startDate',
         ],
+        'additionalProperties' => false,
     ];
 
     expect($output)->toEqual($expected);

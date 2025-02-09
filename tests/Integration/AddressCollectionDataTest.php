@@ -38,6 +38,7 @@ it('can transform the AddressData class', function () {
             'required' => [
                 'street', 'city', 'province', 'postalCode',
             ],
+            'additionalProperties' => false,
         ],
     ];
 

@@ -42,6 +42,7 @@ it('can transform the PersonData class', function () {
                     'age',
                     'children',
                 ],
+                'additionalProperties' => false,
             ],
         ],
     ];

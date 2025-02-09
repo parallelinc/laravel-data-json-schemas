@@ -4,6 +4,7 @@ namespace BasilLangevin\LaravelDataJsonSchemas\Schemas;
 
 use BasilLangevin\LaravelDataJsonSchemas\Enums\DataType;
 use BasilLangevin\LaravelDataJsonSchemas\Keywords\Keyword;
+use BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\AdditionalPropertiesKeyword;
 use BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\MaxPropertiesKeyword;
 use BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\MinPropertiesKeyword;
 use BasilLangevin\LaravelDataJsonSchemas\Keywords\Object\PropertiesKeyword;
@@ -37,6 +38,7 @@ class ObjectSchema implements SingleTypeSchema
         RequiredKeyword::class,
         MaxPropertiesKeyword::class,
         MinPropertiesKeyword::class,
+        AdditionalPropertiesKeyword::class,
     ];
 
     /**

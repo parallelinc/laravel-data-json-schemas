@@ -30,6 +30,7 @@ it('can transform the VehicleData class', function () {
             'year',
             'vin',
         ],
+        'additionalProperties' => false,
     ];
 
     expect($output)->toEqual($expected);

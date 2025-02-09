@@ -28,6 +28,7 @@ it('can transform the PetData class', function () {
             ],
         ],
         'required' => ['name', 'species', 'age'],
+        'additionalProperties' => false,
     ];
 
     expect($output)->toEqual($expected);

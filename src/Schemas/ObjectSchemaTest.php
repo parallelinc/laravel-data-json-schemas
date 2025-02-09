@@ -32,6 +32,7 @@ $vehicleSchema = [
         'year',
         'vin',
     ],
+    'additionalProperties' => false,
 ];
 
 it('returns its own schema when it is nested and it does not have a class', function () {

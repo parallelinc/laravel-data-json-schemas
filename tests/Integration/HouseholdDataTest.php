@@ -67,6 +67,7 @@ it('can transform the HouseholdData class', function () {
             ],
         ],
         'required' => ['id', 'members', 'pets', 'vacations', 'favouriteNumbers'],
+        'additionalProperties' => false,
         '$defs' => [
             'address' => $makeSubschema(AddressData::class),
             'person' => $makeSubschema(PersonData::class),

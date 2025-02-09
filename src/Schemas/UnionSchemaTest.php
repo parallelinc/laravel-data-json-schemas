@@ -127,13 +127,15 @@ it('accepts keywords for each of its types')
         'minimum' => 42,
     ]);
 
-todo('supports multiple not composition keywords')
+it('supports multiple not composition keywords')
     ->expect(fn () => $this->class->addProperty('string | int', 'property', [Filled::class, NotRegex::class => '/test/']))
     ->toHaveSchema('property', [
         'type' => ['string', 'integer'],
-        'not' => ['const' => 0],
+        'not' => [
+            'const' => 0,
+            'pattern' => '/test/',
+        ],
         'minLength' => 1,
-        'pattern' => '/test/',
     ]);
 
 it('can call annotation methods on itself', function () {

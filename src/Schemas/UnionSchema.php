@@ -182,14 +182,23 @@ class UnionSchema implements Schema
             ->map->value
             ->toArray();
 
-        /** @var array<string, mixed> */
+        /** @var array<int, array<string, mixed>> */
         $constituentSchemas = $this->getConstituentSchemas()
-            ->flatMap->toArray(true);
+            ->map->toArray(true)
+            ->toArray();
+
+        $mergedSchemas = array_merge(...$constituentSchemas);
+
+        /** @var array<int, array<string, mixed>> */
+        $notKeywords = collect($constituentSchemas)->pluck('not')->filter()->toArray();
+        if ($notKeywords) {
+            $mergedSchemas['not'] = array_merge(...$notKeywords);
+        }
 
         return [
             ...$this->buildSchema(),
             'type' => $types,
-            ...$constituentSchemas,
+            ...$mergedSchemas,
         ];
     }
 

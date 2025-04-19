@@ -52,7 +52,7 @@ php artisan vendor:publish --tag="laravel-data-json-schemas-config"
 This is the contents of the published config file:
 
 ```php
-use BasilLangevin\LaravelDataSchemas\Enums\JsonSchemaDialect;
+use BasilLangevin\LaravelDataJsonSchemas\Enums\JsonSchemaDialect;
 
 return [
     /*
@@ -70,7 +70,7 @@ return [
 
 ## Quick start
 
-The `BasilLangevin\LaravelDataSchemas\Facades\JsonSchema` facade can transform any `Spatie\LaravelData\Data` class into a JSON Schema.
+The `BasilLangevin\LaravelDataJsonSchemas\DataSchemas` facade can transform any `Spatie\LaravelData\Data` class into a JSON Schema.
 
 It includes four methods:
 
@@ -96,7 +96,7 @@ JsonSchema::collectToArray(string $dataClass): array;
  *
  * @param  class-string<Data>  $dataClass
  */
-JsonSchema::make(string $dataClass): BasilLangevin\LaravelDataSchemas\Schemas\ObjectSchema;
+JsonSchema::make(string $dataClass): BasilLangevin\LaravelDataJsonSchemas\Schemas\ObjectSchema;
 
 /**
  * Transform a Spatie Data class into an ArraySchema object.
@@ -104,7 +104,7 @@ JsonSchema::make(string $dataClass): BasilLangevin\LaravelDataSchemas\Schemas\Ob
  *
  * @param  class-string<Data>  $dataClass
  */
-JsonSchema::collect(string $dataClass): BasilLangevin\LaravelDataSchemas\Schemas\ArraySchema;
+JsonSchema::collect(string $dataClass): BasilLangevin\LaravelDataJsonSchemas\Schemas\ArraySchema;
 ```
 
 ### JsonSchema::toArray(...)
@@ -202,7 +202,7 @@ This package supports the `title`, `description`, and `default` JSON Schema anno
 
 `Data` classes and their properties can have a JSON Schema `title` annotation which can be set three different ways (in order of precedence):
 
-**1. Using the `BasilLangevin\LaravelDataSchemas\Attributes\Title` attribute:**
+**1. Using the `BasilLangevin\LaravelDataJsonSchemas\Attributes\Title` attribute:**
 
 ```php
 #[Title('The title of a data class.')]
@@ -248,7 +248,7 @@ For example, `BikePartData` will become `Bike Part`.
 
 `Data` classes and their properties can have a JSON Schema `description` annotation which can be set four different ways (in order of precedence):
 
-**1. Using the `BasilLangevin\LaravelDataSchemas\Attributes\Description` attribute:**
+**1. Using the `BasilLangevin\LaravelDataJsonSchemas\Attributes\Description` attribute:**
 
 ```php
 #[Description('The description of a data class.')]
@@ -564,12 +564,12 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Please review [our security policy](./SECURITY.md) on how to report security vulnerabilities.
 
 ## Credits
 
 - [BasilLangevin](https://github.com/BasilLangevin)
-- [All Contributors](../../contributors)
+- [All Contributors](https://github.com/BasilLangevin/laravel-data-json-schemas/graphs/contributors)
 
 ## License
 

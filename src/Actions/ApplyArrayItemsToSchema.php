@@ -34,7 +34,7 @@ class ApplyArrayItemsToSchema
             $resolvedSchemas = [];
 
             foreach ($unionItemTypes as $itemType) {
-                $itemSchema = $this->makeSchemaForItemType($itemType, $tree);
+                $itemSchema = $this->makeSchemaForItemType($itemType, $property, $tree);
                 if ($itemSchema instanceof Schema) {
                     $resolvedSchemas[] = $itemSchema;
                 }
@@ -170,7 +170,7 @@ class ApplyArrayItemsToSchema
     /**
      * Map a type token to a Schema instance for items.
      */
-    protected function makeSchemaForItemType(string $typeToken, SchemaTree $tree): ?Schema
+    protected function makeSchemaForItemType(string $typeToken, PropertyWrapper $property, SchemaTree $tree): ?Schema
     {
         $normalized = strtolower($typeToken);
 
@@ -190,9 +190,37 @@ class ApplyArrayItemsToSchema
             return $schemaClass::make()->applyType()->tree($tree);
         }
 
-        // Best-effort: if token is a class-string of a Data object, transform it
-        if (class_exists($typeToken) && is_subclass_of($typeToken, \Spatie\LaravelData\Data::class)) {
-            return TransformDataClassToSchema::run($typeToken, $tree);
+        // Best-effort: if token is a class-string of a Data object, transform it (resolve same-namespace)
+        $resolved = $this->resolvePotentialDataClass($typeToken, $property);
+        if ($resolved !== null && is_subclass_of($resolved, \Spatie\LaravelData\Data::class)) {
+            return TransformDataClassToSchema::run($resolved, $tree);
+        }
+
+        return null;
+    }
+
+    /**
+     * Resolve a potential Data class token to a fully qualified class name.
+     */
+    protected function resolvePotentialDataClass(string $typeToken, PropertyWrapper $property): ?string
+    {
+        $candidate = ltrim($typeToken, '\\');
+
+        // If already fully qualified and exists
+        if (class_exists($candidate)) {
+            return $candidate;
+        }
+
+        // Try same namespace as declaring class
+        $declaringClass = $property->getClass()->getName();
+        $namespacePos = strrpos($declaringClass, '\\');
+        $namespace = $namespacePos !== false ? substr($declaringClass, 0, $namespacePos) : '';
+
+        if ($namespace !== '') {
+            $fqcn = $namespace.'\\'.$candidate;
+            if (class_exists($fqcn)) {
+                return $fqcn;
+            }
         }
 
         return null;

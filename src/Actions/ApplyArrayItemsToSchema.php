@@ -31,15 +31,27 @@ class ApplyArrayItemsToSchema
         $unionItemTypes = $this->getIterableItemUnionTypes($property);
 
         if (! empty($unionItemTypes)) {
+            $resolvedSchemas = [];
+
             foreach ($unionItemTypes as $itemType) {
                 $itemSchema = $this->makeSchemaForItemType($itemType, $tree);
-
                 if ($itemSchema instanceof Schema) {
-                    $schema = $schema->items($itemSchema);
+                    $resolvedSchemas[] = $itemSchema;
                 }
             }
 
-            return $schema;
+            if (count($resolvedSchemas) >= 2) {
+                foreach ($resolvedSchemas as $itemSchema) {
+                    $schema = $schema->items($itemSchema);
+                }
+
+                return $schema;
+            }
+
+            if (count($resolvedSchemas) === 1) {
+                return $schema->items($resolvedSchemas[0]);
+            }
+            // If we couldn't resolve any schemas from the docblock, fall through to existing logic
         }
 
         // 2) Fallbacks: Data class items or single primitive/object item type

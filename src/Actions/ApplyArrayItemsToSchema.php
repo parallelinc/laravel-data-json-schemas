@@ -27,6 +27,22 @@ class ApplyArrayItemsToSchema
      */
     public function handle(ArraySchema|UnionSchema $schema, PropertyWrapper $property, SchemaTree $tree): ArraySchema|UnionSchema
     {
+        // 1) Try to resolve union item types from docblocks (property, class, constructor param)
+        $unionItemTypes = $this->getIterableItemUnionTypes($property);
+
+        if (! empty($unionItemTypes)) {
+            foreach ($unionItemTypes as $itemType) {
+                $itemSchema = $this->makeSchemaForItemType($itemType, $tree);
+
+                if ($itemSchema instanceof Schema) {
+                    $schema = $schema->items($itemSchema);
+                }
+            }
+
+            return $schema;
+        }
+
+        // 2) Fallbacks: Data class items or single primitive/object item type
         $itemsSchema = $this->getDataClassSchema($property, $tree)
             ?? $this->getIterableSchema($property);
 
@@ -72,5 +88,101 @@ class ApplyArrayItemsToSchema
         }
 
         return $schemaClass::make()->applyType();
+    }
+
+    /**
+     * Extract union item types from docblocks if present.
+     *
+     * @return array<int, string> A list of item type tokens (e.g., 'string', 'int')
+     */
+    protected function getIterableItemUnionTypes(PropertyWrapper $property): array
+    {
+        // Check property-level @var
+        $propDoc = $property->getDocBlock();
+        $typeString = $propDoc?->getVarType();
+
+        // Check class-level @var $property
+        if (empty($typeString)) {
+            $classDoc = $property->getClass()->getDocBlock();
+            $typeString = $classDoc?->getVarType($property->getName());
+        }
+
+        // Check constructor-level @param $property
+        if (empty($typeString)) {
+            $ctorDoc = $property->getClass()->getConstructorDocBlock();
+            $typeString = $ctorDoc?->getParamType($property->getName());
+        }
+
+        if (empty($typeString)) {
+            return [];
+        }
+
+        return $this->parseUnionItemTypesFromArrayType($typeString);
+    }
+
+    /**
+     * Parse a phpdoc array type like "array<int, string|int>" and return union item types.
+     *
+     * @return array<int, string>
+     */
+    protected function parseUnionItemTypesFromArrayType(string $docType): array
+    {
+        $docType = trim($docType);
+
+        // Match array<key, value>
+        if (preg_match('/^array\s*<\s*[^,>]+\s*,\s*(.+?)\s*>$/i', $docType, $matches) === 1) {
+            $valueExpr = $matches[1];
+        } elseif (preg_match('/^array\s*<\s*(.+?)\s*>$/i', $docType, $matches) === 1) {
+            // Match array<value>
+            $valueExpr = $matches[1];
+        } else {
+            // Not an array generic or unsupported
+            return [];
+        }
+
+        // Remove wrapping parentheses
+        $valueExpr = trim($valueExpr);
+        if (str_starts_with($valueExpr, '(') && str_ends_with($valueExpr, ')')) {
+            $valueExpr = substr($valueExpr, 1, -1);
+        }
+
+        // Split union by |
+        $parts = array_map('trim', explode('|', $valueExpr));
+
+        // Filter empty
+        $parts = array_values(array_filter($parts, fn ($p) => $p !== ''));
+
+        return $parts;
+    }
+
+    /**
+     * Map a type token to a Schema instance for items.
+     */
+    protected function makeSchemaForItemType(string $typeToken, SchemaTree $tree): ?Schema
+    {
+        $normalized = strtolower($typeToken);
+
+        /** @var class-string<SingleTypeSchema>|null $schemaClass */
+        $schemaClass = match ($normalized) {
+            'array' => ArraySchema::class,
+            'bool', 'boolean' => BooleanSchema::class,
+            'float', 'double' => NumberSchema::class,
+            'int', 'integer' => IntegerSchema::class,
+            'null' => NullSchema::class,
+            'object' => ObjectSchema::class,
+            'string' => StringSchema::class,
+            default => null,
+        };
+
+        if (! is_null($schemaClass)) {
+            return $schemaClass::make()->applyType()->tree($tree);
+        }
+
+        // Best-effort: if token is a class-string of a Data object, transform it
+        if (class_exists($typeToken) && is_subclass_of($typeToken, \Spatie\LaravelData\Data::class)) {
+            return TransformDataClassToSchema::run($typeToken, $tree);
+        }
+
+        return null;
     }
 }

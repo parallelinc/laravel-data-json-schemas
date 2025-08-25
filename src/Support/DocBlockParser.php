@@ -154,6 +154,21 @@ class DocBlockParser
     }
 
     /**
+     * Get the type of a param tag as a string.
+     */
+    public function getParamType(string $name): ?string
+    {
+        $param = $this->getParam($name);
+
+        if ($param === null) {
+            return null;
+        }
+
+        // The PHPStan TypeNode can be string-cast to its textual representation
+        return (string) $param->type;
+    }
+
+    /**
      * Get the description of a param tag.
      */
     public function getParamDescription(string $name): ?string
@@ -184,6 +199,21 @@ class DocBlockParser
 
         return $this->getVarTagValues()
             ->first(fn (VarTagValueNode $tag) => $tag->variableName === $name);
+    }
+
+    /**
+     * Get the type of a var tag as a string.
+     */
+    public function getVarType(?string $name = null): ?string
+    {
+        $var = $this->getVar($name);
+
+        if ($var === null) {
+            return null;
+        }
+
+        // The PHPStan TypeNode can be string-cast to its textual representation
+        return (string) $var->type;
     }
 
     /**

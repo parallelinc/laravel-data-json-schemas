@@ -15,6 +15,7 @@ use BasilLangevin\LaravelDataJsonSchemas\Schemas\StringSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Schemas\UnionSchema;
 use BasilLangevin\LaravelDataJsonSchemas\Support\PropertyWrapper;
 use BasilLangevin\LaravelDataJsonSchemas\Support\SchemaTree;
+use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Support\Types\NamedType;
 
 class ApplyArrayItemsToSchema
@@ -192,7 +193,7 @@ class ApplyArrayItemsToSchema
 
         // Best-effort: if token is a class-string of a Data object, transform it (resolve same-namespace)
         $resolved = $this->resolvePotentialDataClass($typeToken, $property);
-        if ($resolved !== null && is_subclass_of($resolved, \Spatie\LaravelData\Data::class)) {
+        if ($resolved !== null && is_subclass_of($resolved, Data::class)) {
             return TransformDataClassToSchema::run($resolved, $tree);
         }
 
